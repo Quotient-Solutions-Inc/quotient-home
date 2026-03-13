@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import NavWithModal from '@/components/NavWithModal'
+import Nav from '@/components/Nav'
 import QTabBar from '@/components/QTabBar'
 import CodeBlock from '@/components/CodeBlock'
 import FAQ from '@/components/FAQ'
@@ -10,7 +10,7 @@ import Footer from '@/components/Footer'
 export default function ApiPage() {
   return (
     <div className='min-h-screen bg-tb-page pt-[44px]'>
-      <NavWithModal />
+      <Nav />
       <QTabBar />
 
       <main className="flex flex-col p-tb-gap pt-0 w-full">

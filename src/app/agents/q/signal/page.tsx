@@ -1,4 +1,4 @@
-import NavWithModal from '@/components/NavWithModal'
+import Nav from '@/components/Nav'
 import QTabBar from '@/components/QTabBar'
 import QCalledIt from '@/components/QCalledIt'
 import LiveSignal from '@/components/LiveSignal'
@@ -8,7 +8,7 @@ import Footer from '@/components/Footer'
 export default function SignalPage() {
   return (
     <div className='min-h-screen bg-tb-page pt-[44px]'>
-      <NavWithModal />
+      <Nav />
       <QTabBar />
 
       <main className="flex flex-col p-tb-gap pt-0 w-full">

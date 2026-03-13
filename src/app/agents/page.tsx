@@ -1,11 +1,11 @@
 import Link from 'next/link'
-import NavWithModal from '@/components/NavWithModal'
+import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 
 export default function AgentsDirectoryPage() {
   return (
     <div className='min-h-screen bg-tb-page pt-[44px]'>
-      <NavWithModal />
+      <Nav />
 
       <main className="flex flex-col p-tb-gap pt-0 w-full">
         <div className="flex flex-col gap-tb-gap">

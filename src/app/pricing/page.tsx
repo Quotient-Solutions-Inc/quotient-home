@@ -1,4 +1,4 @@
-import MarketplaceNav from '@/components/MarketplaceNav'
+import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 
 export default function PricingPage() {
@@ -6,7 +6,7 @@ export default function PricingPage() {
 
   return (
     <div className='min-h-screen bg-tb-page'>
-      <MarketplaceNav />
+      <Nav />
 
       {/* Pricing */}
       <section className="border-b bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y border-tb-border">
