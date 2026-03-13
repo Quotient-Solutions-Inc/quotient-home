@@ -6,7 +6,7 @@ import {
   useState,
   useEffect,
   useCallback,
-  type ReactNode,
+  type ReactNode
 } from 'react'
 import { type ThemeKey } from './themes'
 
@@ -18,22 +18,13 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
-const STORAGE_KEY = 'quotient-theme'
-
 export function ThemeProvider({ children }: { children: ReactNode }) {
   // Default to Theme B (production). Theme A code preserved in components for reference.
   const [theme, setThemeState] = useState<ThemeKey>('B')
-  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  useEffect(() => {
-    if (!mounted) return
     document.documentElement.setAttribute('data-theme', theme)
-    localStorage.setItem(STORAGE_KEY, theme)
-  }, [theme, mounted])
+  }, [theme])
 
   const setTheme = useCallback((key: ThemeKey) => {
     setThemeState(key)

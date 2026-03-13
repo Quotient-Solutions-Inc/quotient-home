@@ -6,7 +6,6 @@ import {
   Instrument_Sans,
 } from 'next/font/google'
 import { ThemeProvider } from '@/lib/ThemeContext'
-// ThemeToggle removed — Theme B is the production theme. Toggle component preserved at /src/components/ThemeToggle.tsx
 import './globals.css'
 
 const newsreader = Newsreader({
