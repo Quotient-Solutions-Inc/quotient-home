@@ -12,14 +12,14 @@ export default function Closing() {
       ? 'bg-tb-primary rounded-tb-card flex items-center justify-center px-8 py-16 lg:py-24 relative overflow-hidden'
       : 'py-24 px-10 max-md:px-6'
     }>
-      {isB && <FingerprintLoopEdge className="absolute right-0 top-1/2 -translate-y-1/2 text-white/[0.07] z-[1]" />}
+      {isB && <FingerprintLoopEdge className="absolute right-0 top-1/2 -translate-y-1/2 text-white/[0.14] z-[1]" />}
       <div className={isB ? 'text-center max-w-[900px] relative z-10' : 'max-w-[560px] mx-auto text-center'}>
         <h2 className={isB
-          ? 'font-headline font-bold uppercase tracking-[-0.01em] text-[32px] md:text-[52px] lg:text-[72px] leading-[0.95] text-white mb-4'
+          ? 'font-headline font-bold uppercase tracking-[-0.01em] text-[32px] lg:text-[48px] leading-[0.95] text-white mb-4'
           : 'text-[28px] font-headline font-normal tracking-[-0.02em] text-brand-black mb-4 leading-[1.2]'
         }>
           {isB ? (
-            'The best agents are built by people who know things.'
+            <>The best agents are built by people<br className="hidden lg:inline" /> who know things.</>
           ) : (
             'The best agents are built by people who know things.'
           )}

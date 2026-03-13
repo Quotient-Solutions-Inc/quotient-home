@@ -14,7 +14,7 @@ function StatementMoment({ text, variant = 'dark' }: { text: string; variant?: '
   const bg = variant === 'primary' ? 'bg-tb-primary' : 'bg-tb-dark'
   return (
     <div className={`w-full ${bg} rounded-tb-card flex items-center justify-center px-8 py-16 lg:py-24`}>
-      <h2 className="font-headline font-bold uppercase tracking-[-0.01em] text-center text-[32px] md:text-[52px] lg:text-[72px] leading-[0.95] max-w-[900px] text-white">
+      <h2 className="font-headline font-bold uppercase tracking-[-0.01em] text-center text-[32px] lg:text-[48px] leading-[0.95] max-w-[900px] text-white">
         {text}
       </h2>
     </div>
@@ -40,10 +40,6 @@ export default function Home() {
             />
             <MeetQ />
             <Ecosystem />
-            <StatementMoment
-              text="The game builds the credential. The credential unlocks the work. The work generates the data."
-              variant="primary"
-            />
             <Closing />
             <Footer />
           </div>
