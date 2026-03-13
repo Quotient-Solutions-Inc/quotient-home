@@ -5,7 +5,6 @@ import {
   Inter,
   Instrument_Sans,
 } from 'next/font/google'
-import { ThemeProvider } from '@/lib/ThemeContext'
 import './globals.css'
 
 const newsreader = Newsreader({
@@ -58,9 +57,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={fontVars}>
       <body className="font-body text-brand-black bg-brand-white text-sm leading-relaxed">
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   )

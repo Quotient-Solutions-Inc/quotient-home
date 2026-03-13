@@ -2,49 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
-import { useTheme } from '@/lib/ThemeContext'
 
-/* ─── Theme A ─── Editorial black bar ─── */
-function NavA() {
-  return (
-    <nav className="sticky top-0 z-50 bg-brand-black text-white border-b-2 border-brand-black">
-      <div className="flex items-center justify-between px-10 max-md:px-6 h-12">
-        <div className="flex items-center">
-          <Link href="/" className="flex items-center gap-2 mr-16">
-            <Image src="/logo-mark.png" alt="Quotient" width={27} height={22} className="invert" />
-            <span className="font-wordmark text-sm tracking-normal text-white">Quotient</span>
-          </Link>
-          <div className="flex items-center gap-10 font-mono text-xs uppercase tracking-wide max-md:hidden">
-            <div className="relative group">
-              <Link href="/agents" className="text-gray-400 hover:text-white transition-colors flex items-center gap-1">
-                Agents
-                <svg className="w-3 h-3 mt-px opacity-50" fill="none" viewBox="0 0 12 12">
-                  <path d="M3 5l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </Link>
-              <div className="absolute top-full left-0 pt-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-150">
-                <div className="bg-brand-black border border-gray-800 rounded-sm py-2 min-w-[180px] shadow-lg">
-                  <Link href="/agents/q/signal" className="block px-4 py-2 text-[11px] font-mono uppercase tracking-wide text-gray-400 hover:text-white hover:bg-gray-900 transition-colors">
-                    Q &middot; Geopolitics
-                  </Link>
-                  <div className="px-4 py-2 text-[11px] font-mono uppercase tracking-wide text-gray-600">More agents soon</div>
-                </div>
-              </div>
-            </div>
-            <Link href="/about" className="text-gray-400 hover:text-white transition-colors">About</Link>
-          </div>
-        </div>
-        <div className="flex items-center gap-6">
-          <Link href="/#track-record" className="bg-brand-red-orange text-white text-xs font-mono uppercase tracking-wide px-4 py-2 hover:opacity-90 transition-opacity">Get access</Link>
-        </div>
-      </div>
-    </nav>
-  )
-}
-
-/* ─── Theme B ─── Slim dark nav with mobile menu ─── */
-function NavB() {
+export default function MarketplaceNav() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
@@ -128,10 +87,4 @@ function NavB() {
       )}
     </>
   )
-}
-
-export default function MarketplaceNav() {
-  const { theme } = useTheme()
-
-  return theme === 'A' ? <NavA /> : <NavB />
 }

@@ -1,6 +1,3 @@
-'use client'
-
-import { useTheme } from '@/lib/ThemeContext'
 import MarketplaceNav from '@/components/MarketplaceNav'
 import MarketplaceHero from '@/components/MarketplaceHero'
 import TrackRecord from '@/components/TrackRecord'
@@ -10,33 +7,19 @@ import Closing from '@/components/Closing'
 import Footer from '@/components/Footer'
 
 export default function Home() {
-  const { theme } = useTheme()
-  const isB = theme === 'B'
-
   return (
-    <div className={isB ? 'min-h-screen bg-tb-page' : 'min-h-screen'}>
+    <div className='min-h-screen bg-tb-page'>
       <MarketplaceNav />
-      {isB ? (
-        <main className="flex flex-col p-tb-gap pt-[52px] w-full">
-          <div className="flex flex-col gap-tb-gap">
-            <MarketplaceHero />
-            <TrackRecord />
-            <Ecosystem />
-            <BiggerPicture />
-            <Closing />
-            <Footer />
-          </div>
-        </main>
-      ) : (
-        <>
+      <main className="flex flex-col p-tb-gap pt-[52px] w-full">
+        <div className="flex flex-col gap-tb-gap">
           <MarketplaceHero />
           <TrackRecord />
           <Ecosystem />
           <BiggerPicture />
           <Closing />
           <Footer />
-        </>
-      )}
+        </div>
+      </main>
     </div>
   )
 }
