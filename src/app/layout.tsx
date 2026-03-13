@@ -6,7 +6,7 @@ import {
   Instrument_Sans,
 } from 'next/font/google'
 import { ThemeProvider } from '@/lib/ThemeContext'
-import ThemeToggle from '@/components/ThemeToggle'
+// ThemeToggle removed — Theme B is the production theme. Toggle component preserved at /src/components/ThemeToggle.tsx
 import './globals.css'
 
 const newsreader = Newsreader({
@@ -61,7 +61,6 @@ export default function RootLayout({
       <body className="font-body text-brand-black bg-brand-white text-sm leading-relaxed">
         <ThemeProvider>
           {children}
-          <ThemeToggle />
         </ThemeProvider>
       </body>
     </html>

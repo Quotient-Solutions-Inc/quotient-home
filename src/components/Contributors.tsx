@@ -13,7 +13,7 @@ export default function Contributors({
   return (
     <div
       className={isB
-        ? 'bg-tb-cream rounded-tb-card py-12 px-8 lg:px-tb-section-x'
+        ? 'bg-tb-cream rounded-tb-card py-tb-section-y px-8 lg:px-tb-section-x'
         : 'bg-gray-100 border-t border-border-thin py-12 px-10 max-md:px-6'
       }
     >

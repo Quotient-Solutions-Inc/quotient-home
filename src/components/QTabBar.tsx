@@ -5,16 +5,13 @@ import { usePathname } from 'next/navigation'
 import { useTheme } from '@/lib/ThemeContext'
 
 const tabs = [
-  { label: 'Overview', href: '/agents/q' },
-  { label: 'For Traders', href: '/agents/q/signal' },
-  { label: 'For Platforms & Wallets', href: '/agents/q/platforms' },
-  { label: 'For Agents', href: '/agents/q/api' },
+  { label: 'Signal', href: '/agents/q/signal' },
+  { label: 'API', href: '/agents/q/api' },
 ]
 
 export default function QTabBar() {
   const pathname = usePathname()
   const { theme } = useTheme()
-
   const isB = theme === 'B'
 
   return (
@@ -26,7 +23,7 @@ export default function QTabBar() {
       }`}
     >
       <div className={isB ? 'px-8 lg:px-tb-section-x' : 'max-w-content mx-auto px-10 max-md:px-6'}>
-        <div className="flex items-center gap-8 overflow-x-auto -mb-px">
+        <div className="flex items-center gap-8 max-md:gap-4 overflow-x-auto -mb-px">
           {tabs.map((tab) => {
             const isActive = pathname === tab.href
             return (

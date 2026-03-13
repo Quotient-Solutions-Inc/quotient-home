@@ -1,7 +1,6 @@
 'use client'
 
 import { useTheme } from '@/lib/ThemeContext'
-import FingerprintArc from '@/components/decorative/FingerprintArc'
 
 export default function HowItWorks() {
   const { theme } = useTheme()
@@ -14,7 +13,6 @@ export default function HowItWorks() {
         : 'border-b border-border-thin py-20 px-10 max-md:px-6'
       }
     >
-      {isB && <FingerprintArc className="absolute right-[-40px] top-[-20px] text-tb-dark/[0.08] z-[1]" />}
       <div className={isB ? 'relative z-10' : 'max-w-content mx-auto'}>
         <span
           className={`block uppercase mb-4 ${isB

@@ -1,33 +1,32 @@
 'use client'
 
 import { useTheme } from '@/lib/ThemeContext'
-import FingerprintWhorl from '@/components/decorative/FingerprintWhorl'
 
 export default function QCalledIt() {
   const { theme } = useTheme()
   const isB = theme === 'B'
 
   return (
-    <section className={`border-b relative ${
-      isB ? 'bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y' : 'border-border-thin py-20 px-10 max-md:px-6'
+    <section className={`relative ${
+      isB ? 'bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y' : 'border-b border-border-thin py-20 px-10 max-md:px-6'
     }`}>
       <div className={isB ? '' : 'max-w-content mx-auto'}>
         {/* Header with context */}
         <div className="mb-10">
           <span className={`block text-[11px] uppercase mb-4 ${
-            isB ? 'font-mono tracking-[0.08em] text-gray-500' : 'font-mono tracking-eyebrow text-gray-500'
+            isB ? 'font-mono tracking-[0.08em] text-tb-primary' : 'font-mono tracking-eyebrow text-gray-500'
           }`}>
             Q Called It
           </span>
           <h2 className={`font-semibold tracking-[-0.02em] leading-[1.2] mb-3 max-w-[520px] ${
             isB
-              ? 'font-headline font-bold text-[clamp(2rem,4vw,3.5rem)] uppercase text-tb-dark leading-[0.9]'
+              ? 'font-headline font-bold text-[32px] lg:text-[48px] uppercase text-tb-dark leading-[0.95]'
               : 'text-[28px] text-brand-black'
           }`}>
             Q is right 7 out of 10 times and wins 3x what it loses.
           </h2>
           <p className={`text-[15px] leading-relaxed max-w-[560px] ${
-            isB ? 'font-headline text-gray-500' : 'text-gray-500'
+            isB ? 'text-tb-dark/70' : 'text-gray-500'
           }`}>
             ROI reflects what a bet placed at Q&apos;s call time, at market odds,
             would have returned at resolution.
@@ -95,7 +94,6 @@ function ProofCard({
     <div className={`p-5 ${
       isB ? 'border border-tb-border rounded-tb-card bg-white relative overflow-hidden' : 'bg-white border border-border-thin rounded-sm'
     }`}>
-      {isB && <FingerprintWhorl className="absolute -right-2 -bottom-2 text-tb-dark/[0.04] z-[1]" />}
       <div className={`inline-flex items-center gap-1.5 border rounded-sm px-2 py-0.5 text-[10px] uppercase tracking-wide mb-3 ${
         isB ? 'font-mono' : 'font-mono'
       } bg-green-50 border-green-200 text-green-700`}>

@@ -53,7 +53,7 @@ module.exports = {
       },
       spacing: {
         'tb-gap':       '8px',
-        'tb-section-y': '64px',
+        'tb-section-y': '80px',
         'tb-section-x': '48px',
       },
       letterSpacing: {

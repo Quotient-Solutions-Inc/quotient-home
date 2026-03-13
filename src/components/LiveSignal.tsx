@@ -7,10 +7,10 @@ export default function LiveSignal() {
   const isB = theme === 'B'
 
   return (
-    <section className={`border-b relative ${
+    <section className={`relative ${
       isB
         ? 'bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'
-        : 'bg-surface-off border-border-thin py-20 px-10 max-md:px-6'
+        : 'border-b bg-surface-off border-border-thin py-20 px-10 max-md:px-6'
     }`}>
       <div className={isB ? '' : 'max-w-content mx-auto'}>
         {/* Context header */}
@@ -22,13 +22,13 @@ export default function LiveSignal() {
           </span>
           <h2 className={`font-semibold tracking-[-0.02em] leading-[1.2] mb-3 max-w-[520px] ${
             isB
-              ? 'font-headline font-bold text-[clamp(2rem,4vw,3.5rem)] uppercase text-tb-dark leading-[0.9]'
+              ? 'font-headline font-bold text-[32px] lg:text-[48px] uppercase text-tb-dark leading-[0.95]'
               : 'text-[28px] text-brand-black'
           }`}>
             The spread is the signal.
           </h2>
           <p className={`text-[15px] leading-relaxed max-w-[560px] ${
-            isB ? 'font-headline text-gray-500' : 'text-gray-500'
+            isB ? 'text-tb-dark/70' : 'text-gray-500'
           }`}>
             When Q and the market disagree, Q has been right ~70% of the time. Wide spreads have historically been the strongest entry signal.
           </p>
