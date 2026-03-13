@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quotient — Full Site Wireframe</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f5f4f0;
+    color: #1a1a1a;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* ── PAGE SYSTEM ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── ANNOTATION SYSTEM ── */
+  .anno {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #b0935a;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .note {
+    font-size: 11px;
+    color: #999;
+    font-style: italic;
+    margin-top: 6px;
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .wf-anno {
+    background: #fffbf0;
+    border: 1px solid #f0d890;
+    border-radius: 2px;
+    padding: 8px 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #9a7a20;
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── SITE MAP BAR ── */
+  .sitemap-bar {
+    background: #1a1a1a;
+    padding: 8px 40px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .sitemap-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    margin-right: 8px;
+  }
+  .sitemap-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #888;
+    padding: 3px 10px;
+    border: 1px solid #333;
+    border-radius: 2px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .sitemap-link:hover { color: #fff; border-color: #555; }
+  .sitemap-link.current { color: #f5c842; border-color: #f5c842; }
+  .sitemap-sep {
+    color: #333;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: #fff;
+    border-bottom: 1px solid #e0ddd6;
+    padding: 0 40px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 33px;
+    z-index: 10;
+  }
+  .nav-logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-right: 36px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  .nav-logo-mark {
+    width: 20px; height: 20px;
+    border: 2px solid #1a1a1a;
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 600;
+  }
+  .nav-link {
+    font-size: 13px;
+    color: #666;
+    padding: 0 16px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+  }
+  .nav-link:hover { color: #1a1a1a; }
+  .nav-link.active-link { color: #1a1a1a; border-bottom-color: #1a1a1a; }
+  .nav-spacer { flex: 1; }
+  .nav-login {
+    font-size: 13px;
+    color: #888;
+    padding: 0 16px;
+    cursor: pointer;
+  }
+  .nav-cta {
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 8px 18px;
+    border-radius: 2px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { background: #333; }
+
+  /* ── SECTION WRAPPER ── */
+  section {
+    padding: 80px 40px;
+    border-bottom: 1px solid #e0ddd6;
+    position: relative;
+  }
+  section.dark {
+    background: #111;
+    border-bottom: 1px solid #222;
+  }
+  section.light-bg { background: #faf9f7; }
+  .section-num {
+    position: absolute;
+    top: 24px; left: 40px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #ccc;
+  }
+  section.dark .section-num { color: #333; }
+
+  .inner { max-width: 1020px; margin: 0 auto; }
+
+  /* ── SHARED TYPOGRAPHY ── */
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: #999;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .page-h1 {
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+    color: #0f0f0f;
+    max-width: 700px;
+    margin-bottom: 20px;
+  }
+  .page-h1 em { font-style: normal; color: #888; }
+  .page-sub {
+    font-size: 16px;
+    color: #666;
+    max-width: 520px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+  .section-h2 {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -.02em;
+    color: #0f0f0f;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .section-h2.light { color: #e8e8e8; }
+  .section-desc {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 40px;
+  }
+  .section-desc.light { color: #666; }
+
+  /* ── SHARED BUTTONS ── */
+  .btn-primary {
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 13px;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 12px 24px;
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .btn-primary:hover { background: #333; }
+  .btn-secondary {
+    background: transparent;
+    color: #666;
+    font-size: 13px;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 12px 24px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-block;
+  }
+  .btn-ghost-dark {
+    background: transparent;
+    color: #888;
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 10px 20px;
+    border: 1px solid #333;
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  /* ── SHARED GRID / CARD UTILITIES ── */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #e0ddd6; border: 1px solid #e0ddd6; border-radius: 2px; overflow: hidden; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-cell { background: #fff; padding: 28px; }
+  .grid-cell.bg-off { background: #faf9f7; }
+  .grid-cell.bg-dark { background: #111; }
+
+  /* ── FAQ COMPONENT ── */
+  .faq-list { display: flex; flex-direction: column; gap: 1px; background: #e0ddd6; border: 1px solid #e0ddd6; border-radius: 2px; overflow: hidden; }
+  .faq-item { background: #fff; padding: 20px 24px; cursor: pointer; }
+  .faq-q {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .faq-q::after { content: "+"; font-family: 'IBM Plex Mono', monospace; color: #bbb; font-size: 16px; }
+  .faq-a {
+    font-size: 13px;
+    color: #777;
+    line-height: 1.7;
+    margin-top: 12px;
+    display: none;
+    max-width: 680px;
+  }
+  .faq-item.open .faq-a { display: block; }
+  .faq-item.open .faq-q::after { content: "−"; }
+
+  /* ── FEATURE LIST ── */
+  .feature-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  .feature-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+  .feature-icon {
+    width: 20px; height: 20px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #bbb;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #fff;
+    border-top: 1px solid #e0ddd6;
+    padding: 48px 40px 40px;
+  }
+  .footer-inner { max-width: 1020px; margin: 0 auto; }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #e0ddd6;
+    margin-bottom: 28px;
+  }
+  .footer-brand-name { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 8px; }
+  .footer-brand-desc { font-size: 12px; color: #aaa; line-height: 1.6; }
+  .footer-col-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: #bbb; margin-bottom: 14px; }
+  .footer-links { display: flex; flex-direction: column; gap: 9px; }
+  .footer-link { font-size: 13px; color: #888; cursor: pointer; line-height: 1; }
+  .footer-link:hover { color: #1a1a1a; }
+  .footer-link.dim { color: #ccc; font-size: 12px; }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #ccc; }
+  .footer-social { display: flex; gap: 16px; }
+  .footer-social-link { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #bbb; cursor: pointer; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.6);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: 4px;
+    width: 680px;
+    max-width: 96vw;
+    padding: 40px;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 18px;
+    color: #bbb;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .modal-close:hover { color: #333; }
+  .modal-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: #bbb;
+    margin-bottom: 8px;
+  }
+  .modal-title {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -.02em;
+    color: #0f0f0f;
+    margin-bottom: 6px;
+  }
+  .modal-sub {
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 28px;
+  }
+  .modal-tiles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .modal-tile {
+    border: 1px solid #e0ddd6;
+    border-radius: 3px;
+    padding: 20px 18px 22px;
+    cursor: pointer;
+    transition: border-color .15s;
+  }
+  .modal-tile:hover { border-color: #1a1a1a; }
+  .modal-tile-icon {
+    width: 32px; height: 32px;
+    border: 1px solid #e0ddd6;
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 14px;
+  }
+  .modal-tile-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: #bbb;
+    margin-bottom: 6px;
+  }
+  .modal-tile-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+  }
+  .modal-tile-desc {
+    font-size: 12px;
+    color: #999;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .modal-tile-cta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: #666;
+  }
+  .modal-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #bbb;
+    text-align: center;
+  }
+
+  /* ══ HOME PAGE SPECIFIC ══ */
+  .hero-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #999; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 20px; }
+  .hero-h1 { font-size: 48px; font-weight: 600; line-height: 1.1; letter-spacing: -.02em; color: #0f0f0f; max-width: 720px; margin-bottom: 24px; }
+  .hero-h1 em { font-style: normal; color: #888; }
+  .hero-sub { font-size: 16px; color: #666; max-width: 540px; line-height: 1.6; margin-bottom: 36px; }
+  .hero-ctas { display: flex; gap: 12px; align-items: center; margin-bottom: 56px; }
+  .hero-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #e0ddd6; border: 1px solid #e0ddd6; border-radius: 2px; overflow: hidden; }
+  .stat { background: #fff; padding: 20px 24px; }
+  .stat-num { font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #1a1a1a; line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 12px; color: #999; }
+
+  .how-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 48px; gap: 40px; }
+  .how-h2 { font-size: 32px; font-weight: 600; letter-spacing: -.02em; color: #0f0f0f; max-width: 400px; line-height: 1.2; }
+  .how-desc { font-size: 15px; color: #666; max-width: 440px; line-height: 1.7; padding-top: 6px; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #e0ddd6; border: 1px solid #e0ddd6; border-radius: 2px; overflow: hidden; }
+  .step { background: #faf9f7; padding: 28px; }
+  .step-n { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #bbb; margin-bottom: 14px; }
+  .step-title { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 10px; }
+  .step-body { font-size: 13px; color: #777; line-height: 1.7; }
+
+  .proof-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 32px; }
+  .proof-h2 { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: .1em; }
+  .proof-link { font-size: 12px; color: #aaa; font-family: 'IBM Plex Mono', monospace; cursor: pointer; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .card { background: #fff; border: 1px solid #e0ddd6; border-radius: 3px; padding: 20px 22px 22px; }
+  .card-badge { display: inline-flex; align-items: center; gap: 6px; background: #f0faf0; border: 1px solid #c0e8c0; border-radius: 2px; padding: 3px 8px; font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: #3a8a3a; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
+  .card-q { font-size: 14px; font-weight: 500; color: #1a1a1a; line-height: 1.4; margin-bottom: 16px; min-height: 40px; }
+  .card-roi { font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 500; color: #2a7a2a; line-height: 1; margin-bottom: 4px; }
+  .card-roi-label { font-size: 11px; color: #bbb; font-family: 'IBM Plex Mono', monospace; margin-bottom: 16px; }
+  .card-divider { height: 1px; background: #f0ede8; margin-bottom: 14px; }
+  .card-meta { display: flex; flex-direction: column; gap: 5px; }
+  .card-meta-row { display: flex; justify-content: space-between; font-size: 11px; font-family: 'IBM Plex Mono', monospace; }
+  .card-meta-label { color: #bbb; text-transform: uppercase; letter-spacing: .06em; }
+  .card-meta-val { color: #666; }
+  .card-meta-val.green { color: #3a8a3a; font-weight: 500; }
+
+  .live-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+  .live-label { display: flex; align-items: center; gap: 8px; }
+  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #e05050; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+  .live-text { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: .1em; }
+  .live-link { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #aaa; cursor: pointer; }
+  .signal-rows { display: flex; flex-direction: column; gap: 1px; background: #e0ddd6; border: 1px solid #e0ddd6; border-radius: 2px; overflow: hidden; }
+  .signal-row { background: #fff; padding: 16px 20px; display: grid; grid-template-columns: 1fr 80px 80px 90px 200px; gap: 16px; align-items: center; }
+  .signal-row.header { background: #faf9f7; border-bottom: 1px solid #e0ddd6; }
+  .signal-row.header span { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #bbb; text-transform: uppercase; letter-spacing: .08em; }
+  .sig-q { font-size: 13px; color: #1a1a1a; font-weight: 500; line-height: 1.4; }
+  .sig-market { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #888; }
+  .sig-q-val { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #3a6abf; font-weight: 500; }
+  .sig-spread { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; padding: 3px 8px; border-radius: 2px; text-align: center; }
+  .sig-spread.hi { background: #fff0e0; color: #b06020; }
+  .sig-spread.med { background: #f0f4ff; color: #3a5abf; }
+  .sig-signal { font-size: 12px; color: #888; font-style: italic; line-height: 1.4; }
+
+  .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px; }
+  .split-card { border: 1px solid #e0ddd6; border-radius: 3px; padding: 32px; background: #fff; }
+  .split-card.dark-card { background: #111; border-color: #222; }
+  .split-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: #bbb; margin-bottom: 14px; }
+  .split-card.dark-card .split-eyebrow { color: #444; }
+  .split-h3 { font-size: 22px; font-weight: 600; color: #1a1a1a; line-height: 1.2; margin-bottom: 12px; letter-spacing: -.01em; }
+  .split-card.dark-card .split-h3 { color: #e0e0e0; }
+  .split-body { font-size: 14px; color: #777; line-height: 1.7; margin-bottom: 24px; }
+  .split-card.dark-card .split-body { color: #555; }
+  .split-btn { background: #1a1a1a; color: #fff; font-size: 12px; font-family: 'IBM Plex Mono', monospace; padding: 10px 20px; border-radius: 2px; cursor: pointer; display: inline-block; }
+  .split-features { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+  .split-feature { font-size: 13px; color: #888; display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+  .split-feature::before { content: "--"; color: #ccc; flex-shrink: 0; font-family: 'IBM Plex Mono', monospace; font-size: 11px; margin-top: 1px; }
+  .split-card.dark-card .split-feature { color: #555; }
+  .split-card.dark-card .split-feature::before { color: #333; }
+
+  /* ── CONTRIBUTORS BANNER ── */
+  .contrib-banner {
+    background: #111;
+    padding: 48px 40px;
+    border-top: 1px solid #222;
+  }
+  .contrib-inner {
+    max-width: 1020px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+  .contrib-left {}
+  .contrib-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: #444; margin-bottom: 10px; }
+  .contrib-h2 { font-size: 26px; font-weight: 600; color: #e8e8e8; letter-spacing: -.01em; margin-bottom: 8px; }
+  .contrib-desc { font-size: 14px; color: #666; line-height: 1.6; max-width: 480px; }
+  .contrib-right { flex-shrink: 0; }
+  .contrib-btn { background: transparent; color: #888; font-size: 12px; font-family: 'IBM Plex Mono', monospace; padding: 11px 22px; border: 1px solid #333; border-radius: 2px; cursor: pointer; white-space: nowrap; }
+  .contrib-btn:hover { border-color: #666; color: #ccc; }
+
+  /* ══ PRICING TABLE ══ */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #e0ddd6; border: 1px solid #e0ddd6; border-radius: 2px; overflow: hidden; }
+  .pricing-col { background: #fff; padding: 28px 24px 32px; }
+  .pricing-col.featured { background: #0f0f0f; }
+  .pricing-tier { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: #bbb; margin-bottom: 12px; }
+  .pricing-col.featured .pricing-tier { color: #555; }
+  .pricing-price { font-size: 36px; font-weight: 600; letter-spacing: -.02em; color: #1a1a1a; line-height: 1; margin-bottom: 4px; }
+  .pricing-col.featured .pricing-price { color: #e8e8e8; }
+  .pricing-freq { font-size: 13px; color: #bbb; margin-bottom: 20px; font-family: 'IBM Plex Mono', monospace; }
+  .pricing-desc { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 24px; }
+  .pricing-col.featured .pricing-desc { color: #666; }
+  .pricing-divider { height: 1px; background: #f0ede8; margin-bottom: 20px; }
+  .pricing-col.featured .pricing-divider { background: #222; }
+  .pricing-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .pricing-feature { font-size: 12px; color: #777; display: flex; gap: 8px; line-height: 1.5; }
+  .pricing-feature::before { content: "✓"; color: #3a8a3a; flex-shrink: 0; font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
+  .pricing-col.featured .pricing-feature { color: #666; }
+  .pricing-btn { width: 100%; text-align: center; padding: 11px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; border-radius: 2px; cursor: pointer; }
+  .pricing-btn.dark { background: #1a1a1a; color: #fff; border: none; }
+  .pricing-btn.outline { background: transparent; color: #1a1a1a; border: 1px solid #ddd; }
+  .pricing-btn.outline-light { background: transparent; color: #888; border: 1px solid #333; }
+
+  /* ══ ABOUT PAGE ══ */
+  .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #e0ddd6; border: 1px solid #e0ddd6; border-radius: 2px; overflow: hidden; }
+  .team-card { background: #fff; padding: 24px; }
+  .team-avatar { width: 40px; height: 40px; background: #f0ede8; border-radius: 2px; margin-bottom: 14px; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #bbb; }
+  .team-name { font-size: 14px; font-weight: 600; color: #1a1a1a; margin-bottom: 2px; }
+  .team-role { font-size: 12px; color: #bbb; font-family: 'IBM Plex Mono', monospace; margin-bottom: 10px; }
+  .team-bio { font-size: 12px; color: #888; line-height: 1.6; }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb {
+    padding: 12px 40px;
+    background: #faf9f7;
+    border-bottom: 1px solid #e0ddd6;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: #bbb;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .breadcrumb span { cursor: pointer; }
+  .breadcrumb span:hover { color: #666; }
+  .breadcrumb .sep { color: #ddd; }
+  .breadcrumb .current { color: #666; }
+
+  /* ── INLINE SIGNAL PREVIEW (individual page) ── */
+  .signal-preview { border: 1px solid #e0ddd6; border-radius: 3px; overflow: hidden; margin-bottom: 32px; }
+  .signal-preview-header { background: #faf9f7; padding: 12px 20px; border-bottom: 1px solid #e0ddd6; display: flex; align-items: center; justify-content: space-between; }
+  .signal-preview-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #bbb; text-transform: uppercase; letter-spacing: .08em; }
+  .signal-preview-gate { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #d08030; background: #fff8ed; border: 1px solid #f0d890; border-radius: 2px; padding: 2px 8px; }
+
+  /* ── INTEGRATION DIAGRAM (platforms page) ── */
+  .integration-diagram { border: 1px solid #e0ddd6; border-radius: 3px; background: #faf9f7; padding: 32px; margin-bottom: 32px; }
+  .integration-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+  .integration-row:last-child { margin-bottom: 0; }
+  .int-box { border: 1px solid #e0ddd6; border-radius: 2px; background: #fff; padding: 12px 18px; font-size: 13px; font-weight: 500; color: #1a1a1a; min-width: 140px; text-align: center; }
+  .int-box.q-box { background: #0f0f0f; color: #e8e8e8; border-color: #333; }
+  .int-arrow { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ccc; }
+  .int-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #bbb; }
+
+  /* ── CODE BLOCK (agents page) ── */
+  .code-block { background: #0f0f0f; border-radius: 3px; padding: 24px; margin-bottom: 12px; overflow-x: auto; }
+  .code-block pre { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #aaa; line-height: 1.7; }
+  .code-block .kw { color: #6a9edd; }
+  .code-block .str { color: #7ec88a; }
+  .code-block .cm { color: #555; }
+  .code-tabs { display: flex; gap: 1px; background: #333; border-radius: 3px 3px 0 0; overflow: hidden; }
+  .code-tab { background: #222; padding: 8px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #666; cursor: pointer; }
+  .code-tab.active { background: #0f0f0f; color: #aaa; }
+
+</style>
+</head>
+<body>
+
+<!-- ══ SITEMAP BAR ══ -->
+<div class="sitemap-bar" id="sitemapBar">
+  <span class="sitemap-label">Pages</span>
+  <span class="sitemap-link current" id="tab-home" onclick="showPage('home')">quotient.social</span>
+  <span class="sitemap-sep">→ modal →</span>
+  <span class="sitemap-link" id="tab-signal" onclick="showPage('signal')">/signal</span>
+  <span class="sitemap-link" id="tab-platforms" onclick="showPage('platforms')">/platforms</span>
+  <span class="sitemap-link" id="tab-agents" onclick="showPage('agents')">dev.quotient.social</span>
+  <span class="sitemap-sep">|</span>
+  <span class="sitemap-link" id="tab-about" onclick="showPage('about')">/about</span>
+  <span class="sitemap-link" id="tab-pricing" onclick="showPage('pricing')">/pricing</span>
+</div>
+
+<!-- ══ MODAL ══ -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <span class="modal-close" onclick="closeModal()">×</span>
+    <div class="modal-eyebrow">Get access</div>
+    <div class="modal-title">How do you want to use Quotient?</div>
+    <div class="modal-sub">Choose your path. You can always switch later.</div>
+    <div class="modal-tiles">
+      <div class="modal-tile" onclick="showPage('signal'); closeModal();">
+        <div class="modal-tile-icon">~</div>
+        <div class="modal-tile-label">Individual</div>
+        <div class="modal-tile-name">Signal access</div>
+        <div class="modal-tile-desc">Full signal dashboard, market intelligence, and Q's reasoning. Paid subscription.</div>
+        <div class="modal-tile-cta">Subscribe →</div>
+      </div>
+      <div class="modal-tile" onclick="showPage('platforms'); closeModal();">
+        <div class="modal-tile-icon">[P]</div>
+        <div class="modal-tile-label">Platform</div>
+        <div class="modal-tile-name">Platform integration</div>
+        <div class="modal-tile-desc">Embed signal intelligence into your prediction market or wallet. Enterprise pilot.</div>
+        <div class="modal-tile-cta">Contact us →</div>
+      </div>
+      <div class="modal-tile" onclick="showPage('agents'); closeModal();">
+        <div class="modal-tile-icon">&lt;/&gt;</div>
+        <div class="modal-tile-label">Developer</div>
+        <div class="modal-tile-name">API + agent access</div>
+        <div class="modal-tile-desc">Direct API access for agents and developers. x402 micropayments or Stripe.</div>
+        <div class="modal-tile-cta">Start now →</div>
+      </div>
+    </div>
+    <div class="modal-note">Not ready to commit? Start with the free preview via <span style="text-decoration:underline;cursor:pointer" onclick="showPage('signal'); closeModal();">newsletter access</span> or the mobile app.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: HOME
+══════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">
+    <div class="nav-logo-mark">Q</div>
+    Quotient
+  </div>
+  <div class="nav-link" onclick="showPage('signal')">Signal</div>
+  <div class="nav-link" onclick="showPage('platforms')">For Platforms</div>
+  <div class="nav-link" onclick="showPage('agents')">For Agents</div>
+  <div class="nav-spacer"></div>
+  <div class="nav-login">Log in</div>
+  <div class="nav-cta" onclick="openModal()">Get access →</div>
+</nav>
+
+<!-- 01 HERO -->
+<section>
+  <span class="section-num">01 -- Hero</span>
+  <div class="inner">
+    <div class="hero-eyebrow">quotient.social</div>
+    <h1 class="hero-h1">World events prediction markets are <em>noisy.</em><br>Quotient finds the signal.</h1>
+    <p class="hero-sub">Agentic analysis, verified human judgment, and actionable intelligence across prediction markets, commodities, and global equity portfolios.</p>
+    <div class="hero-ctas">
+      <div class="btn-primary" onclick="openModal()">Get access →</div>
+      <div class="btn-secondary" onclick="showPage('signal')">Explore Signal ↗</div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">600+</div>
+        <div class="stat-label">Markets covered</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1,600+</div>
+        <div class="stat-label">Global sources</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">17k+</div>
+        <div class="stat-label">Forecaster predictions</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">74%</div>
+        <div class="stat-label">Win rate vs. market</div>
+      </div>
+    </div>
+    <div class="wf-anno">Stats as of March 2026. Win rate benchmarked via PredictionArena. [DEV: static at launch — Jordan to provide live query endpoint when ready]</div>
+  </div>
+</section>
+
+<!-- 02 HOW IT WORKS -->
+<section class="light-bg">
+  <span class="section-num">02 -- How it works</span>
+  <div class="inner">
+    <div class="how-header">
+      <h2 class="how-h2">AI runs the analysis.<br>Humans close the gap.</h2>
+      <p class="how-desc">Frontier models run on historical data. World events don't wait. Q covers 1,600+ global sources daily, calibrated by human forecasters tracking what is happening right now.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-title">Q processes the evidence</div>
+        <div class="step-body">Structured pipeline across 1,600+ global sources per market. News, government data, analyst reports, social signals. All ranked by historical accuracy.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-title">Human forecasters calibrate the call</div>
+        <div class="step-body">Verified track records fill the gap between model knowledge and real-time events. Accuracy earns influence in Q's context graph.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-title">The spread is the signal</div>
+        <div class="step-body">Divergence between Q's forecast and market odds. Actionable across prediction markets and the broader portfolio decisions they inform.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 Q CALLED IT -->
+<section>
+  <span class="section-num">03 -- Q Called It</span>
+  <div class="inner">
+    <div class="proof-header">
+      <div>
+        <span class="proof-h2">Q Called It — recently resolved markets</span>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#bbb; margin-top:5px;">ROI reflects what a bet placed at Q's call time, at market odds, would have returned at resolution.</div>
+      </div>
+      <span class="proof-link">View all resolved markets ↗</span>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-badge">✓ Resolved Yes</div>
+        <div class="card-q">Will US or Israel strike Iran by December 31, 2026?</div>
+        <div class="card-roi">+34.2%</div>
+        <div class="card-roi-label">ROI</div>
+        <div class="card-divider"></div>
+        <div class="card-meta">
+          <div class="card-meta-row"><span class="card-meta-label">Q forecasted</span><span class="card-meta-val green">Yes</span></div>
+          <div class="card-meta-row"><span class="card-meta-label">Market was</span><span class="card-meta-val">75%</span></div>
+          <div class="card-meta-row"><span class="card-meta-label">Called</span><span class="card-meta-val">Feb 18</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-badge">✓ Resolved Yes</div>
+        <div class="card-q">US strikes Iran by December 31, 2026?</div>
+        <div class="card-roi">+36.1%</div>
+        <div class="card-roi-label">ROI</div>
+        <div class="card-divider"></div>
+        <div class="card-meta">
+          <div class="card-meta-row"><span class="card-meta-label">Q forecasted</span><span class="card-meta-val green">Yes</span></div>
+          <div class="card-meta-row"><span class="card-meta-label">Market was</span><span class="card-meta-val">74%</span></div>
+          <div class="card-meta-row"><span class="card-meta-label">Called</span><span class="card-meta-val">Feb 18</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-badge">✓ Resolved Yes</div>
+        <div class="card-q">U.S. strike on Somalia by February 21?</div>
+        <div class="card-roi">+35.1%</div>
+        <div class="card-roi-label">ROI</div>
+        <div class="card-divider"></div>
+        <div class="card-meta">
+          <div class="card-meta-row"><span class="card-meta-label">Q forecasted</span><span class="card-meta-val green">Yes</span></div>
+          <div class="card-meta-row"><span class="card-meta-label">Market was</span><span class="card-meta-val">74%</span></div>
+          <div class="card-meta-row"><span class="card-meta-label">Called</span><span class="card-meta-val">Feb 18</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 LIVE SIGNAL SAMPLE -->
+<section class="light-bg">
+  <span class="section-num">04 -- Live signal sample</span>
+  <div class="inner">
+    <div class="live-header">
+      <div class="live-label">
+        <div class="live-dot"></div>
+        <span class="live-text">Signal divergence -- updated daily</span>
+      </div>
+      <span class="live-link">Explore all markets → app.quotient.social</span>
+    </div>
+    <div class="signal-rows">
+      <div class="signal-row header">
+        <span>Market</span><span>Market odds</span><span>Q says</span><span>Spread</span><span>Top signal</span>
+      </div>
+      <div class="signal-row">
+        <div class="sig-q">Will Russia capture Kostyantynivka by June 30?</div>
+        <div class="sig-market">72% YES</div>
+        <div class="sig-q-val">NO · 15%</div>
+        <div class="sig-spread hi">56 pts</div>
+        <div class="sig-signal">Frontline Situation as of March 4, 2026</div>
+      </div>
+      <div class="signal-row">
+        <div class="sig-q">US x Cuba military clash in 2026?</div>
+        <div class="sig-market">54% NO</div>
+        <div class="sig-q-val">NO · 4%</div>
+        <div class="sig-spread med">50 pts</div>
+        <div class="sig-signal">The Coming Showdown Over Cuba · Foreign Affairs</div>
+      </div>
+      <div class="signal-row">
+        <div class="sig-q">US x Iran ceasefire by April 30?</div>
+        <div class="sig-market">59% NO</div>
+        <div class="sig-q-val">NO · 20%</div>
+        <div class="sig-spread med">38 pts</div>
+        <div class="sig-signal">Trump demands immediate pardon for Netanyahu</div>
+      </div>
+    </div>
+    <div style="margin-top:16px; text-align:right;">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#aaa; cursor:pointer;" onclick="openModal()">Want the full signal? Get access →</span>
+    </div>
+    <div class="wf-anno">Signal sample is static at launch. "Want the full signal?" triggers modal.</div>
+  </div>
+</section>
+
+<!-- 05 AUDIENCE SPLIT -->
+<section>
+  <span class="section-num">05 -- For you</span>
+  <div class="inner">
+    <div class="split-grid">
+      <div class="split-card">
+        <div class="split-eyebrow">For trading platforms &amp; wallets</div>
+        <h3 class="split-h3">More context.<br>More trading volume.</h3>
+        <p class="split-body">Traders who understand why a market is priced the way it is make larger bets, more often. Quotient's signal integrates directly into your markets.</p>
+        <div class="split-features">
+          <div class="split-feature">Structured multi-factor intelligence per market</div>
+          <div class="split-feature">Surfaces alongside existing markets with no rebuild required</div>
+          <div class="split-feature">World events mapped to commodities and global portfolios</div>
+        </div>
+        <div class="split-btn" onclick="showPage('platforms')">Get access →</div>
+      </div>
+      <div class="split-card dark-card">
+        <div class="split-eyebrow">For agents &amp; developers</div>
+        <h3 class="split-h3" style="color:#e0e0e0">Your agent's edge<br>in world events markets.</h3>
+        <p class="split-body">Q's context graph is queryable via API. Structured reasoning on 600+ markets.</p>
+        <div class="split-features">
+          <div class="split-feature">GET /v1/markets, /v1/signals, /v1/intelligence</div>
+          <div class="split-feature">x402 micropayments or Stripe</div>
+          <div class="split-feature">MCP server, skill.md, llms.txt available</div>
+        </div>
+        <div class="split-btn" style="background:#333;" onclick="showPage('agents')">Start now →</div>
+      </div>
+    </div>
+    <div class="wf-anno">[UPDATED per Jordan] No individual card here -- modal handles individual routing. "Get access" always opens modal.</div>
+  </div>
+</section>
+
+<!-- CONTRIBUTORS BANNER -->
+<div class="contrib-banner">
+  <div class="contrib-inner">
+    <div class="contrib-left">
+      <div class="contrib-eyebrow">For forecasters</div>
+      <div class="contrib-h2">Earn by sharing judgments on the news.</div>
+      <div class="contrib-desc">Forecasters with verified track records influence Q's calls. The better your record, the more weight your judgment carries. Accuracy compounds.</div>
+    </div>
+    <div class="contrib-right">
+      <div class="contrib-btn">Start contributing ↗</div>
+      <div class="wf-anno" style="margin-top:10px; text-align:right;">→ mobile.quotient.social</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">Quotient</div>
+        <div class="footer-brand-desc">World events prediction markets are noisy. Quotient finds the signal.</div>
+      </div>
+      <div>
+        <div class="footer-col-label">Product</div>
+        <div class="footer-links">
+          <div class="footer-link" onclick="showPage('signal')">Signal ↗</div>
+          <div class="footer-link" onclick="showPage('platforms')">For Platforms</div>
+          <div class="footer-link" onclick="showPage('agents')">For Agents</div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-label">Contribute</div>
+        <div class="footer-links">
+          <div class="footer-link">Mobile app ↗</div>
+          <div class="footer-link">Farcaster mini app ↗</div>
+          <div class="footer-link">World mini app ↗</div>
+          
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-label">Developers</div>
+        <div class="footer-links">
+          <div class="footer-link">API portal ↗</div>
+          <div class="footer-link">Documentation ↗</div>
+          <div class="footer-link">llms.txt ↗</div>
+          <div class="footer-link">skill.md ↗</div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-label">Company</div>
+        <div class="footer-links">
+          <div class="footer-link" onclick="showPage('about')">About</div>
+          <div class="footer-link" onclick="showPage('pricing')">Pricing</div>
+          <div class="footer-link">Substack ↗</div>
+          <div class="footer-link">X / Twitter ↗</div>
+          <div class="footer-link">Contact</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Quotient</div>
+      <div class="footer-social">
+        <div class="footer-social-link">X ↗</div>
+        <div class="footer-social-link">@quotient · Farcaster ↗</div>
+        <div class="footer-social-link">Substack ↗</div>
+      </div>
+    </div>
+  </div>
+</footer>
+</div><!-- /page-home -->
+
+
+<!-- ══════════════════════════════════════════════
+     PAGE: SIGNAL (individual)
+══════════════════════════════════════════════ -->
+<div class="page" id="page-signal">
+<nav>
+  <div class="nav-logo" onclick="showPage('home')"><div class="nav-logo-mark">Q</div>Quotient</div>
+  <div class="nav-link active-link">Signal</div>
+  <div class="nav-link" onclick="showPage('platforms')">For Platforms</div>
+  <div class="nav-link" onclick="showPage('agents')">For Agents</div>
+  <div class="nav-spacer"></div>
+  <div class="nav-login">Log in</div>
+  <div class="nav-cta" onclick="openModal()">Get access →</div>
+</nav>
+<div class="breadcrumb"><span onclick="showPage('home')">quotient.social</span><span class="sep">/</span><span class="current">signal</span></div>
+
+<!-- HERO -->
+<section>
+  <span class="section-num">01 -- Hero</span>
+  <div class="inner">
+    <span class="eyebrow">For individual traders &amp; analysts</span>
+    <h1 class="page-h1">The full picture<br>on every market.</h1>
+    <p class="page-sub">Signal gives you Q's forecast, the spread against market odds, the key factors driving the call, and the sourced evidence behind it. Everything you need to form a view.</p>
+    <div style="display:flex; gap:12px; margin-bottom:48px;">
+      <div class="btn-primary" onclick="openModal()">Subscribe →</div>
+      <div class="btn-secondary">View free preview</div>
+    </div>
+
+    <!-- Signal preview (gated) -->
+    <div class="signal-preview">
+      <div class="signal-preview-header">
+        <span class="signal-preview-label">Live signal — 3 markets (free preview)</span>
+        <span class="signal-preview-gate">Subscribe to unlock all 600+ markets</span>
+      </div>
+      <div class="signal-rows">
+        <div class="signal-row header">
+          <span>Market</span><span>Market odds</span><span>Q says</span><span>Spread</span><span>Top signal</span>
+        </div>
+        <div class="signal-row">
+          <div class="sig-q">Will Russia capture Kostyantynivka by June 30?</div>
+          <div class="sig-market">72% YES</div>
+          <div class="sig-q-val">NO · 15%</div>
+          <div class="sig-spread hi">56 pts</div>
+          <div class="sig-signal">Frontline Situation as of March 4, 2026</div>
+        </div>
+        <div class="signal-row">
+          <div class="sig-q">US x Cuba military clash in 2026?</div>
+          <div class="sig-market">54% NO</div>
+          <div class="sig-q-val">NO · 4%</div>
+          <div class="sig-spread med">50 pts</div>
+          <div class="sig-signal">The Coming Showdown Over Cuba · Foreign Affairs</div>
+        </div>
+        <div class="signal-row" style="opacity:.4; pointer-events:none; position:relative;">
+          <div class="sig-q" style="filter:blur(4px);">████████████████████████████</div>
+          <div class="sig-market" style="filter:blur(3px);">██%</div>
+          <div class="sig-q-val" style="filter:blur(3px);">██</div>
+          <div class="sig-spread hi" style="filter:blur(3px);">██</div>
+          <div class="sig-signal" style="filter:blur(3px);">████████████████</div>
+        </div>
+      </div>
+      <div style="padding:14px 20px; background:#faf9f7; border-top:1px solid #e0ddd6; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#bbb;">597 more markets gated</span>
+        <span class="btn-primary" style="font-size:11px; padding:8px 16px;" onclick="openModal()">Subscribe to unlock →</span>
+      </div>
+    </div>
+    <div class="wf-anno">Third row blurred as a paywall preview pattern. Free tier: 2 markets visible, rest gated. Clicking anywhere on the blurred row triggers modal.</div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section class="light-bg">
+  <span class="section-num">02 -- What's included</span>
+  <div class="inner">
+    <h2 class="section-h2">What Signal includes</h2>
+    <p class="section-desc">Every market comes with a full intelligence package, not just a number.</p>
+    <div class="grid-3">
+      <div class="grid-cell">
+        <div class="step-n">01</div>
+        <div class="step-title">Q's forecast</div>
+        <div class="step-body">Q's probability estimate with directional call (Yes/No), updated daily as new evidence comes in.</div>
+      </div>
+      <div class="grid-cell bg-off">
+        <div class="step-n">02</div>
+        <div class="step-title">Spread vs. market</div>
+        <div class="step-body">The gap between Q's estimate and current market odds. Wide spread = potential edge. Aligned = opportunity priced in.</div>
+      </div>
+      <div class="grid-cell">
+        <div class="step-n">03</div>
+        <div class="step-title">Key factors + sourced signals</div>
+        <div class="step-body">The specific evidence and reasoning behind Q's call. Every claim is sourced. You can check the work.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section>
+  <span class="section-num">03 -- Pricing</span>
+  <div class="inner">
+    <h2 class="section-h2">Simple pricing</h2>
+    <p class="section-desc">Pay for the signal. Free preview always available via newsletter and mobile app.</p>
+    <div class="pricing-grid" style="margin-bottom:16px;">
+      <div class="pricing-col">
+        <div class="pricing-tier">Free</div>
+        <div class="pricing-price">$0</div>
+        <div class="pricing-freq">forever</div>
+        <div class="pricing-desc">Newsletter and mobile app access. Sample signals, weekly digest, community forecasting.</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-features">
+          <div class="pricing-feature">2 live markets in Signal</div>
+          <div class="pricing-feature">Weekly Substack digest</div>
+          <div class="pricing-feature">Mobile app access</div>
+          <div class="pricing-feature">Forecaster leaderboard</div>
+        </div>
+        <div class="pricing-btn outline" onclick="showPage('about')">Get started free</div>
+      </div>
+      <div class="pricing-col featured">
+        <div class="pricing-tier">Signal</div>
+        <div class="pricing-price" style="color:#e8e8e8;">$[X]</div>
+        <div class="pricing-freq" style="color:#555;">/month</div>
+        <div class="pricing-desc">Full signal dashboard. All markets, all factors, all sourced evidence. Updated daily.</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-features">
+          <div class="pricing-feature">All 600+ live markets</div>
+          <div class="pricing-feature">Full key factors per market</div>
+          <div class="pricing-feature">Sourced evidence chain</div>
+          <div class="pricing-feature">Historical track record</div>
+          <div class="pricing-feature">Q Called It archive</div>
+          <div class="pricing-feature">Email alerts on spread changes</div>
+        </div>
+        <div class="pricing-btn outline-light" onclick="openModal()">Subscribe →</div>
+      </div>
+      <div class="pricing-col">
+        <div class="pricing-tier">Signal + Equities</div>
+        <div class="pricing-price">$[Y]</div>
+        <div class="pricing-freq">/month</div>
+        <div class="pricing-desc">Everything in Signal, plus world events mapped to commodities and global portfolio impact analysis.</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-features">
+          <div class="pricing-feature">Everything in Signal</div>
+          <div class="pricing-feature">Commodity impact mapping</div>
+          <div class="pricing-feature">Global equity signals</div>
+          <div class="pricing-feature">Portfolio alert configuration</div>
+        </div>
+        <div class="pricing-btn outline" onclick="openModal()">Subscribe →</div>
+      </div>
+    </div>
+    <div class="wf-anno">[Price TBD by Jordan] Third tier included as placeholder for equities expansion — can be removed if not ready at launch.</div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="light-bg">
+  <span class="section-num">04 -- FAQ (Individual)</span>
+  <div class="inner">
+    <h2 class="section-h2" style="margin-bottom:24px;">Common questions</h2>
+    <div class="faq-list">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What markets does Signal cover?</div>
+        <div class="faq-a">Signal covers 600+ world events markets across geopolitics, elections, policy, and macroeconomic triggers. We prioritize markets on Polymarket and Kalshi where thinly traded conditions create the most mispricing opportunity.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How is Q's forecast different from the market odds?</div>
+        <div class="faq-a">Market odds reflect crowd consensus, which is often driven by sentiment, recency bias, and low liquidity. Q's forecast is built from a structured evidence pipeline calibrated by human forecasters with verified track records. The gap between the two is the signal.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How often is the signal updated?</div>
+        <div class="faq-a">Signal updates daily. Markets with breaking developments may update intraday. You'll receive email alerts if a spread changes materially on a market you're watching.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What's included in the free tier?</div>
+        <div class="faq-a">The free tier includes 2 live markets in the Signal dashboard, weekly Substack digest, mobile app access (Farcaster and World mini apps), and access to the forecaster leaderboard. No credit card required.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Is this financial advice?</div>
+        <div class="faq-a">Quotient provides market intelligence, not financial advice. Signal is a research tool. All trading decisions are your own.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTRIBUTORS BANNER -->
+<div class="contrib-banner">
+  <div class="contrib-inner">
+    <div class="contrib-left">
+      <div class="contrib-eyebrow">For forecasters</div>
+      <div class="contrib-h2">Earn by sharing judgments on the news.</div>
+      <div class="contrib-desc">Accurate forecasters influence Q's calls and earn through the reputation system. Your track record is your credential.</div>
+    </div>
+    <div class="contrib-right"><div class="contrib-btn">Start contributing ↗</div></div>
+  </div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div><div class="footer-brand-name">Quotient</div><div class="footer-brand-desc">World events prediction markets are noisy. Quotient finds the signal.</div></div>
+      <div><div class="footer-col-label">Product</div><div class="footer-links"><div class="footer-link" onclick="showPage('signal')">Signal ↗</div><div class="footer-link" onclick="showPage('platforms')">For Platforms</div><div class="footer-link" onclick="showPage('agents')">For Agents</div><div class="footer-link dim">Contribute forecasts ↗</div></div></div><div><div class="footer-col-label">Contribute</div><div class="footer-links"><div class="footer-link">Mobile app ↗</div><div class="footer-link">Farcaster mini app ↗</div><div class="footer-link">World mini app ↗</div></div></div>
+      <div><div class="footer-col-label">Developers</div><div class="footer-links"><div class="footer-link">API portal ↗</div><div class="footer-link">Documentation ↗</div><div class="footer-link">llms.txt ↗</div><div class="footer-link">skill.md ↗</div></div></div>
+      <div><div class="footer-col-label">Company</div><div class="footer-links"><div class="footer-link" onclick="showPage('about')">About</div><div class="footer-link" onclick="showPage('pricing')">Pricing</div><div class="footer-link">Substack ↗</div><div class="footer-link">X / Twitter ↗</div><div class="footer-link">Contact</div></div></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 Quotient</div><div class="footer-social"><div class="footer-social-link">X ↗</div><div class="footer-social-link">@quotient · Farcaster ↗</div><div class="footer-social-link">Substack ↗</div></div></div>
+  </div>
+</footer>
+</div><!-- /page-signal -->
+
+
+<!-- ══════════════════════════════════════════════
+     PAGE: PLATFORMS
+══════════════════════════════════════════════ -->
+<div class="page" id="page-platforms">
+<nav>
+  <div class="nav-logo" onclick="showPage('home')"><div class="nav-logo-mark">Q</div>Quotient</div>
+  <div class="nav-link" onclick="showPage('signal')">Signal</div>
+  <div class="nav-link active-link">For Platforms</div>
+  <div class="nav-link" onclick="showPage('agents')">For Agents</div>
+  <div class="nav-spacer"></div>
+  <div class="nav-login">Log in</div>
+  <div class="nav-cta" onclick="openModal()">Get access →</div>
+</nav>
+<div class="breadcrumb"><span onclick="showPage('home')">quotient.social</span><span class="sep">/</span><span class="current">platforms</span></div>
+
+<!-- HERO -->
+<section>
+  <span class="section-num">01 -- Hero</span>
+  <div class="inner">
+    <span class="eyebrow">For prediction market platforms &amp; wallets</span>
+    <h1 class="page-h1">More context.<br>More trading volume.</h1>
+    <p class="page-sub">Traders who understand why a market is priced the way it is make larger bets, more often. Quotient's signal layer integrates directly into your existing markets — no rebuild required.</p>
+    <div style="display:flex; gap:12px; margin-bottom:48px;">
+      <div class="btn-primary">Request pilot →</div>
+      <div class="btn-secondary" onclick="showPage('about')">Learn more about Quotient</div>
+    </div>
+    <div class="wf-anno">"Request pilot" → contact/pilot form. No self-serve for platforms. Sales-led.</div>
+  </div>
+</section>
+
+<!-- HOW IT INTEGRATES -->
+<section class="light-bg">
+  <span class="section-num">02 -- Integration</span>
+  <div class="inner">
+    <h2 class="section-h2">How it integrates</h2>
+    <p class="section-desc">Quotient surfaces alongside your existing markets. Your users see richer context. Your platform sees deeper engagement.</p>
+
+    <div class="integration-diagram">
+      <div class="integration-row">
+        <div class="int-box q-box">Quotient API</div>
+        <div class="int-arrow">─────────→</div>
+        <div class="int-box">Your platform UI</div>
+        <div class="int-arrow">─────────→</div>
+        <div class="int-box">Trader sees signal</div>
+      </div>
+      <div style="margin-top:20px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+        <div style="font-size:12px; color:#888; line-height:1.6;"><strong style="color:#1a1a1a; display:block; margin-bottom:4px; font-size:13px;">Q's intelligence payload</strong>Forecast, spread, key factors, source ranking, directional call. Structured JSON.</div>
+        <div style="font-size:12px; color:#888; line-height:1.6;"><strong style="color:#1a1a1a; display:block; margin-bottom:4px; font-size:13px;">Your design, your brand</strong>You control presentation. We provide the data layer. Surface it however fits your UX.</div>
+        <div style="font-size:12px; color:#888; line-height:1.6;"><strong style="color:#1a1a1a; display:block; margin-bottom:4px; font-size:13px;">No liquidity dependency</strong>Signal doesn't require Quotient to operate your market. It sits alongside independently.</div>
+      </div>
+    </div>
+    <div class="wf-anno">Diagram is illustrative. Actual integration details in dev docs.</div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section>
+  <span class="section-num">03 -- Intelligence package</span>
+  <div class="inner">
+    <h2 class="section-h2">What your users see</h2>
+    <p class="section-desc">Each market gets a structured intelligence package your platform can surface however it fits your UX.</p>
+    <div class="grid-3">
+      <div class="grid-cell bg-off">
+        <div class="step-n">01</div>
+        <div class="step-title">Q's directional call</div>
+        <div class="step-body">"Q says Yes" or "Q says No" with confidence level. Plain language first. Numbers available for traders who want them.</div>
+      </div>
+      <div class="grid-cell">
+        <div class="step-n">02</div>
+        <div class="step-title">Spread indicator</div>
+        <div class="step-body">Visual spread between Q's estimate and market odds. Wide spread signals divergence. Aligned signals consensus. You decide how to present it.</div>
+      </div>
+      <div class="grid-cell bg-off">
+        <div class="step-n">03</div>
+        <div class="step-title">Key factors</div>
+        <div class="step-body">The 2–4 factors Q weighted most heavily. Each sourced. Gives traders a basis for conviction rather than a black-box number.</div>
+      </div>
+    </div>
+    <div style="margin-top:1px;" class="grid-3">
+      <div class="grid-cell">
+        <div class="step-n">04</div>
+        <div class="step-title">Commodity + equity mapping</div>
+        <div class="step-body">World events mapped to their downstream portfolio impact. Signals the connection between geopolitical outcomes and asset prices.</div>
+      </div>
+      <div class="grid-cell bg-off">
+        <div class="step-n">05</div>
+        <div class="step-title">Historical track record</div>
+        <div class="step-body">Q's accuracy on resolved markets, surfaced per market. Transparency on methodology and win rate builds user trust in the signal.</div>
+      </div>
+      <div class="grid-cell">
+        <div class="step-n">06</div>
+        <div class="step-title">Forecaster attribution</div>
+        <div class="step-body">Which human forecasters contributed, ranked by track record. Users can see whose judgment backs the call.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY IT WORKS -->
+<section class="light-bg">
+  <span class="section-num">04 -- The case</span>
+  <div class="inner">
+    <div class="grid-2">
+      <div>
+        <h2 class="section-h2">Why prediction markets underperform</h2>
+        <p class="section-desc">World events markets are thinly traded, easily moved, and systematically cited as authoritative by major media. The analytical infrastructure to support them doesn't exist yet.</p>
+        <div class="feature-list">
+          <div class="feature-item"><div class="feature-icon">1</div>Low liquidity amplifies noise. Small trades move odds materially.</div>
+          <div class="feature-item"><div class="feature-icon">2</div>No verification layer. Market odds reflect sentiment, not analysis.</div>
+          <div class="feature-item"><div class="feature-icon">3</div>Traders lack context. They know the odds but not why.</div>
+        </div>
+      </div>
+      <div>
+        <h2 class="section-h2">What Quotient adds</h2>
+        <p class="section-desc">Quotient is the analytical layer prediction markets are missing. Liquidity follows trust. Trust follows verifiable reasoning.</p>
+        <div class="feature-list">
+          <div class="feature-item"><div class="feature-icon">Q</div>Verified track records replace opinion with accountability.</div>
+          <div class="feature-item"><div class="feature-icon">Q</div>Sourced evidence gives traders a basis for conviction.</div>
+          <div class="feature-item"><div class="feature-icon">Q</div>Institutional-grade intelligence at the market level.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section>
+  <span class="section-num">05 -- Pilot</span>
+  <div class="inner" style="text-align:center; max-width:560px; margin:0 auto;">
+    <span class="eyebrow">Enterprise pilot</span>
+    <h2 class="section-h2" style="margin-bottom:12px;">Ready to add signal to your markets?</h2>
+    <p class="section-desc" style="margin:0 auto 32px; max-width:440px;">We work with platforms directly to scope integration. Pilots typically run 30–60 days. No long-term commitment required.</p>
+    <div class="btn-primary" style="font-size:14px; padding:14px 32px;">Request pilot →</div>
+    <div class="wf-anno" style="margin-top:16px; text-align:left;">→ contact/pilot form. Not self-serve. Jordan or Cameron handles these.</div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="light-bg">
+  <span class="section-num">06 -- FAQ (Platforms)</span>
+  <div class="inner">
+    <h2 class="section-h2" style="margin-bottom:24px;">Platform questions</h2>
+    <div class="faq-list">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How does the integration work technically?</div>
+        <div class="faq-a">Quotient provides a REST API with endpoints per market, per signal, and per intelligence package. You call our API and render the data in your UI. We provide structured JSON with all fields documented. Integration typically takes 1–2 engineering days for a basic implementation.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Does this affect our existing market mechanics?</div>
+        <div class="faq-a">No. Quotient's signal is a read-only data layer. It doesn't interact with your order book, liquidity pool, or market resolution logic. It sits alongside your existing markets as context.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What markets are covered?</div>
+        <div class="faq-a">600+ world events markets with active coverage on Polymarket and Kalshi. New markets are added weekly. You can request coverage for specific markets not yet in our database.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How is pricing structured for platforms?</div>
+        <div class="faq-a">Platform pricing is based on API call volume and market coverage scope. We discuss this during the pilot scoping call. No public pricing — reach out to get a number.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Can we white-label the signal?</div>
+        <div class="faq-a">Yes, with attribution requirements. The intelligence can be presented under your brand with a "Powered by Quotient" or "Verified by Quotient" mark. Exact co-branding terms are discussed during pilot.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="contrib-banner">
+  <div class="contrib-inner">
+    <div class="contrib-left"><div class="contrib-eyebrow">For forecasters</div><div class="contrib-h2">Earn by sharing judgments on the news.</div><div class="contrib-desc">Forecasters with verified track records influence Q's calls and earn through the reputation system.</div></div>
+    <div class="contrib-right"><div class="contrib-btn">Start contributing ↗</div></div>
+  </div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div><div class="footer-brand-name">Quotient</div><div class="footer-brand-desc">World events prediction markets are noisy. Quotient finds the signal.</div></div>
+      <div><div class="footer-col-label">Product</div><div class="footer-links"><div class="footer-link" onclick="showPage('signal')">Signal ↗</div><div class="footer-link" onclick="showPage('platforms')">For Platforms</div><div class="footer-link" onclick="showPage('agents')">For Agents</div><div class="footer-link dim">Contribute forecasts ↗</div></div></div><div><div class="footer-col-label">Contribute</div><div class="footer-links"><div class="footer-link">Mobile app ↗</div><div class="footer-link">Farcaster mini app ↗</div><div class="footer-link">World mini app ↗</div></div></div>
+      <div><div class="footer-col-label">Developers</div><div class="footer-links"><div class="footer-link">API portal ↗</div><div class="footer-link">Documentation ↗</div><div class="footer-link">llms.txt ↗</div><div class="footer-link">skill.md ↗</div></div></div>
+      <div><div class="footer-col-label">Company</div><div class="footer-links"><div class="footer-link" onclick="showPage('about')">About</div><div class="footer-link" onclick="showPage('pricing')">Pricing</div><div class="footer-link">Substack ↗</div><div class="footer-link">X / Twitter ↗</div><div class="footer-link">Contact</div></div></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 Quotient</div><div class="footer-social"><div class="footer-social-link">X ↗</div><div class="footer-social-link">@quotient · Farcaster ↗</div><div class="footer-social-link">Substack ↗</div></div></div>
+  </div>
+</footer>
+</div><!-- /page-platforms -->
+
+
+<!-- ══════════════════════════════════════════════
+     PAGE: AGENTS / DEVELOPERS
+══════════════════════════════════════════════ -->
+<div class="page" id="page-agents">
+<nav>
+  <div class="nav-logo" onclick="showPage('home')"><div class="nav-logo-mark">Q</div>Quotient</div>
+  <div class="nav-link" onclick="showPage('signal')">Signal</div>
+  <div class="nav-link" onclick="showPage('platforms')">For Platforms</div>
+  <div class="nav-link active-link">For Agents</div>
+  <div class="nav-spacer"></div>
+  <div class="nav-login">Log in</div>
+  <div class="nav-cta">API docs →</div>
+</nav>
+<div class="breadcrumb"><span onclick="showPage('home')">quotient.social</span><span class="sep">/</span><span class="current">dev.quotient.social</span></div>
+
+<!-- HERO -->
+<section style="background:#0f0f0f; border-bottom:1px solid #222;">
+  <span class="section-num" style="color:#333;">01 -- Hero</span>
+  <div class="inner">
+    <span class="eyebrow" style="color:#444;">dev.quotient.social</span>
+    <h1 class="page-h1" style="color:#e8e8e8;">World events signal.<br>Built for agents.</h1>
+    <p class="page-sub" style="color:#666;">Agents reasoning about news and geopolitics are operating blind without a verified signal layer. Q gives your pipeline structured, sourced, accountable intelligence on 600+ world events markets. Not scraped headlines. Not raw odds. Verified forecasts with citable reasoning.</p>
+    <div style="display:flex; gap:12px; margin-bottom:48px;">
+      <div class="btn-primary" style="background:#e8e8e8; color:#0f0f0f;">Start building →</div>
+      <div class="btn-ghost-dark">Read the docs ↗</div>
+    </div>
+    <div class="code-tabs">
+      <div class="code-tab active">curl</div>
+      <div class="code-tab">Python</div>
+      <div class="code-tab">Node</div>
+    </div>
+    <div class="code-block" style="border-radius:0 0 3px 3px; margin-bottom:0;">
+      <pre><span class="cm"># Get signal for a specific market</span>
+curl <span class="str">https://api.quotient.social/v1/signals/polymarket-iran-strike-2026</span> \
+  -H <span class="str">"Authorization: Bearer YOUR_API_KEY"</span> \
+  -H <span class="str">"Accept: application/json"</span>
+
+<span class="cm"># Response</span>
+{
+  <span class="str">"market_id"</span>: <span class="str">"polymarket-iran-strike-2026"</span>,
+  <span class="str">"q_forecast"</span>: <span class="str">"YES"</span>,
+  <span class="str">"q_probability"</span>: <span class="kw">0.91</span>,
+  <span class="str">"market_odds"</span>: <span class="kw">0.75</span>,
+  <span class="str">"spread"</span>: <span class="kw">16</span>,
+  <span class="str">"key_factors"</span>: [...],
+  <span class="str">"updated_at"</span>: <span class="str">"2026-03-09T14:32:00Z"</span>
+}</pre>
+    </div>
+    <div class="wf-anno" style="background:#1a1a1a; border-color:#333; color:#665;">API structure is illustrative. Actual response schema defined in dev docs.</div>
+  </div>
+</section>
+
+<!-- ENDPOINTS -->
+<section style="background:#111; border-bottom:1px solid #222;">
+  <span class="section-num" style="color:#333;">02 -- Endpoints</span>
+  <div class="inner">
+    <h2 class="section-h2 light">Core endpoints</h2>
+    <p class="section-desc light">Three endpoints cover most agent use cases. Start with /v1/markets to orient, then pull signal detail per market as needed.</p>
+    <div class="grid-3">
+      <div class="grid-cell bg-dark" style="border:1px solid #222; border-radius:0;">
+        <div class="step-n" style="color:#444;">GET</div>
+        <div class="step-title" style="color:#e8e8e8; font-family:'IBM Plex Mono',monospace; font-size:13px;">/v1/markets</div>
+        <div class="step-body" style="color:#555;">All active markets with current odds, Q forecast, and spread. Filterable by category, spread magnitude, platform, and resolution date. Good for surfacing where the signal is strongest.</div>
+      </div>
+      <div class="grid-cell bg-dark" style="border:1px solid #222; border-radius:0;">
+        <div class="step-n" style="color:#444;">GET</div>
+        <div class="step-title" style="color:#e8e8e8; font-family:'IBM Plex Mono',monospace; font-size:13px;">/v1/signals/:id</div>
+        <div class="step-body" style="color:#555;">Full intelligence package for a single market. Q's forecast, spread, key factors, sourced signals, forecaster attribution. Everything your agent needs to form and justify a position.</div>
+      </div>
+      <div class="grid-cell bg-dark" style="border:1px solid #222; border-radius:0;">
+        <div class="step-n" style="color:#444;">GET</div>
+        <div class="step-title" style="color:#e8e8e8; font-family:'IBM Plex Mono',monospace; font-size:13px;">/v1/intelligence</div>
+        <div class="step-body" style="color:#555;">Raw context graph. Q's source rankings, forecaster weights, evidence chains. For agents building deeper reasoning pipelines or cross-market analysis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY AGENTS NEED THIS -->
+<section style="background:#111; border-bottom:1px solid #222;">
+  <span class="section-num" style="color:#333;">03 -- The problem Quotient solves</span>
+  <div class="inner">
+    <h2 class="section-h2 light">Most agents are reasoning on noise.</h2>
+    <p style="font-size:15px; color:#555; max-width:580px; line-height:1.7; margin-bottom:40px;">News pipelines surface volume, not signal. Raw prediction market odds reflect who traded, not what the evidence supports. Without a verification layer, agents confuse activity for intelligence.</p>
+    <div class="grid-3">
+      <div class="grid-cell bg-dark" style="border:1px solid #222; border-radius:0;">
+        <div class="step-n" style="color:#555; font-family:'IBM Plex Mono',monospace;">Without Quotient</div>
+        <div class="step-title" style="color:#666;">Raw headlines</div>
+        <div class="step-body" style="color:#444;">High volume, low accountability. No source ranking. No track records. No way to distinguish signal from noise at scale.</div>
+      </div>
+      <div class="grid-cell bg-dark" style="border:1px solid #222; border-radius:0;">
+        <div class="step-n" style="color:#555; font-family:'IBM Plex Mono',monospace;">Without Quotient</div>
+        <div class="step-title" style="color:#666;">Raw market odds</div>
+        <div class="step-body" style="color:#444;">Reflects crowd sentiment and trading volume. Easily manipulated. Cites no evidence. Your agent inherits the market's bias.</div>
+      </div>
+      <div class="grid-cell bg-dark" style="border:1px solid #222; border-radius:0;">
+        <div class="step-n" style="color:#6a9edd; font-family:'IBM Plex Mono',monospace;">With Quotient</div>
+        <div class="step-title" style="color:#e8e8e8;">Verified signal</div>
+        <div class="step-body" style="color:#666;">Structured forecast with sourced evidence, forecaster attribution, and spread vs. market odds. Your agent reasons on intelligence, not sentiment.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCOVERY + PAYMENT -->
+<section style="background:#111; border-bottom:1px solid #222;">
+  <span class="section-num" style="color:#333;">04 -- Discovery &amp; payment</span>
+  <div class="inner">
+    <div class="grid-2">
+      <div>
+        <h2 class="section-h2 light" style="margin-bottom:16px;">Auto-discoverable</h2>
+        <p style="font-size:14px; color:#555; line-height:1.7; margin-bottom:20px;">Quotient is registered across major agent skill directories. Your agent can find and use Quotient without manual configuration.</p>
+        <div class="feature-list">
+          <div class="feature-item" style="color:#555;"><div class="feature-icon" style="border-color:#333; color:#444;">✓</div>llms.txt available at quotient.social/llms.txt</div>
+          <div class="feature-item" style="color:#555;"><div class="feature-icon" style="border-color:#333; color:#444;">✓</div>skill.md for OpenClaw and compatible frameworks</div>
+          <div class="feature-item" style="color:#555;"><div class="feature-icon" style="border-color:#333; color:#444;">✓</div>Listed on ClawHub and AgentSkills.io</div>
+          <div class="feature-item" style="color:#555;"><div class="feature-icon" style="border-color:#333; color:#444;">✓</div>MCP server available</div>
+        </div>
+      </div>
+      <div>
+        <h2 class="section-h2 light" style="margin-bottom:16px;">Flexible payment</h2>
+        <p style="font-size:14px; color:#555; line-height:1.7; margin-bottom:20px;">Pay per call or subscribe. Agent-native payment via x402. Human-friendly via Stripe.</p>
+        <div class="feature-list">
+          <div class="feature-item" style="color:#555;"><div class="feature-icon" style="border-color:#333; color:#444;">$</div>x402 micropayments — native to agentic workflows</div>
+          <div class="feature-item" style="color:#555;"><div class="feature-icon" style="border-color:#333; color:#444;">$</div>Stripe credit card for developers</div>
+          <div class="feature-item" style="color:#555;"><div class="feature-icon" style="border-color:#333; color:#444;">$</div>Volume tiers for high-frequency agent use</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="light-bg">
+  <span class="section-num">05 -- FAQ (Developers)</span>
+  <div class="inner">
+    <h2 class="section-h2" style="margin-bottom:24px;">Developer questions</h2>
+    <div class="faq-list">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What's the rate limit?</div>
+        <div class="faq-a">Default rate limit is 100 requests/minute. Volume tiers are available for agents making high-frequency calls. Contact us or configure via the developer dashboard.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How does x402 payment work?</div>
+        <div class="faq-a">x402 is a micropayment protocol for HTTP APIs. Your agent sends a payment header with each request. No API key management required — the payment is the authentication. We support USDC on Base.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How fresh is the data?</div>
+        <div class="faq-a">Core signal data updates daily. Breaking news triggers intraday updates on affected markets. The updated_at field in each response tells you exactly when that market's signal was last refreshed.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Can I access historical data?</div>
+        <div class="faq-a">Yes. The /v1/intelligence endpoint includes historical forecast data and resolved market track records. Useful for backtesting and building calibration models.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Is there a sandbox environment?</div>
+        <div class="faq-a">Yes. sandbox.quotient.social mirrors production with a fixed dataset. Free to use. No payment required. API key provisioned instantly on signup.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="contrib-banner">
+  <div class="contrib-inner">
+    <div class="contrib-left"><div class="contrib-eyebrow">For forecasters</div><div class="contrib-h2">Earn by sharing judgments on the news.</div><div class="contrib-desc">Forecasters with verified track records influence Q's calls.</div></div>
+    <div class="contrib-right"><div class="contrib-btn">Start contributing ↗</div></div>
+  </div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div><div class="footer-brand-name">Quotient</div><div class="footer-brand-desc">World events prediction markets are noisy. Quotient finds the signal.</div></div>
+      <div><div class="footer-col-label">Product</div><div class="footer-links"><div class="footer-link" onclick="showPage('signal')">Signal ↗</div><div class="footer-link" onclick="showPage('platforms')">For Platforms</div><div class="footer-link" onclick="showPage('agents')">For Agents</div><div class="footer-link dim">Contribute forecasts ↗</div></div></div><div><div class="footer-col-label">Contribute</div><div class="footer-links"><div class="footer-link">Mobile app ↗</div><div class="footer-link">Farcaster mini app ↗</div><div class="footer-link">World mini app ↗</div></div></div>
+      <div><div class="footer-col-label">Developers</div><div class="footer-links"><div class="footer-link">API portal ↗</div><div class="footer-link">Documentation ↗</div><div class="footer-link">llms.txt ↗</div><div class="footer-link">skill.md ↗</div></div></div>
+      <div><div class="footer-col-label">Company</div><div class="footer-links"><div class="footer-link" onclick="showPage('about')">About</div><div class="footer-link" onclick="showPage('pricing')">Pricing</div><div class="footer-link">Substack ↗</div><div class="footer-link">X / Twitter ↗</div><div class="footer-link">Contact</div></div></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 Quotient</div><div class="footer-social"><div class="footer-social-link">X ↗</div><div class="footer-social-link">@quotient · Farcaster ↗</div><div class="footer-social-link">Substack ↗</div></div></div>
+  </div>
+</footer>
+</div><!-- /page-agents -->
+
+
+<!-- ══════════════════════════════════════════════
+     PAGE: ABOUT
+══════════════════════════════════════════════ -->
+<div class="page" id="page-about">
+<nav>
+  <div class="nav-logo" onclick="showPage('home')"><div class="nav-logo-mark">Q</div>Quotient</div>
+  <div class="nav-link" onclick="showPage('signal')">Signal</div>
+  <div class="nav-link" onclick="showPage('platforms')">For Platforms</div>
+  <div class="nav-link" onclick="showPage('agents')">For Agents</div>
+  <div class="nav-spacer"></div>
+  <div class="nav-login">Log in</div>
+  <div class="nav-cta" onclick="openModal()">Get access →</div>
+</nav>
+<div class="breadcrumb"><span onclick="showPage('home')">quotient.social</span><span class="sep">/</span><span class="current">about</span></div>
+
+<!-- MISSION -->
+<section>
+  <span class="section-num">01 -- Mission</span>
+  <div class="inner">
+    <span class="eyebrow">About Quotient</span>
+    <h1 class="page-h1">Prediction markets are cited like fact.<br><em>They shouldn't be.</em></h1>
+    <p class="page-sub">World events prediction markets are thinly traded, easily moved, and systematically cited as authoritative by major media outlets. Quotient exists to fix that — by building the analytical layer these markets are missing.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-top:40px;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#bbb; text-transform:uppercase; letter-spacing:.1em; margin-bottom:12px;">The problem</div>
+        <p style="font-size:14px; color:#666; line-height:1.8;">A market with $40k in liquidity can set the headline odds on whether there will be a ceasefire in Ukraine. Major outlets cite that number as if it reflects expert consensus. It doesn't. It reflects who happened to trade that day.</p>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#bbb; text-transform:uppercase; letter-spacing:.1em; margin-bottom:12px;">What Quotient does</div>
+        <p style="font-size:14px; color:#666; line-height:1.8;">Bloomberg made equities legible through data aggregation and backward-looking analysis. Prediction markets are forward-looking and analytically underserved. Quotient is the verification layer that makes them trustworthy enough to act on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW Q WORKS -->
+<section class="light-bg">
+  <span class="section-num">02 -- How Q works</span>
+  <div class="inner">
+    <h2 class="section-h2">The accountability architecture</h2>
+    <p class="section-desc">Most AI forecasting optimizes for accuracy through compute. Quotient optimizes for accuracy through accountability. The difference compounds.</p>
+    <div class="grid-3">
+      <div class="grid-cell">
+        <div class="step-n">Sources</div>
+        <div class="step-title">Ranked by track record</div>
+        <div class="step-body">1,600+ global sources weighted by historical accuracy on the types of events they cover. Recency bias is controlled. Source credibility compounds over time.</div>
+      </div>
+      <div class="grid-cell bg-off">
+        <div class="step-n">Forecasters</div>
+        <div class="step-title">Verified, public records</div>
+        <div class="step-body">Human forecasters contribute judgment with public track records. Accuracy earns influence. Poor performance reduces weight. No anonymous opinion — only auditable calls.</div>
+      </div>
+      <div class="grid-cell">
+        <div class="step-n">Q</div>
+        <div class="step-title">Citable reasoning</div>
+        <div class="step-body">Q's calls are grounded in specific sources and forecaster input. When Q is wrong, the failure is auditable. That accountability is what makes the signal trustworthy.</div>
+      </div>
+    </div>
+    <div class="wf-anno">Bloomberg analogy: Bloomberg made equities legible through backward-looking data. Prediction markets are forward-looking and analytically underserved. Quotient fills that gap.</div>
+  </div>
+</section>
+
+<!-- RESEARCH BACKING -->
+<section>
+  <span class="section-num">03 -- Research foundation</span>
+  <div class="inner">
+    <h2 class="section-h2">Built on a body of evidence</h2>
+    <p class="section-desc">The methodology behind Q draws on decades of forecasting research and geopolitical intelligence work.</p>
+    <div class="grid-2">
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="border:1px solid #e0ddd6; border-radius:3px; padding:20px 22px; background:#fff;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#bbb; text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px;">Tetlock / IARPA</div>
+          <div style="font-size:14px; font-weight:500; color:#1a1a1a; margin-bottom:6px;">Superforecaster research</div>
+          <div style="font-size:12px; color:#888; line-height:1.6;">Phil Tetlock's work on calibrated forecasting shows that structured, accountable prediction consistently outperforms expert intuition. Quotient's track record system operationalizes this.</div>
+        </div>
+        <div style="border:1px solid #e0ddd6; border-radius:3px; padding:20px 22px; background:#fff;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#bbb; text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px;">Atlantic Council</div>
+          <div style="font-size:14px; font-weight:500; color:#1a1a1a; margin-bottom:6px;">"Weaponizing the Odds"</div>
+          <div style="font-size:12px; color:#888; line-height:1.6;">Documents how prediction market odds are cited as authoritative without verification infrastructure. The gap Quotient is built to close.</div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="border:1px solid #e0ddd6; border-radius:3px; padding:20px 22px; background:#fff;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#bbb; text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px;">MIT / Economics</div>
+          <div style="font-size:14px; font-weight:500; color:#1a1a1a; margin-bottom:6px;">Verification bandwidth in AI economies</div>
+          <div style="font-size:12px; color:#888; line-height:1.6;">Research on how AI-generated content scales faster than human verification capacity — and why credibility infrastructure becomes a structural necessity.</div>
+        </div>
+        <div style="border:1px solid #e0ddd6; border-radius:3px; padding:20px 22px; background:#fff;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#bbb; text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px;">PredictionArena</div>
+          <div style="font-size:14px; font-weight:500; color:#1a1a1a; margin-bottom:6px;">Benchmarking methodology</div>
+          <div style="font-size:12px; color:#888; line-height:1.6;">Q's 74% win rate is benchmarked via PredictionArena's methodology. Independent, comparable, auditable.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GENERAL FAQ -->
+<section class="light-bg">
+  <span class="section-num">04 -- General FAQ</span>
+  <div class="inner">
+    <h2 class="section-h2" style="margin-bottom:24px;">General questions</h2>
+    <div class="faq-list">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What is Quotient?</div>
+        <div class="faq-a">Quotient is a prediction market intelligence platform. We combine AI analysis with verified human forecaster judgment to surface signals on world events markets — the gap between Q's forecast and market odds is the product.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Who built this?</div>
+        <div class="faq-a">Quotient was founded by Jordan [LAST NAME TBD] with a team focused on prediction market infrastructure, AI agent pipelines, and geopolitical intelligence research.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What data sources does Q use?</div>
+        <div class="faq-a">Q processes 1,600+ global sources including news organizations, government data, analyst reports, and social signals. All sources are ranked by historical accuracy on the types of events they cover. Sources are attributed in every signal.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Is Quotient regulated?</div>
+        <div class="faq-a">Quotient provides research and market intelligence, not financial advice or trading services. We are not a registered investment advisor. All decisions based on our signals are made by the user.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How do I get involved as a forecaster?</div>
+        <div class="faq-a">Forecasters can contribute via the mobile app (mobile.quotient.social) or the Farcaster and World mini apps. Your track record builds over time. Accuracy earns influence in Q's context graph and reputation rewards in the leaderboard system.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="contrib-banner">
+  <div class="contrib-inner">
+    <div class="contrib-left"><div class="contrib-eyebrow">For forecasters</div><div class="contrib-h2">Earn by sharing judgments on the news.</div><div class="contrib-desc">Forecasters with verified track records influence Q's calls.</div></div>
+    <div class="contrib-right"><div class="contrib-btn">Start contributing ↗</div></div>
+  </div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div><div class="footer-brand-name">Quotient</div><div class="footer-brand-desc">World events prediction markets are noisy. Quotient finds the signal.</div></div>
+      <div><div class="footer-col-label">Product</div><div class="footer-links"><div class="footer-link" onclick="showPage('signal')">Signal ↗</div><div class="footer-link" onclick="showPage('platforms')">For Platforms</div><div class="footer-link" onclick="showPage('agents')">For Agents</div><div class="footer-link dim">Contribute forecasts ↗</div></div></div><div><div class="footer-col-label">Contribute</div><div class="footer-links"><div class="footer-link">Mobile app ↗</div><div class="footer-link">Farcaster mini app ↗</div><div class="footer-link">World mini app ↗</div></div></div>
+      <div><div class="footer-col-label">Developers</div><div class="footer-links"><div class="footer-link">API portal ↗</div><div class="footer-link">Documentation ↗</div><div class="footer-link">llms.txt ↗</div><div class="footer-link">skill.md ↗</div></div></div>
+      <div><div class="footer-col-label">Company</div><div class="footer-links"><div class="footer-link" onclick="showPage('about')">About</div><div class="footer-link" onclick="showPage('pricing')">Pricing</div><div class="footer-link">Substack ↗</div><div class="footer-link">X / Twitter ↗</div><div class="footer-link">Contact</div></div></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 Quotient</div><div class="footer-social"><div class="footer-social-link">X ↗</div><div class="footer-social-link">@quotient · Farcaster ↗</div><div class="footer-social-link">Substack ↗</div></div></div>
+  </div>
+</footer>
+</div><!-- /page-about -->
+
+
+<!-- ══════════════════════════════════════════════
+     PAGE: PRICING
+══════════════════════════════════════════════ -->
+<div class="page" id="page-pricing">
+<nav>
+  <div class="nav-logo" onclick="showPage('home')"><div class="nav-logo-mark">Q</div>Quotient</div>
+  <div class="nav-link" onclick="showPage('signal')">Signal</div>
+  <div class="nav-link" onclick="showPage('platforms')">For Platforms</div>
+  <div class="nav-link" onclick="showPage('agents')">For Agents</div>
+  <div class="nav-spacer"></div>
+  <div class="nav-login">Log in</div>
+  <div class="nav-cta" onclick="openModal()">Get access →</div>
+</nav>
+<div class="breadcrumb"><span onclick="showPage('home')">quotient.social</span><span class="sep">/</span><span class="current">pricing</span></div>
+
+<section>
+  <span class="section-num">01 -- Pricing</span>
+  <div class="inner">
+    <span class="eyebrow">Pricing</span>
+    <h1 class="page-h1">Simple. Transparent.<br>Three ways in.</h1>
+    <p class="page-sub">Start free. Upgrade when the signal is working for you. Enterprise pricing for platforms is scoped separately.</p>
+
+    <div class="pricing-grid" style="margin-bottom:16px;">
+      <!-- Free -->
+      <div class="pricing-col">
+        <div class="pricing-tier">Free</div>
+        <div class="pricing-price">$0</div>
+        <div class="pricing-freq">no credit card</div>
+        <div class="pricing-desc">Newsletter, mobile app, and 2 live markets in Signal. The free preview that earns trust.</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-features">
+          <div class="pricing-feature">2 live markets in Signal dashboard</div>
+          <div class="pricing-feature">Weekly Substack digest</div>
+          <div class="pricing-feature">Mobile app (Farcaster + World)</div>
+          <div class="pricing-feature">Forecaster leaderboard</div>
+          <div class="pricing-feature">Q Called It archive (public)</div>
+        </div>
+        <div class="pricing-btn outline">Get started free</div>
+      </div>
+      <!-- Signal -->
+      <div class="pricing-col featured">
+        <div class="pricing-tier">Signal</div>
+        <div class="pricing-price" style="color:#e8e8e8;">$[X]</div>
+        <div class="pricing-freq" style="color:#555;">/month · cancel anytime</div>
+        <div class="pricing-desc" style="color:#555;">Full access to Signal. Every market, every factor, all the evidence. Updated daily.</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-features">
+          <div class="pricing-feature">All 600+ live markets</div>
+          <div class="pricing-feature">Full key factors per market</div>
+          <div class="pricing-feature">Sourced evidence chains</div>
+          <div class="pricing-feature">Historical track record</div>
+          <div class="pricing-feature">Email alerts on spread changes</div>
+          <div class="pricing-feature">Early access to new markets</div>
+        </div>
+        <div class="pricing-btn outline-light" onclick="openModal()">Subscribe →</div>
+      </div>
+      <!-- Platforms -->
+      <div class="pricing-col">
+        <div class="pricing-tier">Platform / API</div>
+        <div class="pricing-price">Custom</div>
+        <div class="pricing-freq">volume-based</div>
+        <div class="pricing-desc">For platforms integrating signal into their markets, and developers building on the API at scale.</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-features">
+          <div class="pricing-feature">Full API access</div>
+          <div class="pricing-feature">Volume pricing on API calls</div>
+          <div class="pricing-feature">Co-branding options</div>
+          <div class="pricing-feature">Dedicated integration support</div>
+          <div class="pricing-feature">SLA and uptime guarantees</div>
+          <div class="pricing-feature">Custom market coverage requests</div>
+        </div>
+        <div class="pricing-btn outline" onclick="showPage('platforms')">Contact us →</div>
+      </div>
+    </div>
+    <div class="wf-anno">[Price TBD] Platform pricing not self-serve. Routes to contact form. Developer API self-serve pricing TBD separately (x402 per-call or monthly volume tiers).</div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section class="light-bg">
+  <span class="section-num">02 -- Compare</span>
+  <div class="inner">
+    <h2 class="section-h2" style="margin-bottom:24px;">Feature comparison</h2>
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+      <thead>
+        <tr style="border-bottom:2px solid #e0ddd6;">
+          <th style="text-align:left; padding:12px 0; color:#bbb; font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:400; text-transform:uppercase; letter-spacing:.08em; width:40%;">Feature</th>
+          <th style="text-align:center; padding:12px; color:#bbb; font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:400; text-transform:uppercase; letter-spacing:.08em;">Free</th>
+          <th style="text-align:center; padding:12px; color:#1a1a1a; font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:500; text-transform:uppercase; letter-spacing:.08em;">Signal</th>
+          <th style="text-align:center; padding:12px; color:#bbb; font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:400; text-transform:uppercase; letter-spacing:.08em;">Platform</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #f0ede8;">
+          <td style="padding:12px 0; color:#555;">Live markets in Signal</td>
+          <td style="text-align:center; padding:12px; color:#888;">2</td>
+          <td style="text-align:center; padding:12px; color:#1a1a1a; font-weight:500;">600+</td>
+          <td style="text-align:center; padding:12px; color:#1a1a1a; font-weight:500;">600+</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f0ede8;">
+          <td style="padding:12px 0; color:#555;">Key factors per market</td>
+          <td style="text-align:center; padding:12px; color:#ccc;">—</td>
+          <td style="text-align:center; padding:12px; color:#3a8a3a;">✓</td>
+          <td style="text-align:center; padding:12px; color:#3a8a3a;">✓</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f0ede8;">
+          <td style="padding:12px 0; color:#555;">Sourced evidence chains</td>
+          <td style="text-align:center; padding:12px; color:#ccc;">—</td>
+          <td style="text-align:center; padding:12px; color:#3a8a3a;">✓</td>
+          <td style="text-align:center; padding:12px; color:#3a8a3a;">✓</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f0ede8;">
+          <td style="padding:12px 0; color:#555;">Email alerts on spread changes</td>
+          <td style="text-align:center; padding:12px; color:#ccc;">—</td>
+          <td style="text-align:center; padding:12px; color:#3a8a3a;">✓</td>
+          <td style="text-align:center; padding:12px; color:#3a8a3a;">✓</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f0ede8;">
+          <td style="padding:12px 0; color:#555;">API access</td>
+          <td style="text-align:center; padding:12px; color:#ccc;">—</td>
+          <td style="text-align:center; padding:12px; color:#ccc;">—</td>
+          <td style="text-align:center; padding:12px; color:#3a8a3a;">✓</td>
+        </tr>
+        <tr>
+          <td style="padding:12px 0; color:#555;">Substack + mobile app</td>
+          <td style="text-align:center; padding:12px; color:#3a8a3a;">✓</td>
+          <td style="text-align:center; padding:12px; color:#3a8a3a;">✓</td>
+          <td style="text-align:center; padding:12px; color:#3a8a3a;">✓</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="contrib-banner">
+  <div class="contrib-inner">
+    <div class="contrib-left"><div class="contrib-eyebrow">For forecasters</div><div class="contrib-h2">Earn by sharing judgments on the news.</div><div class="contrib-desc">Accurate forecasters influence Q's calls and earn through the reputation system.</div></div>
+    <div class="contrib-right"><div class="contrib-btn">Start contributing ↗</div></div>
+  </div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div><div class="footer-brand-name">Quotient</div><div class="footer-brand-desc">World events prediction markets are noisy. Quotient finds the signal.</div></div>
+      <div><div class="footer-col-label">Product</div><div class="footer-links"><div class="footer-link" onclick="showPage('signal')">Signal ↗</div><div class="footer-link" onclick="showPage('platforms')">For Platforms</div><div class="footer-link" onclick="showPage('agents')">For Agents</div><div class="footer-link dim">Contribute forecasts ↗</div></div></div><div><div class="footer-col-label">Contribute</div><div class="footer-links"><div class="footer-link">Mobile app ↗</div><div class="footer-link">Farcaster mini app ↗</div><div class="footer-link">World mini app ↗</div></div></div>
+      <div><div class="footer-col-label">Developers</div><div class="footer-links"><div class="footer-link">API portal ↗</div><div class="footer-link">Documentation ↗</div><div class="footer-link">llms.txt ↗</div><div class="footer-link">skill.md ↗</div></div></div>
+      <div><div class="footer-col-label">Company</div><div class="footer-links"><div class="footer-link" onclick="showPage('about')">About</div><div class="footer-link" onclick="showPage('pricing')">Pricing</div><div class="footer-link">Substack ↗</div><div class="footer-link">X / Twitter ↗</div><div class="footer-link">Contact</div></div></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 Quotient</div>link">X ↗</div><div class="footer-social-link">@quotient · Farcaster ↗</div><div class="footer-social-link">Substack ↗</div></div></div>
+  </div>
+</footer>
+</div><!-- /page-pricing -->
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sitemap-link').forEach(l => l.classList.remove('current'));
+  var page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  var tab = document.getElementById('tab-' + id);
+  if (tab) tab.classList.add('current');
+  window.scrollTo(0, 0);
+}
+
+function openModal() {
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function toggleFaq(el) {
+  el.classList.toggle('open');
+}
+
+// Close modal on overlay click
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+</body>
+</html>

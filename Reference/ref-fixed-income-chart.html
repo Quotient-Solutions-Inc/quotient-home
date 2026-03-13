@@ -1,0 +1,129 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixed Income Deep-Dive | Terminal Core</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0A0A0A; --white: #FFFFFF; --gray-light: #F4F4F4; --gray-mid: #E0E0E0; --gray-dark: #666666;
+            --border-thin: #D0D0D0; --border-heavy: #0A0A0A; --accent-red: #DE4A2F; --accent-blue: #2A6496;
+            --font-serif: 'IBM Plex Serif', Georgia, serif; --font-sans: 'Inter', Helvetica, sans-serif; --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+            --unit: 4px; --p-sm: calc(var(--unit) * 2); --p-md: calc(var(--unit) * 4); --p-lg: calc(var(--unit) * 8); --p-xl: calc(var(--unit) * 12);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--gray-light); color: var(--black); font-family: var(--font-sans); font-size: 14px; line-height: 1.4; padding: var(--p-lg); min-height: 100vh; display: flex; justify-content: center; }
+        .system-frame { background-color: var(--white); width: 1280px; height: 960px; border: 1px solid var(--border-heavy); display: flex; flex-direction: column; box-shadow: 0 0 0 1px var(--white), 0 0 0 2px var(--border-heavy); overflow: hidden; border-radius: 20px; }
+        .sys-header { display: flex; justify-content: space-between; align-items: center; padding: var(--p-sm) var(--p-md); border-bottom: 2px solid var(--border-heavy); font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; background-color: var(--black); color: var(--white); }
+        .sys-header-left, .sys-header-right { display: flex; gap: var(--p-lg); }
+        .sys-brand { font-weight: 600; display: flex; align-items: center; gap: var(--p-sm); }
+        .sys-brand::before { content: ''; display: block; width: 8px; height: 8px; background-color: var(--accent-red); }
+        .sys-nav a { color: var(--gray-mid); text-decoration: none; }
+        .sys-nav a.active { color: var(--white); border-bottom: 1px solid var(--white); }
+        .main-grid { display: grid; grid-template-columns: 2.8fr 1.2fr; flex-grow: 1; overflow: hidden; }
+        .grid-left { display: flex; flex-direction: column; border-right: 1px solid var(--border-heavy); overflow-y: auto; }
+        .fi-analysis-header { padding: var(--p-lg) var(--p-xl); border-bottom: 1px solid var(--border-heavy); }
+        .meta-label { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; color: var(--gray-dark); margin-bottom: var(--p-sm); display: block; }
+        .section-title { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 500; letter-spacing: -0.02em; }
+        .yield-curve-container { padding: var(--p-xl); border-bottom: 1px solid var(--border-thin); background-color: #fafafa; }
+        .viz-box { height: 240px; width: 100%; border: 1px solid var(--border-thin); background: white; position: relative; display: flex; align-items: flex-end; padding: var(--p-lg); }
+        .curve-svg { width: 100%; height: 100%; overflow: visible; }
+        .curve-line { fill: none; stroke: var(--accent-blue); stroke-width: 2.5; }
+        .curve-line-ref { fill: none; stroke: var(--gray-mid); stroke-width: 1; stroke-dasharray: 4; }
+        .auction-results { padding: var(--p-xl); border-bottom: 1px solid var(--border-thin); }
+        .fi-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.75rem; margin-top: var(--p-md); }
+        .fi-table th { text-align: left; padding: var(--p-sm); border-bottom: 2px solid var(--border-heavy); color: var(--gray-dark); text-transform: uppercase; }
+        .fi-table td { padding: var(--p-sm); border-bottom: 1px solid var(--border-thin); }
+        .duration-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background-color: var(--border-thin); border-bottom: 1px solid var(--border-heavy); }
+        .duration-cell { background-color: var(--white); padding: var(--p-lg); }
+        .grid-right { background-color: var(--black); color: var(--white); display: flex; flex-direction: column; }
+        .sidebar-module { padding: var(--p-lg); border-bottom: 1px solid #333; }
+        .stat-row { display: flex; justify-content: space-between; margin-bottom: var(--p-sm); font-family: var(--font-mono); font-size: 0.75rem; }
+        .c-red { color: var(--accent-red); } .c-blue { color: #64b5f6; }
+        .text-mono { font-family: var(--font-mono); }
+    </style>
+</head>
+<body>
+    <div class="system-frame">
+        <header class="sys-header">
+            <div class="sys-header-left">
+                <div class="sys-brand">TERMINAL_CORE</div>
+                <div class="sys-nav"><a href="#">[ MACRO ]</a><a href="#">[ EQUITIES ]</a><a href="#" class="active">[ FIXED_INC ]</a></div>
+            </div>
+            <div class="sys-header-right"><div>NODE: US-EAST-1</div><div class="text-mono">SYS.TIME 14:52:11 UTC</div></div>
+        </header>
+        <main class="main-grid">
+            <div class="grid-left">
+                <section class="fi-analysis-header">
+                    <span class="meta-label">Fixed Income // Yield Analysis</span>
+                    <h1 class="section-title">Curve Inversion Deepens Across G7 Sovereigns.</h1>
+                </section>
+                <div class="yield-curve-container">
+                    <div class="meta-label">Live Yield Curve: US Treasuries (UST)</div>
+                    <div class="viz-box">
+                        <svg class="curve-svg" viewBox="0 0 800 200">
+                            <path class="curve-line-ref" d="M 0 180 Q 200 150, 400 120 T 800 60"></path>
+                            <path class="curve-line" d="M 0 40 Q 200 60, 400 90 T 800 140"></path>
+                            <circle cx="0" cy="40" r="4" fill="var(--accent-blue)"></circle>
+                            <circle cx="200" cy="65" r="4" fill="var(--accent-blue)"></circle>
+                            <circle cx="400" cy="90" r="4" fill="var(--accent-blue)"></circle>
+                            <circle cx="800" cy="140" r="4" fill="var(--accent-blue)"></circle>
+                        </svg>
+                        <div style="position: absolute; bottom: 8px; left: 0; right: 0; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--gray-dark);">
+                            <span>1M</span><span>2Y</span><span>5Y</span><span>10Y</span><span>30Y</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="duration-grid">
+                    <div class="duration-cell">
+                        <span class="meta-label">Avg. Duration</span>
+                        <div style="font-family: var(--font-serif); font-size: 2rem;">6.42y</div>
+                        <div class="text-mono" style="font-size: 10px; color: var(--accent-red);">Δ -0.15 YOY</div>
+                    </div>
+                    <div class="duration-cell">
+                        <span class="meta-label">Convexity</span>
+                        <div style="font-family: var(--font-serif); font-size: 2rem;">0.884</div>
+                        <div class="text-mono" style="font-size: 10px; color: var(--accent-blue);">STABLE</div>
+                    </div>
+                    <div class="duration-cell">
+                        <span class="meta-label">OAS Spread</span>
+                        <div style="font-family: var(--font-serif); font-size: 2rem;">148bp</div>
+                        <div class="text-mono" style="font-size: 10px; color: var(--accent-red);">+12BP 24H</div>
+                    </div>
+                </div>
+                <div class="auction-results">
+                    <span class="meta-label">Recent Auction Results // 10-YEAR NOTES</span>
+                    <table class="fi-table">
+                        <thead><tr><th>Date</th><th>Issue</th><th>High Yield</th><th>Bid-To-Cover</th><th>Allocation</th></tr></thead>
+                        <tbody>
+                            <tr><td>OCT-12</td><td>T-NOTE 4.25%</td><td>4.610%</td><td class="c-red">2.12</td><td>$32.0B</td></tr>
+                            <tr><td>SEP-14</td><td>T-NOTE 4.12%</td><td>4.482%</td><td>2.44</td><td>$32.0B</td></tr>
+                            <tr><td>AUG-10</td><td>T-NOTE 3.88%</td><td>3.991%</td><td>2.51</td><td>$35.0B</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <aside class="grid-right">
+                <div class="sidebar-module" style="background-color: var(--accent-red);">
+                    <div class="text-mono" style="font-size: 0.7rem; margin-bottom: 4px;">SYSTEM ALERT</div>
+                    <div style="font-family: var(--font-serif); font-size: 1.8rem; line-height: 1.1;">Negative Convexity Warning</div>
+                </div>
+                <div class="sidebar-module">
+                    <span class="meta-label" style="color: #888;">Global Benchmarks</span>
+                    <div class="stat-row"><span>GER 10Y (Bund)</span><span class="c-blue">2.45%</span></div>
+                    <div class="stat-row"><span>UK 10Y (Gilt)</span><span class="c-red">4.18%</span></div>
+                    <div class="stat-row"><span>JPN 10Y (JGB)</span><span>0.81%</span></div>
+                </div>
+                <div class="sidebar-module" style="flex-grow: 1;">
+                    <span class="meta-label" style="color: #888;">Fixed Income Feed</span>
+                    <div style="font-size: 0.85rem; border-left: 1px solid #444; padding-left: 12px; margin-top: 12px;">
+                        <div style="margin-bottom: 16px;"><div class="text-mono" style="color: #666; font-size: 10px;">14:48 UTC</div><div>PIMCO reports increased positioning in <span class="c-blue">Short-Duration</span> US Credit.</div></div>
+                        <div style="margin-bottom: 16px;"><div class="text-mono" style="color: #666; font-size: 10px;">14:22 UTC</div><div>Liquidity in off-the-run 30Y Treasuries remains <span class="c-red">IMPAIRED</span>.</div></div>
+                    </div>
+                </div>
+                <div class="sidebar-module text-mono" style="font-size: 0.65rem; color: #555;">REFERENCE: FI-882-OMEGA<br>CALC: BLK_SCHOLES_V4<br>MODEL: MONTE_CARLO_SIM</div>
+            </aside>
+        </main>
+    </div>
+</body></html>

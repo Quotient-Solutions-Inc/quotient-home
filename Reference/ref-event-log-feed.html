@@ -1,0 +1,108 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Log | Terminal Core</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0A0A0A; --white: #FFFFFF; --gray-light: #F4F4F4; --gray-mid: #E0E0E0; --gray-dark: #666666;
+            --border-thin: #D0D0D0; --border-heavy: #0A0A0A; --accent-red: #DE4A2F; --accent-blue: #2A6496;
+            --font-serif: 'IBM Plex Serif', Georgia, serif; --font-sans: 'Inter', Helvetica, sans-serif; --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+            --unit: 4px; --p-sm: calc(var(--unit) * 2); --p-md: calc(var(--unit) * 4); --p-lg: calc(var(--unit) * 8); --p-xl: calc(var(--unit) * 12);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--gray-light); color: var(--black); font-family: var(--font-sans); font-size: 14px; line-height: 1.4; padding: var(--p-lg); min-height: 100vh; display: flex; justify-content: center; }
+        .system-frame { background-color: var(--white); width: 100%; max-width: 1280px; border: 1px solid var(--border-heavy); display: flex; flex-direction: column; box-shadow: 0 0 0 1px var(--white), 0 0 0 2px var(--border-heavy); height: 960px; overflow: hidden; }
+        .sys-header { display: flex; justify-content: space-between; align-items: center; padding: var(--p-sm) var(--p-md); border-bottom: 2px solid var(--border-heavy); font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; background-color: var(--black); color: var(--white); flex-shrink: 0; }
+        .sys-brand { font-weight: 600; display: flex; align-items: center; gap: var(--p-sm); }
+        .sys-brand::before { content: ''; display: block; width: 8px; height: 8px; background-color: var(--accent-red); }
+        .sys-nav a { color: var(--gray-mid); text-decoration: none; margin-left: var(--p-lg); }
+        .sys-nav a.active { color: var(--white); text-decoration: underline; }
+        .log-container { display: flex; flex-direction: column; flex-grow: 1; height: 100%; overflow: hidden; }
+        .log-toolbar { padding: var(--p-md) var(--p-xl); background-color: var(--white); border-bottom: 1px solid var(--border-heavy); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); }
+        .filter-group { display: flex; gap: var(--p-md); }
+        .filter-btn { padding: 4px 12px; border: 1px solid var(--border-thin); font-size: 0.7rem; text-transform: uppercase; cursor: pointer; background: none; }
+        .filter-btn.active { background-color: var(--black); color: var(--white); border-color: var(--black); }
+        .log-viewport { flex-grow: 1; overflow-y: scroll; background-color: var(--white); }
+        .log-header-row { display: grid; grid-template-columns: 100px 100px 120px 1fr 150px; padding: var(--p-sm) var(--p-xl); background-color: var(--gray-light); border-bottom: 1px solid var(--border-heavy); font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; color: var(--gray-dark); position: sticky; top: 0; z-index: 10; }
+        .log-entry { display: grid; grid-template-columns: 100px 100px 120px 1fr 150px; padding: var(--p-md) var(--p-xl); border-bottom: 1px solid var(--gray-mid); font-family: var(--font-mono); font-size: 0.85rem; align-items: start; transition: background 0.1s; }
+        .log-entry:hover { background-color: #fafafa; }
+        .log-entry.critical { background-color: rgba(222, 74, 47, 0.05); }
+        .tag { font-size: 0.65rem; padding: 2px 6px; border: 1px solid currentColor; width: fit-content; font-weight: 600; }
+        .tag.crit { color: var(--accent-red); } .tag.warn { color: #8a6d3b; border-color: #8a6d3b; } .tag.info { color: var(--accent-blue); }
+        .time { color: var(--gray-dark); } .id { color: var(--gray-dark); font-size: 0.75rem; } .source { color: var(--accent-blue); font-weight: 500; }
+        .message { color: var(--black); line-height: 1.4; padding-right: var(--p-lg); }
+        .message span.val { color: var(--accent-blue); font-weight: 600; }
+        .sys-footer { padding: var(--p-sm) var(--p-xl); background-color: var(--black); color: var(--gray-dark); font-family: var(--font-mono); font-size: 0.65rem; display: flex; justify-content: space-between; }
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+    <div class="system-frame">
+        <header class="sys-header">
+            <div class="sys-brand">TERMINAL_CORE</div>
+            <div class="sys-nav">
+                <a href="#">[ MACRO ]</a><a href="#">[ EQUITIES ]</a><a href="#">[ FIXED_INC ]</a><a href="#" class="active">[ LIVE_FEED ]</a>
+            </div>
+            <div>SYS.TIME <span style="color:white">14:43:12 UTC</span></div>
+        </header>
+        <div class="log-container">
+            <div class="log-toolbar">
+                <div class="filter-group">
+                    <button class="filter-btn active">ALL_EVENTS</button>
+                    <button class="filter-btn">CRITICAL</button>
+                    <button class="filter-btn">LIQUIDITY</button>
+                    <button class="filter-btn">SOVEREIGN</button>
+                </div>
+                <div style="font-size: 0.75rem;"><span class="blink" style="color: var(--accent-red);">●</span> STREAM_ACTIVE // 402.4 kbps</div>
+            </div>
+            <div class="log-viewport">
+                <div class="log-header-row">
+                    <div>Timestamp</div><div>Severity</div><div>Source</div><div>Event / Parameters</div><div>Reference</div>
+                </div>
+                <div class="log-entry critical">
+                    <div class="time">14:42:09</div><div><span class="tag crit">CRIT</span></div><div class="source">NODE-US-E1</div>
+                    <div class="message">Secondary debt contagion velocity detected at <span class="val">4.2σ</span> deviation. Modeling threshold breach.</div>
+                    <div class="id">DOC-884-A</div>
+                </div>
+                <div class="log-entry">
+                    <div class="time">14:38:45</div><div><span class="tag info">INFO</span></div><div class="source">ECB_FEED</div>
+                    <div class="message">Minutes release: Terminal rate projection adjusted to <span class="val">4.25%</span>. Hawkish pivot confirmed.</div>
+                    <div class="id">TX-9922-B</div>
+                </div>
+                <div class="log-entry">
+                    <div class="time">14:21:12</div><div><span class="tag warn">WARN</span></div><div class="source">MKT_FLOW</div>
+                    <div class="message">Energy futures rollover volume spike: <span class="val">+18.4%</span> above 30-day moving average.</div>
+                    <div class="id">VOL-E-104</div>
+                </div>
+                <div class="log-entry critical">
+                    <div class="time">14:15:02</div><div><span class="tag crit">CRIT</span></div><div class="source">SOV_AUCT</div>
+                    <div class="message">Sovereign bond auction undersubscribed. Bid-to-cover: <span class="val">1.12</span>. Liquidity drain imminent.</div>
+                    <div class="id">AUC-GB-99</div>
+                </div>
+                <div class="log-entry">
+                    <div class="time">13:58:30</div><div><span class="tag info">INFO</span></div><div class="source">ASIA_CORE</div>
+                    <div class="message">HKEX/SSE Close: Neutral sentiment. Capital flight metrics stabilizing at <span class="val">0.82 index</span>.</div>
+                    <div class="id">MKT-HK-12</div>
+                </div>
+                <div class="log-entry">
+                    <div class="time">13:42:15</div><div><span class="tag info">INFO</span></div><div class="source">SYS_AUTH</div>
+                    <div class="message">User [K. VANCE] initiated deep-scan on <span class="val">Fixed-Inc Tranche-B</span>.</div>
+                    <div class="id">LOG-USER-01</div>
+                </div>
+                <div class="log-entry">
+                    <div class="time">13:30:00</div><div><span class="tag warn">WARN</span></div><div class="source">FX_PULSE</div>
+                    <div class="message">EUR/USD volatility clusters forming around <span class="val">1.0400</span> support levels.</div>
+                    <div class="id">FX-EUR-P0</div>
+                </div>
+            </div>
+        </div>
+        <footer class="sys-footer">
+            <div>TERMINAL_ID: 884-X-91 // ENCRYPT: RSA-4096</div>
+            <div>RECORDS_SHOWING: 1-50 OF 1,024 // PAGE 1/21</div>
+        </footer>
+    </div>
+</body></html>

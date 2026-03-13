@@ -1,0 +1,153 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Core | Intel Terminal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0A0A0A; --white: #FFFFFF; --gray-light: #F4F4F4; --gray-mid: #E0E0E0; --gray-dark: #666666;
+            --border-thin: #D0D0D0; --border-heavy: #0A0A0A; --accent-red: #DE4A2F; --accent-blue: #2A6496;
+            --font-serif: 'IBM Plex Serif', Georgia, serif; --font-sans: 'Inter', Helvetica, sans-serif; --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+            --unit: 4px; --p-sm: calc(var(--unit) * 2); --p-md: calc(var(--unit) * 4); --p-lg: calc(var(--unit) * 8); --p-xl: calc(var(--unit) * 12);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--gray-light); color: var(--black); font-family: var(--font-sans); font-size: 14px; line-height: 1.4; -webkit-font-smoothing: antialiased; padding: var(--p-lg); min-height: 100vh; display: flex; justify-content: center; }
+        .system-frame { background-color: var(--white); width: 100%; max-width: 1600px; border: 1px solid var(--border-heavy); display: flex; flex-direction: column; box-shadow: 0 0 0 1px var(--white), 0 0 0 2px var(--border-heavy); }
+        .sys-header { display: flex; justify-content: space-between; align-items: center; padding: var(--p-sm) var(--p-md); border-bottom: 2px solid var(--border-heavy); font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; background-color: var(--black); color: var(--white); }
+        .sys-header-left, .sys-header-right { display: flex; gap: var(--p-lg); }
+        .sys-brand { font-weight: 600; color: var(--white); display: flex; align-items: center; gap: var(--p-sm); }
+        .sys-brand::before { content: ''; display: block; width: 8px; height: 8px; background-color: var(--accent-red); }
+        .sys-nav a { color: var(--gray-mid); text-decoration: none; transition: color 0.2s; }
+        .sys-nav a:hover, .sys-nav a.active { color: var(--white); }
+        .sys-stat { color: var(--gray-mid); }
+        .main-grid { display: grid; grid-template-columns: 2.5fr 1fr; flex-grow: 1; }
+        .grid-left { display: flex; flex-direction: column; border-right: 1px solid var(--border-heavy); }
+        .editorial-hero { padding: var(--p-xl) var(--p-xl) var(--p-lg) var(--p-xl); border-bottom: 1px solid var(--border-thin); position: relative; }
+        .meta-label { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-dark); margin-bottom: var(--p-md); display: block; border-bottom: 1px solid var(--border-thin); padding-bottom: var(--p-sm); width: max-content; }
+        .headline-serif { font-family: var(--font-serif); font-size: 4rem; font-weight: 500; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: var(--p-lg); max-width: 90%; }
+        .prose-block { display: grid; grid-template-columns: 1fr 1fr; gap: var(--p-lg); font-size: 0.95rem; line-height: 1.6; color: var(--black); max-width: 800px; }
+        .prose-block p { margin-bottom: var(--p-md); }
+        .bg-motif { position: absolute; top: var(--p-lg); right: var(--p-lg); font-family: var(--font-serif); font-size: 10rem; line-height: 0.8; color: var(--gray-light); z-index: 0; user-select: none; letter-spacing: -0.05em; }
+        .editorial-content { position: relative; z-index: 1; }
+        .data-section { display: flex; flex-direction: column; flex-grow: 1; }
+        .data-header { padding: var(--p-sm) var(--p-xl); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; border-bottom: 1px solid var(--border-heavy); background-color: var(--gray-light); }
+        .data-table-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background-color: var(--border-thin); }
+        .data-cell { background-color: var(--white); padding: var(--p-md) var(--p-xl); display: flex; flex-direction: column; justify-content: space-between; min-height: 120px; }
+        .cell-label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--gray-dark); text-transform: uppercase; }
+        .cell-val-group { display: flex; align-items: baseline; gap: var(--p-sm); }
+        .cell-value { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 400; line-height: 1; color: var(--accent-blue); }
+        .cell-delta { font-family: var(--font-mono); font-size: 0.8rem; }
+        .delta-neg { color: var(--accent-red); } .delta-pos { color: var(--black); }
+        .cell-meta { font-family: var(--font-mono); font-size: 0.65rem; color: var(--gray-dark); border-top: 1px solid var(--gray-light); padding-top: var(--p-sm); margin-top: var(--p-md); }
+        .grid-right { display: flex; flex-direction: column; background-color: var(--black); color: var(--white); }
+        .sidebar-module { border-bottom: 1px solid #333; padding: var(--p-lg); }
+        .sidebar-module.dark-motif { background-color: var(--accent-red); color: var(--white); padding: var(--p-xl) var(--p-lg); }
+        .motif-large { font-family: var(--font-sans); font-size: 5rem; font-weight: 700; line-height: 1; letter-spacing: -0.04em; margin-bottom: var(--p-sm); }
+        .motif-sub { font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; border-top: 1px solid rgba(255,255,255,0.3); padding-top: var(--p-sm); }
+        .feed-item { padding: var(--p-md) 0; border-bottom: 1px dashed #333; }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-time { font-family: var(--font-mono); font-size: 0.7rem; color: #888; margin-bottom: calc(var(--unit) * 1); }
+        .feed-text { font-family: var(--font-sans); font-size: 0.9rem; line-height: 1.4; }
+        .feed-text span.highlight { color: var(--accent-blue); font-family: var(--font-mono); font-size: 0.85rem; }
+        .sidebar-image { width: 100%; height: 200px; object-fit: cover; filter: grayscale(100%) contrast(1.2); border-bottom: 1px solid #333; }
+        .text-mono { font-family: var(--font-mono); } .text-serif { font-family: var(--font-serif); }
+        .c-red { color: var(--accent-red); } .c-blue { color: var(--accent-blue); }
+        @media (max-width: 1200px) {
+            .main-grid { grid-template-columns: 1fr; } .grid-left { border-right: none; border-bottom: 2px solid var(--border-heavy); }
+            .data-table-container { grid-template-columns: repeat(2, 1fr); } .headline-serif { font-size: 3rem; } .bg-motif { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="system-frame">
+        <header class="sys-header">
+            <div class="sys-header-left">
+                <div class="sys-brand">TERMINAL_CORE</div>
+                <div class="sys-nav">
+                    <a href="#" class="active">[ MACRO ]</a>
+                    <a href="#">[ EQUITIES ]</a>
+                    <a href="#">[ FIXED_INC ]</a>
+                </div>
+            </div>
+            <div class="sys-header-right">
+                <div class="sys-stat">NODE: US-EAST-1</div>
+                <div class="sys-stat text-mono">SYS.TIME <span>14:42:09 UTC</span></div>
+            </div>
+        </header>
+        <main class="main-grid">
+            <div class="grid-left">
+                <article class="editorial-hero">
+                    <div class="bg-motif">Δ.v</div>
+                    <div class="editorial-content">
+                        <span class="meta-label">Briefing // Systemic Risk</span>
+                        <h1 class="headline-serif">Contagion velocity exceeds primary models in secondary debt markets.</h1>
+                        <div class="prose-block">
+                            <div>
+                                <p>Analysis indicates a structural decoupling. Quantitative easing protocols have masked underlying illiquidity in tranche-B assets. Current telemetry suggests a 4.2σ deviation from mean historical resilience.</p>
+                                <p>The assumption of perpetual central bank intervention is demonstrably flawed. Yield curves are not merely inverting; they are fracturing along lines of institutional exposure.</p>
+                            </div>
+                            <div>
+                                <p>Immediate reallocation is advised. Defensive positioning requires sovereign instrument focus, prioritizing short-duration paper. The paradigm of 'transitory' volatility is definitively concluded.</p>
+                                <p class="text-mono" style="font-size: 0.75rem; margin-top: var(--p-lg); padding-top: var(--p-sm); border-top: 1px solid var(--border-heavy);">
+                                    AUTH: <span class="c-blue">K. VANCE</span><br>REF: <span class="c-blue">DOC-884-A</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <div class="data-section">
+                    <div class="data-header">Key Indicators [ Live ]</div>
+                    <div class="data-table-container">
+                        <div class="data-cell">
+                            <span class="cell-label">Global Yield IDX</span>
+                            <div><div class="cell-val-group"><span class="cell-value">4.82</span><span class="cell-delta delta-pos">+0.12</span></div><div class="cell-meta">BPS SPREAD: 142</div></div>
+                        </div>
+                        <div class="data-cell">
+                            <span class="cell-label">Volatility (VIX)</span>
+                            <div><div class="cell-val-group"><span class="cell-value" style="color: var(--black);">28.4</span><span class="cell-delta delta-neg">+4.2%</span></div><div class="cell-meta">CRITICAL THRESHOLD</div></div>
+                        </div>
+                        <div class="data-cell">
+                            <span class="cell-label">Liquidity Ratio</span>
+                            <div><div class="cell-val-group"><span class="cell-value">0.84</span><span class="cell-delta delta-neg">-0.05</span></div><div class="cell-meta">SUB-OPTIMAL</div></div>
+                        </div>
+                        <div class="data-cell" style="background-color: var(--gray-light);">
+                            <span class="cell-label">System Status</span>
+                            <div style="margin-top: auto;"><div class="text-mono" style="font-size: 0.85rem; font-weight: 600;"><span class="c-red">ACTION REQUIRED</span><br>REBALANCE PORTFOLIO</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="data-section" style="border-top: 2px solid var(--border-heavy);">
+                    <div class="data-table-container" style="grid-template-columns: repeat(2, 1fr);">
+                        <div class="data-cell" style="min-height: auto; padding: var(--p-md) var(--p-xl);">
+                            <span class="cell-label">EUR/USD Cross</span>
+                            <div class="cell-val-group" style="margin-top: var(--p-sm);"><span class="text-mono" style="font-size: 1.2rem;">1.0422</span><span class="cell-delta delta-neg">-0.0014</span></div>
+                        </div>
+                        <div class="data-cell" style="min-height: auto; padding: var(--p-md) var(--p-xl);">
+                            <span class="cell-label">USD/JPY Cross</span>
+                            <div class="cell-val-group" style="margin-top: var(--p-sm);"><span class="text-mono" style="font-size: 1.2rem;">149.80</span><span class="cell-delta delta-pos">+0.25</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <aside class="grid-right">
+                <div class="sidebar-module dark-motif">
+                    <div class="motif-large">Q.3</div>
+                    <div class="motif-sub">Fiscal Realignment<br>Guidelines</div>
+                </div>
+                <img src="https://images.pexels.com/photos/1036396/pexels-photo-1036396.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Abstract architectural structure" class="sidebar-image">
+                <div class="sidebar-module" style="flex-grow: 1;">
+                    <div class="meta-label" style="color: #AAA; border-color: #444;">Live Feed</div>
+                    <div class="feed-item"><div class="feed-time">14:38 UTC</div><div class="feed-text">ECB minutes released. <span class="highlight">HAWKISH</span> tone noted regarding terminal rate projections.</div></div>
+                    <div class="feed-item"><div class="feed-time">14:15 UTC</div><div class="feed-text">Energy futures contract rollover volume exceeds baseline by <span class="highlight">18%</span>.</div></div>
+                    <div class="feed-item"><div class="feed-time">13:50 UTC</div><div class="feed-text" style="color: var(--accent-red);">ALERT: Sovereign bond auction undersubscribed. Bid-to-cover ratio at historic low.</div></div>
+                    <div class="feed-item" style="border-bottom: none;"><div class="feed-time">12:00 UTC</div><div class="feed-text">Asian markets close flat. Capital flight metrics stabilizing.</div></div>
+                </div>
+                <div class="sidebar-module text-mono" style="font-size: 0.65rem; color: #555; background-color: #050505;">
+                    TERMINAL ID: 884-X-91<br>ENCRYPTION: RSA-4096<br>DATA DELAY: 0MS (DIRECT)
+                </div>
+            </aside>
+        </main>
+    </div>
+</body></html>

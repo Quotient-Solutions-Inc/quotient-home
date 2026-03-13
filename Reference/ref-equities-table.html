@@ -1,0 +1,123 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equities Module | Intel Terminal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0A0A0A; --white: #FFFFFF; --gray-light: #F4F4F4; --gray-mid: #E0E0E0; --gray-dark: #666666;
+            --border-thin: #D0D0D0; --border-heavy: #0A0A0A; --accent-red: #DE4A2F; --accent-blue: #2A6496; --accent-green: #2D8A4E;
+            --font-serif: 'IBM Plex Serif', Georgia, serif; --font-sans: 'Inter', Helvetica, sans-serif; --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+            --unit: 4px; --p-sm: calc(var(--unit) * 2); --p-md: calc(var(--unit) * 4); --p-lg: calc(var(--unit) * 8); --p-xl: calc(var(--unit) * 12);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--gray-light); color: var(--black); font-family: var(--font-sans); font-size: 14px; line-height: 1.4; -webkit-font-smoothing: antialiased; padding: var(--p-lg); min-height: 100vh; display: flex; justify-content: center; }
+        .system-frame { background-color: var(--white); width: 1280px; height: 960px; border: 1px solid var(--border-heavy); display: flex; flex-direction: column; box-shadow: 0 0 0 1px var(--white), 0 0 0 2px var(--border-heavy); border-radius: 20px; overflow: hidden; }
+        .sys-header { display: flex; justify-content: space-between; align-items: center; padding: var(--p-sm) var(--p-md); border-bottom: 2px solid var(--border-heavy); font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; background-color: var(--black); color: var(--white); }
+        .sys-header-left, .sys-header-right { display: flex; gap: var(--p-lg); }
+        .sys-brand { font-weight: 600; display: flex; align-items: center; gap: var(--p-sm); }
+        .sys-brand::before { content: ''; display: block; width: 8px; height: 8px; background-color: var(--accent-red); }
+        .sys-nav a { color: var(--gray-mid); text-decoration: none; }
+        .sys-nav a.active { color: var(--white); border-bottom: 1px solid var(--white); }
+        .main-grid { display: grid; grid-template-columns: 2.8fr 1fr; flex-grow: 1; overflow: hidden; }
+        .grid-left { display: flex; flex-direction: column; border-right: 1px solid var(--border-heavy); overflow: hidden; }
+        .equities-header { padding: var(--p-lg) var(--p-xl); border-bottom: 1px solid var(--border-heavy); }
+        .meta-label { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-dark); margin-bottom: var(--p-sm); display: block; }
+        .headline-serif { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 500; margin-bottom: var(--p-md); }
+        .heatmap-container { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background-color: var(--border-thin); border-bottom: 1px solid var(--border-heavy); }
+        .heatmap-cell { background-color: var(--white); padding: var(--p-md); height: 80px; display: flex; flex-direction: column; justify-content: space-between; }
+        .hm-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--gray-dark); }
+        .hm-val { font-family: var(--font-mono); font-size: 1rem; font-weight: 600; }
+        .hm-pos { background-color: #E8F5E9; border-top: 3px solid var(--accent-green); }
+        .hm-neg { background-color: #FCE8E6; border-top: 3px solid var(--accent-red); }
+        .hm-neu { background-color: var(--gray-light); border-top: 3px solid var(--gray-mid); }
+        .table-wrap { flex-grow: 1; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.8rem; }
+        th { position: sticky; top: 0; background: var(--gray-light); text-align: left; padding: var(--p-sm) var(--p-md); border-bottom: 1px solid var(--border-heavy); text-transform: uppercase; color: var(--gray-dark); font-weight: 600; z-index: 10; }
+        td { padding: var(--p-sm) var(--p-md); border-bottom: 1px solid var(--border-thin); }
+        tr:hover { background-color: var(--gray-light); }
+        .ticker { font-weight: 600; color: var(--accent-blue); }
+        .trend-up { color: var(--accent-green); } .trend-down { color: var(--accent-red); }
+        .momentum-bar { height: 4px; width: 60px; background: var(--gray-mid); position: relative; }
+        .momentum-fill { height: 100%; background: var(--black); }
+        .grid-right { display: flex; flex-direction: column; background-color: var(--black); color: var(--white); }
+        .sidebar-module { padding: var(--p-lg); border-bottom: 1px solid #333; }
+        .analysis-block { font-family: var(--font-serif); font-size: 1.1rem; line-height: 1.5; color: var(--gray-mid); font-style: italic; border-left: 2px solid var(--accent-red); padding-left: var(--p-md); }
+        .signal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #333; margin-top: var(--p-md); }
+        .signal-cell { background: var(--black); padding: var(--p-md); }
+        .c-red { color: var(--accent-red); } .c-green { color: var(--accent-green); }
+        .text-mono { font-family: var(--font-mono); }
+    </style>
+</head>
+<body>
+    <div class="system-frame">
+        <header class="sys-header">
+            <div class="sys-header-left">
+                <div class="sys-brand">TERMINAL_CORE</div>
+                <div class="sys-nav"><a href="#">[ MACRO ]</a><a href="#" class="active">[ EQUITIES ]</a><a href="#">[ FIXED_INC ]</a></div>
+            </div>
+            <div class="sys-header-right"><div>NODE: US-EAST-1</div><div class="text-mono">SYS.TIME 15:12:44 UTC</div></div>
+        </header>
+        <main class="main-grid">
+            <div class="grid-left">
+                <div class="equities-header">
+                    <span class="meta-label">Market Intel // Global Equities</span>
+                    <h1 class="headline-serif">Sector rotation accelerates as tech multiples undergo structural reset.</h1>
+                </div>
+                <div class="heatmap-container">
+                    <div class="heatmap-cell hm-neg"><span class="hm-label">TECH</span><span class="hm-val">-2.41%</span></div>
+                    <div class="heatmap-cell hm-pos"><span class="hm-label">ENERGY</span><span class="hm-val">+1.85%</span></div>
+                    <div class="heatmap-cell hm-pos"><span class="hm-label">FINANCIALS</span><span class="hm-val">+0.92%</span></div>
+                    <div class="heatmap-cell hm-neg"><span class="hm-label">HEALTH</span><span class="hm-val">-0.45%</span></div>
+                    <div class="heatmap-cell hm-neu"><span class="hm-label">UTIL</span><span class="hm-val">+0.04%</span></div>
+                    <div class="heatmap-cell hm-pos"><span class="hm-label">COMMODS</span><span class="hm-val">+3.12%</span></div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Price</th><th>Chg %</th><th>P/E (fwd)</th><th>Vol (m)</th><th>Momentum</th><th>Signal</th></tr></thead>
+                        <tbody>
+                            <tr><td class="ticker">AAPL.US</td><td>178.42</td><td class="trend-down">-1.24%</td><td>28.4x</td><td>54.2</td><td><div class="momentum-bar"><div class="momentum-fill" style="width: 40%;"></div></div></td><td class="text-mono">HOLD</td></tr>
+                            <tr><td class="ticker">NVDA.US</td><td>824.15</td><td class="trend-down">-4.82%</td><td>64.1x</td><td>82.9</td><td><div class="momentum-bar"><div class="momentum-fill" style="width: 85%; background: var(--accent-red);"></div></div></td><td class="text-mono c-red">SELL</td></tr>
+                            <tr><td class="ticker">XOM.US</td><td>112.30</td><td class="trend-up">+2.15%</td><td>12.2x</td><td>18.4</td><td><div class="momentum-bar"><div class="momentum-fill" style="width: 70%; background: var(--accent-green);"></div></div></td><td class="text-mono c-green">BUY</td></tr>
+                            <tr><td class="ticker">GS.US</td><td>384.11</td><td class="trend-up">+0.88%</td><td>14.5x</td><td>4.1</td><td><div class="momentum-bar"><div class="momentum-fill" style="width: 55%;"></div></div></td><td class="text-mono">ACCUM</td></tr>
+                            <tr><td class="ticker">TSLA.US</td><td>164.08</td><td class="trend-down">-3.10%</td><td>41.8x</td><td>91.4</td><td><div class="momentum-bar"><div class="momentum-fill" style="width: 20%; background: var(--accent-red);"></div></div></td><td class="text-mono c-red">REDUCE</td></tr>
+                            <tr><td class="ticker">CVX.US</td><td>149.55</td><td class="trend-up">+1.42%</td><td>11.9x</td><td>9.8</td><td><div class="momentum-bar"><div class="momentum-fill" style="width: 65%; background: var(--accent-green);"></div></div></td><td class="text-mono c-green">BUY</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <aside class="grid-right">
+                <div class="sidebar-module" style="background: var(--accent-red);">
+                    <div class="text-mono" style="font-size: 0.7rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.8);">ALPHA STRATEGY</div>
+                    <div style="font-size: 2.5rem; font-weight: 700; font-family: var(--font-mono); margin-top: 10px;">S.O.S</div>
+                    <div class="text-mono" style="font-size: 0.75rem; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 8px; margin-top: 8px;">Systematic Outflow Signal<br>Status: ACTIVE</div>
+                </div>
+                <div class="sidebar-module">
+                    <span class="meta-label" style="color: #888;">Analyst Perspective</span>
+                    <div class="analysis-block">"The decoupling of growth metrics from discount rates suggests a valuation floor has not yet been established for high-beta names."</div>
+                </div>
+                <div class="sidebar-module">
+                    <span class="meta-label" style="color: #888;">Real-Time Signals</span>
+                    <div class="signal-grid">
+                        <div class="signal-cell"><div class="hm-label">RSI (OVERSOLD)</div><div class="text-mono c-green">14 Tickers</div></div>
+                        <div class="signal-cell"><div class="hm-label">52W LOWS</div><div class="text-mono c-red">112 Tickers</div></div>
+                        <div class="signal-cell"><div class="hm-label">VOL SPIKE</div><div class="text-mono c-red">+440%</div></div>
+                        <div class="signal-cell"><div class="hm-label">BETA ADJ.</div><div class="text-mono">1.42</div></div>
+                    </div>
+                </div>
+                <div class="sidebar-module" style="flex-grow: 1; border-bottom: none;">
+                    <span class="meta-label" style="color: #888;">Sectors Flow</span>
+                    <div style="margin-top: 15px;">
+                        <div style="display:flex; justify-content:space-between; margin-bottom: 8px;"><span class="text-mono" style="font-size:0.75rem">Value</span><span class="text-mono c-green">+$4.2B</span></div>
+                        <div style="height:2px; background:#222; width:100%"><div style="height:100%; background:var(--accent-green); width:75%"></div></div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom: 8px; margin-top: 15px;"><span class="text-mono" style="font-size:0.75rem">Growth</span><span class="text-mono c-red">-$8.9B</span></div>
+                        <div style="height:2px; background:#222; width:100%"><div style="height:100%; background:var(--accent-red); width:90%"></div></div>
+                    </div>
+                </div>
+                <div class="sidebar-module text-mono" style="font-size: 0.65rem; color: #555; background-color: #050505;">EQUITY ENGINE: V4.2.1-E<br>TICK-BY-TICK: ENABLED<br>LATENCY: 4MS</div>
+            </aside>
+        </main>
+    </div>
+</body></html>

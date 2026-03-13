@@ -1,0 +1,100 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Rebalance | Terminal Core</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0A0A0A; --white: #FFFFFF; --gray-light: #F4F4F4; --gray-mid: #E0E0E0; --gray-dark: #666666;
+            --border-thin: #D0D0D0; --border-heavy: #0A0A0A; --accent-red: #DE4A2F; --accent-blue: #2A6496;
+            --font-serif: 'IBM Plex Serif', Georgia, serif; --font-sans: 'Inter', Helvetica, sans-serif; --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+            --unit: 4px; --p-sm: calc(var(--unit) * 2); --p-md: calc(var(--unit) * 4); --p-lg: calc(var(--unit) * 8); --p-xl: calc(var(--unit) * 12);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: #CCC; color: var(--black); font-family: var(--font-sans); font-size: 14px; line-height: 1.4; padding: var(--p-lg); min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .system-frame { background-color: var(--white); width: 1280px; height: 960px; border: 1px solid var(--border-heavy); display: flex; flex-direction: column; position: relative; overflow: hidden; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); }
+        .bg-blur { filter: blur(4px); opacity: 0.4; pointer-events: none; display: flex; flex-direction: column; height: 100%; }
+        .sys-header { display: flex; justify-content: space-between; align-items: center; padding: var(--p-sm) var(--p-md); border-bottom: 2px solid var(--border-heavy); font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; background-color: var(--black); color: var(--white); }
+        .modal-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10,10,10,0.6); display: flex; justify-content: center; align-items: center; z-index: 100; }
+        .modal-container { width: 900px; background: var(--white); border: 2px solid var(--border-heavy); box-shadow: 20px 20px 0px var(--black); display: flex; flex-direction: column; }
+        .modal-header { background: var(--accent-red); color: var(--white); padding: var(--p-md) var(--p-lg); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; }
+        .modal-body { padding: var(--p-xl); display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--p-xl); }
+        .rebalance-summary h2 { font-family: var(--font-serif); font-size: 2.5rem; line-height: 1.1; margin-bottom: var(--p-md); }
+        .meta-tag { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent-red); border: 1px solid var(--accent-red); padding: 2px 6px; margin-bottom: var(--p-sm); display: inline-block; }
+        .allocation-table { width: 100%; border-collapse: collapse; margin-top: var(--p-lg); font-family: var(--font-mono); font-size: 0.8rem; }
+        .allocation-table th { text-align: left; padding: var(--p-sm); border-bottom: 2px solid var(--black); color: var(--gray-dark); }
+        .allocation-table td { padding: var(--p-md) var(--p-sm); border-bottom: 1px solid var(--border-thin); }
+        .target-val { color: var(--accent-blue); font-weight: 600; }
+        .risk-exposure-box { border-left: 1px solid var(--border-thin); padding-left: var(--p-xl); }
+        .chart-label { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; color: var(--gray-dark); margin-bottom: var(--p-md); display: block; }
+        .visual-bar-container { height: 200px; display: flex; align-items: flex-end; gap: 20px; margin-bottom: var(--p-lg); padding-bottom: var(--p-md); border-bottom: 1px solid var(--border-thin); }
+        .visual-bar { flex: 1; background: var(--gray-mid); position: relative; }
+        .visual-bar.active { background: var(--black); } .visual-bar.risk { background: var(--accent-red); }
+        .bar-label { position: absolute; bottom: -25px; left: 0; font-family: var(--font-mono); font-size: 0.6rem; white-space: nowrap; }
+        .action-footer { padding: var(--p-lg) var(--p-xl); background: var(--gray-light); border-top: 1px solid var(--border-thin); display: flex; justify-content: space-between; align-items: center; }
+        .btn-primary { background: var(--black); color: var(--white); padding: var(--p-md) var(--p-lg); font-family: var(--font-mono); text-transform: uppercase; border: none; cursor: pointer; font-weight: 600; }
+        .btn-secondary { background: transparent; color: var(--black); padding: var(--p-md) var(--p-lg); font-family: var(--font-mono); text-transform: uppercase; border: 1px solid var(--black); cursor: pointer; }
+        .text-mono { font-family: var(--font-mono); }
+    </style>
+</head>
+<body>
+    <div class="system-frame">
+        <div class="bg-blur">
+            <header class="sys-header">
+                <div>TERMINAL_CORE</div>
+                <div>[ MACRO ] [ EQUITIES ] [ FIXED_INC ]</div>
+                <div>NODE: US-EAST-1 // 14:42:09 UTC</div>
+            </header>
+            <div style="padding: 40px;"><h1 style="font-family: var(--font-serif); font-size: 4rem;">Contagion velocity exceeds primary models...</h1></div>
+        </div>
+        <div class="modal-overlay">
+            <div class="modal-container">
+                <div class="modal-header">
+                    <span>System Alert: CRITICAL_REBALANCE_REQUIRED</span>
+                    <span>ID: PR-992-ALPHA</span>
+                </div>
+                <div class="modal-body">
+                    <div class="rebalance-summary">
+                        <span class="meta-tag">Action Required</span>
+                        <h2>Portfolio Realignment: Strategic Shift to Defensive Sovereign Paper.</h2>
+                        <p style="color: var(--gray-dark); margin-bottom: 20px;">Current exposure to Tranche-B secondary debt exceeds systemic safety thresholds by 12.4%. Immediate liquidation of non-core high-yield assets recommended.</p>
+                        <table class="allocation-table">
+                            <thead><tr><th>Asset Class</th><th>Current</th><th>Target</th><th>Delta</th></tr></thead>
+                            <tbody>
+                                <tr><td>Sovereign Bonds (Short)</td><td>12.5%</td><td class="target-val">45.0%</td><td style="color: var(--accent-blue);">+32.5%</td></tr>
+                                <tr><td>Tranche-B Debt</td><td>34.2%</td><td class="target-val">5.0%</td><td style="color: var(--accent-red);">-29.2%</td></tr>
+                                <tr><td>Cash Equivalents</td><td>5.0%</td><td class="target-val">25.0%</td><td style="color: var(--accent-blue);">+20.0%</td></tr>
+                                <tr><td>Equities (Defensive)</td><td>48.3%</td><td class="target-val">25.0%</td><td style="color: var(--accent-red);">-23.3%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="risk-exposure-box">
+                        <span class="chart-label">Systemic Risk Exposure (Projected)</span>
+                        <div class="visual-bar-container">
+                            <div class="visual-bar active" style="height: 85%;"><span class="bar-label">Current Risk</span></div>
+                            <div class="visual-bar risk" style="height: 40%;"><span class="bar-label">Target Risk</span></div>
+                            <div class="visual-bar" style="height: 60%;"><span class="bar-label">Market Avg</span></div>
+                        </div>
+                        <div class="text-mono" style="font-size: 0.7rem; color: var(--gray-dark);">
+                            <p>PROJECTED VOLATILITY REDUCTION: <span style="color: var(--black); font-weight: 600;">45.2%</span></p>
+                            <p style="margin-top: 10px;">LIQUIDITY BUFFER INCREASE: <span style="color: var(--black); font-weight: 600;">+400 BPS</span></p>
+                            <div style="margin-top: 30px; border: 1px dashed var(--border-thin); padding: 10px;">
+                                <span style="display: block; margin-bottom: 5px;">MODEL_REF: Monte-Carlo_V4</span>
+                                <span>CONFIDENCE: 98.4%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-footer">
+                    <div class="text-mono" style="font-size: 0.7rem; color: var(--gray-dark);">ESTIMATED SLIPPAGE: 0.04%<br>EXECUTION VENUE: DARK_POOL_A</div>
+                    <div style="display: flex; gap: 15px;">
+                        <button class="btn-secondary">Ignore Alert</button>
+                        <button class="btn-primary">Execute Rebalance [ Enter ]</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body></html>
