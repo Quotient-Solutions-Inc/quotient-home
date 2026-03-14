@@ -74,7 +74,7 @@ export default function Footer() {
   return (
     <footer className='bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x pt-14 pb-10 relative overflow-hidden'>
       <div>
-        <div className="grid max-md:grid-cols-1 gap-16 pb-10 mb-8 grid-cols-[200px_1fr] border-b border-white/20">
+        <div className="grid max-md:grid-cols-1 gap-16 max-md:gap-10 pb-10 max-md:pb-8 mb-8 grid-cols-[200px_1fr] border-b border-white/20">
           <div>
             <span className="font-mono text-[13px] uppercase tracking-[0.08em] text-white block mb-2">
               QUOTIENT
@@ -84,7 +84,7 @@ export default function Footer() {
             </div>
             <SubstackSubscribe />
           </div>
-          <div className="grid grid-cols-4 max-md:grid-cols-2 gap-12 max-md:gap-4 ml-auto">
+          <div className="grid grid-cols-4 max-md:grid-cols-2 gap-12 max-md:gap-x-8 max-md:gap-y-6 ml-auto max-md:ml-0">
             <div className="flex flex-col gap-3">
               <FooterLabel>Agents</FooterLabel>
               <FooterLink href="/agents/q/signal">Q Trading Agent</FooterLink>
@@ -110,10 +110,10 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="flex max-md:flex-col max-md:gap-4 justify-between items-center relative z-10">
+        <div className="flex max-md:flex-col max-md:gap-3 max-md:items-start justify-between items-center relative z-10">
           <span className="font-mono text-[11px] text-white/40">&copy; 2026 Quotient</span>
-          <div className="flex gap-4 max-md:gap-3">
-            <Link href="https://x.com/QuotientHQ" className="font-mono text-white/40 text-[11px] uppercase tracking-[0.08em] hover:text-white transition-colors">X @quotient</Link>
+          <div className="flex gap-4 max-md:gap-3 max-md:flex-wrap">
+            <Link href="https://x.com/QuotientHQ" className="font-mono text-white/40 text-[11px] uppercase tracking-[0.08em] hover:text-white transition-colors">X</Link>
             <Link href="https://farcaster.xyz/quotient" className="font-mono text-white/40 text-[11px] uppercase tracking-[0.08em] hover:text-white transition-colors">Farcaster</Link>
             <Link href="https://quotient.substack.com/" className="font-mono text-white/40 text-[11px] uppercase tracking-[0.08em] hover:text-white transition-colors">Substack</Link>
           </div>
