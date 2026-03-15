@@ -2,30 +2,17 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useTheme } from '@/lib/ThemeContext'
 
 const tabs = [
   { label: 'Overview', href: '/agents/q' },
-  { label: 'For Traders', href: '/agents/q/signal' },
-  { label: 'For Platforms & Wallets', href: '/agents/q/platforms' },
-  { label: 'For Agents', href: '/agents/q/api' },
 ]
 
 export default function QTabBar() {
   const pathname = usePathname()
-  const { theme } = useTheme()
-
-  const isB = theme === 'B'
 
   return (
-    <div
-      className={`sticky z-40 border-b ${
-        isB
-          ? 'top-[44px] bg-white border-tb-border'
-          : 'top-12 bg-white border-border-thin'
-      }`}
-    >
-      <div className={isB ? 'px-8 lg:px-tb-section-x' : 'max-w-content mx-auto px-10 max-md:px-6'}>
+    <div className="sticky top-[44px] z-40 bg-white border-b border-tb-border">
+      <div className="px-8 lg:px-tb-section-x">
         <div className="flex items-center gap-8 overflow-x-auto -mb-px">
           {tabs.map((tab) => {
             const isActive = pathname === tab.href
@@ -33,19 +20,11 @@ export default function QTabBar() {
               <Link
                 key={tab.href}
                 href={tab.href}
-                className={`
-                  font-mono text-[11px] uppercase whitespace-nowrap py-3 border-b-2 transition-colors
-                  ${isB ? 'tracking-[0.08em]' : 'tracking-wide'}
-                  ${
-                    isActive
-                      ? isB
-                        ? 'border-tb-primary text-tb-dark'
-                        : 'border-brand-black text-brand-black'
-                      : isB
-                        ? 'border-transparent text-gray-400 hover:text-tb-dark'
-                        : 'border-transparent text-gray-400 hover:text-brand-black'
-                  }
-                `}
+                className={`font-mono text-[11px] uppercase whitespace-nowrap py-3 border-b-2 tracking-[0.08em] transition-colors ${
+                  isActive
+                    ? 'border-tb-primary text-tb-dark'
+                    : 'border-transparent text-gray-400 hover:text-tb-dark'
+                }`}
               >
                 {tab.label}
               </Link>

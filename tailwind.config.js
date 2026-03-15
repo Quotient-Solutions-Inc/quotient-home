@@ -28,13 +28,13 @@ module.exports = {
         },
         // Theme B palette
         tb: {
-          primary:   '#F35B28',
-          cream:     '#F5F0E1',
-          dark:      '#25110F',
-          page:      '#FAFAFA',
+          primary:   '#C596FE',
+          cream:     '#F8F8F6',
+          dark:      '#0A0A0A',
+          page:      '#FFFFFF',
           data:      '#3B98E6',
-          border:    '#D9D9D9',
-          'cta-hover': '#FF6B3D',
+          border:    '#E5E5E5',
+          'cta-hover': '#B07FE8',
         },
       },
       fontFamily: {
