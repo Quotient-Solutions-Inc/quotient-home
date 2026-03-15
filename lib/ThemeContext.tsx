@@ -21,14 +21,10 @@ const ThemeContext = createContext<ThemeContextValue | null>(null)
 const STORAGE_KEY = 'quotient-theme'
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeKey>('A')
+  const [theme, setThemeState] = useState<ThemeKey>('B')
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored === 'A' || stored === 'B') {
-      setThemeState(stored)
-    }
     setMounted(true)
   }, [])
 
