@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getDriver } from '@/lib/neo4j'
+import { runQuery } from '@/lib/neo4j'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -41,29 +41,20 @@ RETURN
 
 export async function GET() {
   try {
-    const driver = getDriver()
-    const session = driver.session({ database: process.env.NEO4J_DATABASE || 'neo4j' })
+    const records = await runQuery(QUERY)
+    const record = records[0]
 
-    try {
-      const result = await session.run(QUERY)
-      const record = result.records[0]
-
-      if (!record) {
-        return NextResponse.json({ error: 'No data returned' }, { status: 404 })
-      }
-
-      const stats = {
-        totalTrades: toNumber(record.get('totalTrades')),
-        avgRoi: toNumber(record.get('avgRoi')),
-        winRate: toNumber(record.get('winRate')),
-        avgWin: toNumber(record.get('avgWin')),
-        avgLoss: toNumber(record.get('avgLoss')),
-      }
-
-      return NextResponse.json(stats)
-    } finally {
-      await session.close()
+    if (!record) {
+      return NextResponse.json({ error: 'No data returned' }, { status: 404 })
     }
+
+    return NextResponse.json({
+      totalTrades: record.get('totalTrades'),
+      avgRoi: record.get('avgRoi'),
+      winRate: record.get('winRate'),
+      avgWin: record.get('avgWin'),
+      avgLoss: record.get('avgLoss'),
+    })
   } catch (err) {
     console.error('Q stats query error:', err)
     return NextResponse.json(
@@ -71,13 +62,4 @@ export async function GET() {
       { status: 500 }
     )
   }
-}
-
-function toNumber(val: unknown): number {
-  if (val === null || val === undefined) return 0
-  if (typeof val === 'number') return val
-  if (typeof val === 'object' && val !== null && 'toNumber' in val) {
-    return (val as { toNumber: () => number }).toNumber()
-  }
-  return Number(val)
 }
