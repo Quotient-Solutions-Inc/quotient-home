@@ -2,6 +2,22 @@
 
 import { useQTrades } from '@/lib/useQData'
 
+function Header({ pulse = true }: { pulse?: boolean }) {
+  return (
+    <div className="flex items-center justify-between px-4 py-3 border-b border-white/20">
+      <div className="flex items-center gap-2">
+        <span className={`w-[7px] h-[7px] rounded-full ${pulse ? 'animate-pulse bg-tb-cream' : 'bg-tb-cream/50'}`} />
+        <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-white/60">
+          Recent Calls
+        </span>
+      </div>
+      <span className="font-mono text-[10px] text-white/30">
+        Last 14d
+      </span>
+    </div>
+  )
+}
+
 export default function RecentTrades({ variant = 'hero' }: { variant?: 'hero' | 'card' }) {
   const { trades, loading, error } = useQTrades()
 
@@ -10,12 +26,7 @@ export default function RecentTrades({ variant = 'hero' }: { variant?: 'hero' | 
   if (loading) {
     return (
       <div className={`flex flex-col ${isHero ? 'h-full' : ''}`}>
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/20">
-          <span className="w-[7px] h-[7px] rounded-full animate-pulse bg-tb-cream" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-white/60">
-            Recent Trades
-          </span>
-        </div>
+        <Header />
         <div className="flex-1 flex items-center justify-center px-4 py-8">
           <span className="font-mono text-[12px] text-white/40 animate-pulse">Loading...</span>
         </div>
@@ -26,14 +37,9 @@ export default function RecentTrades({ variant = 'hero' }: { variant?: 'hero' | 
   if (error || trades.length === 0) {
     return (
       <div className={`flex flex-col ${isHero ? 'h-full' : ''}`}>
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/20">
-          <span className="w-[7px] h-[7px] rounded-full bg-tb-cream/50" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-white/60">
-            Recent Trades
-          </span>
-        </div>
+        <Header pulse={false} />
         <div className="flex-1 flex items-center justify-center px-4 py-8">
-          <span className="font-mono text-[12px] text-white/40">No trades available</span>
+          <span className="font-mono text-[12px] text-white/40">No calls available</span>
         </div>
       </div>
     )
@@ -43,20 +49,16 @@ export default function RecentTrades({ variant = 'hero' }: { variant?: 'hero' | 
 
   return (
     <div className={`flex flex-col ${isHero ? 'h-full' : ''}`}>
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/20">
-        <div className="flex items-center gap-2">
-          <span className="w-[7px] h-[7px] rounded-full animate-pulse bg-tb-cream" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-white/60">
-            Recent Trades
-          </span>
-        </div>
-        <span className="font-mono text-[10px] text-white/30">
-          Last 14d
-        </span>
+      <Header />
+
+      {/* Explainer */}
+      <div className="px-4 py-2.5 border-b border-white/10">
+        <p className="text-[11px] text-white/35 leading-snug">
+          These are trades that would have been placed with the active Q strategy — buy when Q&apos;s forecast diverges 20+ points from market odds. ROI reflects 24h price movement.
+        </p>
       </div>
 
-      {/* Trades list */}
+      {/* Calls list */}
       <div className={`flex-1 overflow-y-auto ${isHero ? 'max-h-[500px]' : ''}`}>
         {displayTrades.map((trade, i) => (
           <div
@@ -99,7 +101,7 @@ export default function RecentTrades({ variant = 'hero' }: { variant?: 'hero' | 
       {/* Footer */}
       <div className="px-4 py-2.5 border-t border-white/10">
         <span className="font-mono text-[10px] text-white/30">
-          {trades.length} trade{trades.length !== 1 ? 's' : ''} in window
+          {trades.length} call{trades.length !== 1 ? 's' : ''} in last 14 days
         </span>
       </div>
     </div>
