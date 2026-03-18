@@ -1,33 +1,49 @@
+'use client'
+
 import Link from 'next/link'
+import HeroAnimation from './HeroAnimation'
+
+// VAULT WAITLIST DESTINATION — Jordan to provide form URL or endpoint
+const VAULT_WAITLIST_HREF = '#'
 
 export default function MarketplaceHero() {
   return (
-    <section className="relative overflow-hidden bg-tb-primary rounded-tb-card min-h-[480px] md:min-h-[640px] lg:min-h-[720px] flex flex-col justify-end px-8 lg:px-tb-section-x py-12 lg:py-16">
-      <div className='flex flex-col gap-6 relative z-10 max-w-[720px]'>
-        <div className='flex flex-col w-full'>
-          <h1 className='font-headline font-bold uppercase tracking-[-0.01em] text-[32px] md:text-[56px] lg:text-[72px] text-white leading-[0.95] mb-6'>
-            <span className="block">Q trades</span>
-            <span className="block">prediction markets.</span>
-            <span className="block text-tb-dark mt-2 italic">You collect</span>
-            <span className="block text-tb-dark italic">the returns.</span>
-          </h1>
-          <div className="flex flex-col gap-2 mb-8">
-            <p className="font-headline italic text-white/90 text-[16px] lg:text-[18px] leading-[150%]">
-              It finds where the odds are wrong and trades on the gap.
-            </p>
-            <p className="font-mono text-[12px] lg:text-[13px] uppercase tracking-[0.06em] text-white/60">
-              69% win rate &middot; 3.5x win-to-loss ratio
-            </p>
-          </div>
-          <div className='flex gap-3'>
-            <Link
-              href="/agents/q"
-              className='px-8 h-[50px] flex items-center bg-tb-cream text-tb-dark font-mono text-[14px] uppercase tracking-[0.08em] rounded-tb-card hover:bg-white transition-colors'
-            >
-              Get access
-            </Link>
-          </div>
-        </div>
+    <section className="relative overflow-hidden bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-20 lg:py-28">
+      {/* Full-spread particle animation behind all content */}
+      <div className="absolute inset-0 pointer-events-none">
+        <HeroAnimation />
+      </div>
+
+      {/* Content layer - all content left-aligned, evenly spaced */}
+      <div className="relative z-10 flex flex-col items-start">
+        {/* Eyebrow */}
+        <span className="block font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary mb-8">
+          Agentic Market Intelligence
+        </span>
+
+        {/* Headline - 3 lines: Q TRADES / PREDICTION MARKETS. / YOU COLLECT THE RETURNS. */}
+        <h1 className="font-headline font-bold tracking-[-0.01em] text-[28px] md:text-[44px] lg:text-[56px] text-tb-page leading-[1.0] uppercase mb-8">
+          Q TRADES<br />
+          PREDICTION MARKETS.<br />
+          YOU COLLECT THE RETURNS.
+        </h1>
+
+        {/* Animation line appears here via canvas - spacer for visual balance */}
+        <div className="w-full h-[2px] mb-8" />
+
+        {/* Subhead - uses body font Inter */}
+        <p className="text-tb-page/70 text-[15px] lg:text-[16px] leading-[1.7] max-w-[560px] mb-8">
+          Q turns global signals into high conviction calls,
+          surfacing mispriced markets before the crowd catches up.
+        </p>
+
+        {/* Single CTA - white outline at rest, orange fill on hover */}
+        <Link
+          href={VAULT_WAITLIST_HREF}
+          className="px-8 h-[50px] flex items-center border border-tb-page text-tb-page font-mono text-[14px] uppercase tracking-[0.08em] rounded-tb-card hover:bg-tb-primary hover:border-tb-primary transition-all duration-200 ease-out"
+        >
+          Get Early Access
+        </Link>
       </div>
     </section>
   )

@@ -1,9 +1,8 @@
 import Nav from '@/components/Nav'
 import MarketplaceHero from '@/components/MarketplaceHero'
 import TrackRecord from '@/components/TrackRecord'
+import HowItWorks from '@/components/HowItWorks'
 import Ecosystem from '@/components/Ecosystem'
-import BiggerPicture from '@/components/BiggerPicture'
-import Closing from '@/components/Closing'
 import Footer from '@/components/Footer'
 
 export default function Home() {
@@ -14,9 +13,8 @@ export default function Home() {
         <div className="flex flex-col gap-tb-gap">
           <MarketplaceHero />
           <TrackRecord />
+          <HowItWorks />
           <Ecosystem />
-          <BiggerPicture />
-          <Closing />
           <Footer />
         </div>
       </main>
