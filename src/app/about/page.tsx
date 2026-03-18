@@ -24,11 +24,11 @@ export default function AboutPage() {
 
 const faqItems = [
   { q: 'What is Quotient?', a: 'Quotient is a platform for building, proving, and monetizing prediction market trading agents. We provide the coaching framework, the evaluation layer, and the marketplace. Q is the first agent — more are coming.' },
-  { q: 'What is a prediction agent?', a: "A prediction agent is an AI system that forecasts outcomes on verifiable questions. On Quotient, every agent has a public track record, sources its reasoning, and is evaluated against real-world results. Q is Quotient\u2019s first agent, covering geopolitics." },
-  { q: 'How do I build an agent on Quotient?', a: "Quotient provides a coaching framework that helps domain experts decompose questions, calibrate confidence, and iterate through structured feedback. You bring the expertise \u2014 Quotient turns it into a product. Builder program launching soon." },
+  { q: 'What is a prediction agent?', a: "A prediction agent is an AI system that forecasts outcomes on verifiable questions. On Quotient, every agent has a public track record, sources its reasoning, and is evaluated against real-world results. Q is Quotient's first agent, covering geopolitics." },
+  { q: 'How do I build an agent on Quotient?', a: "Quotient provides a coaching framework that helps domain experts decompose questions, calibrate confidence, and iterate through structured feedback. You bring the expertise — Quotient turns it into a product. Builder program launching soon." },
   { q: 'Who built this?', a: 'Quotient was founded by Jordan with a team focused on prediction market infrastructure, AI agent pipelines, and geopolitical intelligence research.' },
   { q: 'Is Quotient regulated?', a: 'Quotient provides research and market intelligence, not financial advice or trading services. We are not a registered investment advisor.' },
-  { q: 'How do I get involved as a forecaster?', a: "Forecasters can contribute via the mobile app or the Farcaster and World mini apps. Your track record builds over time. Accuracy earns influence in Q\u2019s context graph and qualifies you for the builder program." },
+  { q: 'How do I get involved as a forecaster?', a: "Forecasters can contribute via the mobile app or the Farcaster and World mini apps. Your track record builds over time. Accuracy earns influence in Q's context graph and qualifies you for the builder program." },
 ]
 
 /* ─── Hero B ─── Dark brown hero ─── */
@@ -38,7 +38,7 @@ function AboutHeroB() {
       <span className="block font-mono text-[11px] uppercase tracking-[0.08em] text-white/40 mb-6">
         About Quotient
       </span>
-      <h1 className="font-headline font-bold text-[32px] lg:text-[56px] leading-[0.95] uppercase text-white tracking-[-0.02em] max-w-[800px] mx-auto">
+      <h1 className="font-headline font-bold text-[32px] lg:text-[56px] leading-[0.95] text-white tracking-[-0.02em] max-w-[800px] mx-auto">
         Where judgment becomes a product.
       </h1>
     </section>
@@ -48,12 +48,12 @@ function AboutHeroB() {
 /* ─── Problem / Solution two-column ─── */
 function ProveItSection() {
   return (
-    <section className='bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
+    <section className='bg-tb-page rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
       <div>
         <div className="grid grid-cols-2 max-md:grid-cols-1 gap-12 max-md:gap-8">
           <div>
             <div className="text-[10px] uppercase mb-3 pb-2 font-mono tracking-[0.08em] text-gray-500 border-b border-tb-border">The problem</div>
-            <h2 className="font-semibold tracking-[-0.02em] mb-4 font-headline font-bold uppercase text-[28px] text-tb-dark">Judgment is invisible</h2>
+            <h2 className="font-semibold tracking-[-0.02em] mb-4 font-headline font-bold text-[28px] text-tb-dark">Judgment is invisible</h2>
             <div className="flex flex-col gap-4">
               <p className="text-[14px] leading-[1.8] text-tb-dark/60">
                 People with real expertise make critical calls every day, but
@@ -68,7 +68,7 @@ function ProveItSection() {
           </div>
           <div>
             <div className="text-[10px] uppercase mb-3 pb-2 font-mono tracking-[0.08em] text-gray-500 border-b border-tb-border">Quotient</div>
-            <h2 className="font-semibold tracking-[-0.02em] mb-4 font-headline font-bold uppercase text-[28px] text-tb-dark">Build an agent. Prove it. Earn.</h2>
+            <h2 className="font-semibold tracking-[-0.02em] mb-4 font-headline font-bold text-[28px] text-tb-dark">Build an agent. Prove it. Earn.</h2>
             <div className="flex flex-col gap-4">
               <p className="text-[14px] leading-[1.8] text-tb-dark/60">
                 Build forecasting agents, prove them against real outcomes,
@@ -78,7 +78,7 @@ function ProveItSection() {
               <p className="text-[14px] leading-[1.8] text-tb-dark/60">
                 Q is the first agent — geopolitics. 69% win rate across 600+
                 prediction markets. More agents and domains are coming.
-                <Link href="/agents/q/signal" className="ml-1 font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover">
+                <Link href="/agents/q/track-record" className="ml-1 font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover">
                   See Q&apos;s track record &rarr;
                 </Link>
               </p>
@@ -96,7 +96,7 @@ function WhereThisIsGoing() {
     <section className='bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
       <div>
         <span className="block text-[11px] uppercase mb-4 font-mono tracking-[0.08em] text-tb-primary">Roadmap</span>
-        <h2 className='font-headline font-bold uppercase text-white text-[32px] lg:text-[48px] leading-[0.95] tracking-[-0.02em] mb-8'>Where this is going</h2>
+        <h2 className='font-headline font-bold text-white text-[32px] lg:text-[48px] leading-[0.95] tracking-[-0.02em] mb-8'>Where this is going</h2>
         <div className="grid grid-cols-3 max-md:grid-cols-1 gap-[8px]">
           {[
             {
@@ -148,17 +148,17 @@ function CoachingLoopCompressed() {
   ]
 
   return (
-    <section className='bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
+    <section className='bg-tb-page rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
       <div>
         <span className="block text-[11px] uppercase mb-4 font-mono tracking-[0.08em] text-tb-primary">The coaching loop</span>
-        <h2 className='font-headline font-bold uppercase text-tb-dark text-[32px] lg:text-[48px] leading-[0.95] tracking-[-0.02em] mb-3'>How agents improve</h2>
+        <h2 className='font-headline font-bold text-tb-dark text-[32px] lg:text-[48px] leading-[0.95] tracking-[-0.02em] mb-3'>How agents improve</h2>
         <p className="text-[15px] leading-relaxed max-w-[600px] mb-8 text-tb-dark/70">
           Every agent on the platform runs through a structured coaching loop
           that turns domain expertise into compounding accuracy.
         </p>
         <div className="grid grid-cols-5 max-md:grid-cols-1 gap-[8px]">
           {steps.map((step) => (
-            <div key={step.n} className='bg-white rounded-[10px] p-5'>
+            <div key={step.n} className='bg-tb-cream rounded-[10px] p-5'>
               <div className="font-mono text-[10px] uppercase tracking-[0.08em] mb-2 text-tb-primary">
                 {step.n}
               </div>

@@ -23,7 +23,7 @@ function SubstackSubscribe() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
-  async function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email) return
     setStatus('loading')
@@ -34,7 +34,6 @@ function SubstackSubscribe() {
         body: new URLSearchParams({ email, first_url: 'https://quotient.substack.com/', first_referrer: '', current_url: 'https://quotient.substack.com/', current_referrer: window.location.href }),
         mode: 'no-cors',
       })
-      // no-cors means we can't read the response, but the request goes through
       setStatus('success')
     } catch {
       setStatus('error')
@@ -44,7 +43,7 @@ function SubstackSubscribe() {
   if (status === 'success') {
     return (
       <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary">
-        Subscribed — check your inbox.
+        Subscribed. Check your inbox.
       </div>
     )
   }
@@ -74,42 +73,60 @@ export default function Footer() {
   return (
     <footer className='bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x pt-14 pb-10 relative overflow-hidden'>
       <div>
-        <div className="grid max-md:grid-cols-1 gap-16 max-md:gap-10 pb-10 max-md:pb-8 mb-8 grid-cols-[200px_1fr] border-b border-white/20">
+        {/* Main grid with generous gap between brand block and nav columns */}
+        <div className="grid max-md:grid-cols-1 gap-24 max-md:gap-10 pb-10 max-md:pb-8 mb-8 grid-cols-[200px_1fr] border-b border-white/20">
+          {/* Left: Brand block */}
           <div>
-            <span className="font-mono text-[13px] uppercase tracking-[0.08em] text-white block mb-2">
-              QUOTIENT
-            </span>
+            {/* White SVG wordmark - preserves negative space in Q */}
+            <img
+              src="/logos/quotient-wordmark-white.svg"
+              alt="Quotient"
+              className="h-5 w-auto mb-2"
+            />
             <div className="font-mono text-white/60 text-[12px] uppercase tracking-[0.04em] leading-relaxed mb-5">
-              The platform for building,<br />proving, and monetizing<br />prediction agents.
+              AI-powered prediction<br />market intelligence.
             </div>
             <SubstackSubscribe />
           </div>
+
+          {/* Right: Nav columns - pushed further right with ml-auto and larger gap */}
           <div className="grid grid-cols-4 max-md:grid-cols-2 gap-12 max-md:gap-x-8 max-md:gap-y-6 ml-auto max-md:ml-0">
+            {/* Agentic Trading Column (renamed from Q) */}
             <div className="flex flex-col gap-3">
-              <FooterLabel>Agents</FooterLabel>
-              <FooterLink href="/agents/q/signal">Q Trading Agent</FooterLink>
-              <span className="text-[11px] text-white/20">More coming soon</span>
+              <FooterLabel>Agentic Trading</FooterLabel>
+              <FooterLink href="/agents/q/track-record">Track Record</FooterLink>
+              <FooterLink href="/agents">Build with Q</FooterLink>
+              <FooterLink href="/agents/q/api">API Docs</FooterLink>
             </div>
-            <div className="flex flex-col gap-3">
-              <FooterLabel>Access Q</FooterLabel>
-              <FooterLink href="/agents/q/signal">Signal For Traders</FooterLink>
-              <FooterLink href="/agents/q/api">For Platforms</FooterLink>
-              <FooterLink href="/agents/q/api">For Agents</FooterLink>
-              <FooterLink href="/agents/q/api">API</FooterLink>
-            </div>
-            <div className="flex flex-col gap-3">
-              <FooterLabel>Contribute</FooterLabel>
-              <FooterLink href="https://farcaster.xyz/miniapps/i0_1abYbjySF/signal-by-quotient">Farcaster mini app</FooterLink>
-              <FooterLink href="https://world.org/mini-app?app_id=app_fcc649404ebe858f0e95cf53a800ec3e">World mini app</FooterLink>
-            </div>
+
+            {/* Company Column */}
             <div className="flex flex-col gap-3">
               <FooterLabel>Company</FooterLabel>
               <FooterLink href="/about">About</FooterLink>
-              <FooterLink href="/pricing">Pricing</FooterLink>
+              <FooterLink href="/team">Team</FooterLink>
+              <FooterLink href="/about#general-questions">FAQs</FooterLink>
               <FooterLink href="mailto:hello@quotient.social">Contact</FooterLink>
+            </div>
+
+            {/* Contributors Column (renamed from Signal) */}
+            <div className="flex flex-col gap-3">
+              <FooterLabel>Contributors</FooterLabel>
+              <FooterLink href="https://signal.quotient.social">Signal</FooterLink>
+              <FooterLink href="https://farcaster.xyz/miniapps/i0_1abYbjySF/signal-by-quotient">Farcaster</FooterLink>
+              <FooterLink href="https://world.org/mini-app?app_id=app_fcc649404ebe858f0e95cf53a800ec3e">World App</FooterLink>
+            </div>
+
+            {/* Social Column */}
+            <div className="flex flex-col gap-3">
+              <FooterLabel>Social</FooterLabel>
+              <FooterLink href="https://x.com/QuotientHQ">X</FooterLink>
+              <FooterLink href="https://farcaster.xyz/quotient">Farcaster</FooterLink>
+              <FooterLink href="https://quotient.substack.com/">Substack</FooterLink>
             </div>
           </div>
         </div>
+
+        {/* Bottom bar */}
         <div className="flex max-md:flex-col max-md:gap-3 max-md:items-start justify-between items-center relative z-10">
           <span className="font-mono text-[11px] text-white/40">&copy; 2026 Quotient</span>
           <div className="flex gap-4 max-md:gap-3 max-md:flex-wrap">
