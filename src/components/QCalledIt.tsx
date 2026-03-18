@@ -1,18 +1,17 @@
 export default function QCalledIt() {
   return (
-    <section className='relative bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
+    <section className='relative bg-[#FAFAF7] rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
       <div>
         {/* Header with context */}
         <div className="mb-10">
           <span className="block text-[11px] uppercase mb-4 font-mono tracking-[0.08em] text-tb-primary">
             Q Called It
           </span>
-          <h2 className='font-semibold tracking-[-0.02em] leading-[1.2] mb-3 max-w-[520px] font-headline font-bold text-[32px] lg:text-[48px] uppercase text-tb-dark leading-[0.95]'>
-            Q is right 7 out of 10 times and wins 3x what it loses.
+          <h2 className='font-headline font-bold text-[24px] lg:text-[36px] tracking-[-0.02em] leading-[0.95] mb-4 uppercase text-tb-dark'>
+            Q IS RIGHT 7 OUT OF 10 TIMES<br />AND WINS 3X WHAT IT LOSES.
           </h2>
           <p className="text-[15px] leading-relaxed max-w-[560px] text-tb-dark/70">
-            ROI reflects what a bet placed at Q&apos;s call time, at market odds,
-            would have returned at resolution.
+            ROI reflects what a bet placed at Q&apos;s call time, at market odds, would have returned at resolution.
           </p>
         </div>
 
@@ -65,7 +64,10 @@ function ProofCard({
   callDate: string
 }) {
   return (
-    <div className="p-5 border border-tb-border rounded-tb-card bg-white relative overflow-hidden">
+    <div
+      className="p-5 rounded-[10px] bg-white relative overflow-hidden"
+      style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
+    >
       <div className="inline-flex items-center gap-1.5 border rounded-sm px-2 py-0.5 text-[10px] uppercase tracking-wide mb-3 font-mono bg-green-50 border-green-200 text-green-700">
         &#10003; Resolved Yes
       </div>
