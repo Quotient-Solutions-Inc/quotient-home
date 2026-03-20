@@ -1,10 +1,48 @@
 'use client'
 
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 // VAULT WAITLIST DESTINATION — Jordan to provide form URL or endpoint
 const VAULT_WAITLIST_HREF = '#'
+
+function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const pathname = usePathname()
+  const isActive = pathname === href || pathname?.startsWith(href + '/')
+
+  return (
+    <Link
+      href={href}
+      className={`flex items-center px-4 font-mono text-[13px] uppercase tracking-[0.06em] transition-colors ${
+        isActive
+          ? 'text-tb-dark border-b-[1.5px] border-tb-dark'
+          : 'text-tb-dark/70 hover:text-tb-dark'
+      }`}
+    >
+      {children}
+    </Link>
+  )
+}
+
+function MobileNavLink({ href, onClick, children }: { href: string; onClick: () => void; children: React.ReactNode }) {
+  const pathname = usePathname()
+  const isActive = pathname === href || pathname?.startsWith(href + '/')
+
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={`px-6 py-3 font-mono text-[13px] uppercase tracking-[0.06em] transition-colors ${
+        isActive
+          ? 'text-tb-dark bg-tb-dark/5'
+          : 'text-tb-dark/70 hover:text-tb-dark hover:bg-tb-dark/5'
+      }`}
+    >
+      {children}
+    </Link>
+  )
+}
 
 export default function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -22,15 +60,9 @@ export default function Nav() {
         <div className="flex-1" />
         {/* Desktop nav */}
         <div className="hidden lg:flex items-stretch gap-0">
-          <Link href="/agents/q/track-record" className="flex items-center px-4 font-mono text-[13px] uppercase tracking-[0.06em] text-tb-dark/70 hover:text-tb-dark transition-colors">
-            Track Record
-          </Link>
-          <Link href="/agents" className="flex items-center px-4 font-mono text-[13px] uppercase tracking-[0.06em] text-tb-dark/70 hover:text-tb-dark transition-colors">
-            Build with Q
-          </Link>
-          <Link href="/about" className="flex items-center px-4 font-mono text-[13px] uppercase tracking-[0.06em] text-tb-dark/70 hover:text-tb-dark transition-colors">
-            About
-          </Link>
+          <NavLink href="/agents/q/case-studies">Case Studies</NavLink>
+          <NavLink href="/agents">Build with Q</NavLink>
+          <NavLink href="/about">About</NavLink>
           <Link href={VAULT_WAITLIST_HREF} className="flex items-center px-5 bg-tb-primary text-white font-mono text-[13px] uppercase tracking-[0.08em] rounded-tb-card hover:bg-tb-cta-hover transition-colors">
             Get Early Access
           </Link>
@@ -61,27 +93,15 @@ export default function Nav() {
       {mobileOpen && (
         <div className="fixed top-[44px] left-0 right-0 z-40 bg-tb-page border-t border-tb-border/30 lg:hidden">
           <div className="flex flex-col py-2">
-            <Link
-              href="/agents/q/track-record"
-              onClick={() => setMobileOpen(false)}
-              className="px-6 py-3 font-mono text-[13px] uppercase tracking-[0.06em] text-tb-dark/70 hover:text-tb-dark hover:bg-tb-dark/5 transition-colors"
-            >
-              Track Record
-            </Link>
-            <Link
-              href="/agents"
-              onClick={() => setMobileOpen(false)}
-              className="px-6 py-3 font-mono text-[13px] uppercase tracking-[0.06em] text-tb-dark/70 hover:text-tb-dark hover:bg-tb-dark/5 transition-colors"
-            >
+            <MobileNavLink href="/agents/q/case-studies" onClick={() => setMobileOpen(false)}>
+              Case Studies
+            </MobileNavLink>
+            <MobileNavLink href="/agents" onClick={() => setMobileOpen(false)}>
               Build with Q
-            </Link>
-            <Link
-              href="/about"
-              onClick={() => setMobileOpen(false)}
-              className="px-6 py-3 font-mono text-[13px] uppercase tracking-[0.06em] text-tb-dark/70 hover:text-tb-dark hover:bg-tb-dark/5 transition-colors"
-            >
+            </MobileNavLink>
+            <MobileNavLink href="/about" onClick={() => setMobileOpen(false)}>
               About
-            </Link>
+            </MobileNavLink>
           </div>
         </div>
       )}

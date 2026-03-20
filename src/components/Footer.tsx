@@ -94,9 +94,10 @@ export default function Footer() {
             {/* Agentic Trading Column (renamed from Q) */}
             <div className="flex flex-col gap-3">
               <FooterLabel>Agentic Trading</FooterLabel>
-              <FooterLink href="/agents/q/track-record">Track Record</FooterLink>
+              <FooterLink href="/agents/q/case-studies">Case Studies</FooterLink>
               <FooterLink href="/agents">Build with Q</FooterLink>
               <FooterLink href="/agents/q/api">API Docs</FooterLink>
+              <FooterLink href="/agents/q/api#pricing">Pricing</FooterLink>
             </div>
 
             {/* Company Column */}
@@ -104,7 +105,6 @@ export default function Footer() {
               <FooterLabel>Company</FooterLabel>
               <FooterLink href="/about">About</FooterLink>
               <FooterLink href="/team">Team</FooterLink>
-              <FooterLink href="/about#general-questions">FAQs</FooterLink>
               <FooterLink href="mailto:hello@quotient.social">Contact</FooterLink>
             </div>
 
