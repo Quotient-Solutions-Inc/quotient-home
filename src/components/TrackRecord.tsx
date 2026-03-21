@@ -66,7 +66,7 @@ export default function TrackRecord() {
   return (
     <section
       id="track-record"
-      className='bg-[#EDEDEA] rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'
+      className='bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'
     >
       <div>
         {/* Eyebrow */}
@@ -109,9 +109,9 @@ export default function TrackRecord() {
             </h3>
 
             {/* Table-style comparison */}
-            <div className="rounded-[8px] overflow-hidden border border-tb-dark/10 bg-[#F5F5F3]">
+            <div className="rounded-[8px] overflow-hidden border border-tb-dark/10 bg-tb-card-inner">
               {/* Header row */}
-              <div className="grid grid-cols-[1fr_1fr_1fr] bg-[#EAEAE8] border-b border-tb-dark/10">
+              <div className="grid grid-cols-[1fr_1fr_1fr] bg-tb-card-header border-b border-tb-dark/10">
                 <div className="p-4"></div>
                 <div className="p-4 text-center">
                   <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-tb-dark/50">Win Rate</span>
@@ -122,7 +122,7 @@ export default function TrackRecord() {
               </div>
 
               {/* Q row */}
-              <div className="grid grid-cols-[1fr_1fr_1fr] bg-[#F5F5F3] border-b border-tb-dark/10">
+              <div className="grid grid-cols-[1fr_1fr_1fr] bg-tb-card-inner border-b border-tb-dark/10">
                 <div className="p-4 flex items-center">
                   <span className="text-[16px] font-bold text-tb-dark">Q</span>
                 </div>
@@ -135,7 +135,7 @@ export default function TrackRecord() {
               </div>
 
               {/* Claude Opus 4.6 row */}
-              <div className="grid grid-cols-[1fr_1fr_1fr] bg-[#F5F5F3]">
+              <div className="grid grid-cols-[1fr_1fr_1fr] bg-tb-card-inner">
                 <div className="p-4 flex items-center">
                   <span className="text-[14px] text-tb-dark/60">Claude Opus 4.6</span>
                 </div>

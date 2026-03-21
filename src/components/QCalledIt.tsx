@@ -1,19 +1,21 @@
 export default function QCalledIt() {
   return (
-    <section className='relative bg-[#FAFAF7] rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
-      <div>
-        {/* Header with context */}
-        <div className="mb-10">
-          <span className="block text-[11px] uppercase mb-4 font-mono tracking-[0.08em] text-tb-primary">
-            Q Called It
-          </span>
-          <h2 className='font-headline font-bold text-[24px] lg:text-[36px] tracking-[-0.02em] leading-[0.95] mb-4 uppercase text-tb-dark'>
-            Q IS RIGHT 7 OUT OF 10 TIMES<br />AND WINS 3X WHAT IT LOSES.
-          </h2>
-          <p className="text-[15px] leading-relaxed max-w-[560px] text-tb-dark/70">
-            ROI reflects what a bet placed at Q&apos;s call time, at market odds, would have returned at resolution.
-          </p>
-        </div>
+    <section className='relative bg-tb-page rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
+      <div className="max-w-content mx-auto">
+        {/* Eyebrow */}
+        <span className="block text-[11px] uppercase mb-3 font-mono tracking-[0.08em] text-tb-primary">
+          Q Called It
+        </span>
+
+        {/* Headline */}
+        <h2 className='font-headline font-bold text-[24px] lg:text-[36px] tracking-[-0.02em] leading-[0.95] mb-2 uppercase text-tb-dark'>
+          Q IS RIGHT 7 OUT OF 10 TIMES<br />AND WINS 3X WHAT IT LOSES.
+        </h2>
+
+        {/* Subhead */}
+        <p className="text-[15px] leading-[1.7] max-w-[560px] text-tb-dark/60 mb-8">
+          ROI reflects what a bet placed at Q&apos;s call time, at market odds, would have returned at resolution.
+        </p>
 
         {/* Cards */}
         <div className="grid grid-cols-3 max-md:grid-cols-1 gap-3 mb-4">

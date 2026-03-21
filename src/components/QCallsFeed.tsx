@@ -27,6 +27,7 @@ export default function QCallsFeed({ forecasts }: QCallsFeedProps) {
 
   return (
     <div className='px-8 lg:px-tb-section-x pb-tb-section-y'>
+      <div className="max-w-content mx-auto">
       {/* Eyebrow */}
       <span className="block uppercase mb-4 font-mono text-tb-primary text-[11px] tracking-[0.08em]">
         Track Record
@@ -48,7 +49,7 @@ export default function QCallsFeed({ forecasts }: QCallsFeedProps) {
         style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
       >
         {/* Table header */}
-        <div className="grid grid-cols-[1fr_80px_100px_90px_70px] max-md:grid-cols-[1fr_70px_70px] gap-4 px-5 py-3 border-b border-tb-dark/10 bg-[#EDEDEA]">
+        <div className="grid grid-cols-[1fr_80px_100px_90px_70px] max-md:grid-cols-[1fr_70px_70px] gap-4 px-5 py-3 border-b border-tb-dark/10 bg-tb-cream">
           <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">Market</span>
           <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">Direction</span>
           <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50 max-md:hidden">Entry Odds</span>
@@ -85,6 +86,7 @@ export default function QCallsFeed({ forecasts }: QCallsFeedProps) {
             </span>
           </div>
         ))}
+      </div>
       </div>
     </div>
   )

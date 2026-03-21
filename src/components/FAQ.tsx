@@ -11,7 +11,7 @@ export default function FAQ({
 }) {
   return (
     <section className='bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
-      <div>
+      <div className="max-w-content mx-auto">
         <h2 className='font-headline font-bold uppercase text-tb-dark text-[36px] lg:text-[52px] leading-[0.9] tracking-[-0.01em] mb-8'>
           {title}
         </h2>

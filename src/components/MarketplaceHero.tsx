@@ -15,17 +15,17 @@ export default function MarketplaceHero() {
       </div>
 
       {/* Content layer - all content left-aligned, evenly spaced */}
-      <div className="relative z-10 flex flex-col items-start">
+      <div className="max-w-content mx-auto relative z-10 flex flex-col items-start">
         {/* Eyebrow */}
         <span className="block font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary mb-8">
           Agentic Market Intelligence
         </span>
 
-        {/* Headline - 3 lines: Q TRADES / PREDICTION MARKETS. / YOU COLLECT THE RETURNS. */}
+        {/* Headline - 3 lines, left aligned */}
         <h1 className="font-headline font-bold tracking-[-0.01em] text-[28px] md:text-[44px] lg:text-[56px] text-tb-page leading-[1.0] uppercase mb-8">
-          Q TRADES<br />
-          PREDICTION MARKETS.<br />
-          YOU COLLECT THE RETURNS.
+          WE FIND THE SIGNAL.<br />
+          YOU DECIDE<br />
+          HOW BIG TO GO.
         </h1>
 
         {/* Animation line appears here via canvas - spacer for visual balance */}
@@ -33,8 +33,7 @@ export default function MarketplaceHero() {
 
         {/* Subhead - uses body font Inter */}
         <p className="text-tb-page/70 text-[15px] lg:text-[16px] leading-[1.7] max-w-[560px] mb-8">
-          Q turns global signals into high conviction calls,
-          surfacing mispriced markets before the crowd catches up.
+          Quotient turns global signals into high conviction forecasts, surfacing mispriced markets before the crowd catches up.
         </p>
 
         {/* Single CTA - white outline at rest, orange fill on hover */}

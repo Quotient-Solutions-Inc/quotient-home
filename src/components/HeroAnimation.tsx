@@ -11,7 +11,7 @@ import { useEffect, useRef } from 'react';
 // ~11-second loop.
 
 const PARTICLE_COUNT = 200;
-const CYCLE_DURATION = 10800; // ms per full cycle (10% faster)
+const CYCLE_DURATION = 13000; // ms per full cycle (extended for longer line hold)
 const COLOR = '255, 255, 255'; // Pure white
 
 function easeInOutCubic(x: number): number {
@@ -57,22 +57,27 @@ class Particle {
   }
 
   draw(ctx: CanvasRenderingContext2D, time: number, progress: number) {
+    // Reduce drift as particles converge for smoother alignment
+    const driftFactor = 1 - progress * 0.9;
+
     const currentNoiseX =
       this.baseNoiseX +
-      Math.sin(time * this.driftSpeedX + this.driftPhaseX) * this.driftRadius;
+      Math.sin(time * this.driftSpeedX + this.driftPhaseX) * this.driftRadius * driftFactor;
     const currentNoiseY =
       this.baseNoiseY +
-      Math.cos(time * this.driftSpeedY + this.driftPhaseY) * this.driftRadius;
+      Math.cos(time * this.driftSpeedY + this.driftPhaseY) * this.driftRadius * driftFactor;
 
     const x = currentNoiseX + (this.targetX - currentNoiseX) * progress;
     const y = currentNoiseY + (this.targetY - currentNoiseY) * progress;
 
-    // Opacity increases as particles converge, but stays subtle
-    const currentOpacity = this.baseOpacity + progress * (0.4 - this.baseOpacity);
+    // Opacity increases as particles converge - brighter when forming line
+    const currentOpacity = this.baseOpacity + progress * (0.65 - this.baseOpacity);
 
-    // Size: more defined dots when scattered, uniform when converging
-    const scatteredSize = Math.random() * 1.8 + 1.2;
-    const convergedSize = 1.2;
+    // Size: slightly larger dots when scattered, uniform tight dots when converged
+    // Use a fixed random seed based on index for consistent size (no flickering)
+    const sizeVariation = ((this.index * 7) % 10) / 10; // Pseudo-random 0-1 based on index
+    const scatteredSize = sizeVariation * 1.2 + 1.2;
+    const convergedSize = 1.0;
     const size = scatteredSize * (1 - progress) + convergedSize * progress;
 
     ctx.fillStyle = `rgba(${COLOR}, ${currentOpacity})`;
@@ -147,39 +152,28 @@ export default function HeroAnimation() {
 
       let progress = 0;
 
-      if (normalizedTime < 0.15) {
+      if (normalizedTime < 0.12) {
         // scattered — hold
         progress = 0;
-      } else if (normalizedTime < 0.4) {
+      } else if (normalizedTime < 0.32) {
         // converging into line
-        const phaseT = (normalizedTime - 0.15) / 0.25;
+        const phaseT = (normalizedTime - 0.12) / 0.20;
         progress = easeInOutCubic(phaseT);
-      } else if (normalizedTime < 0.58) {
-        // formed line — hold (reduced from 0.2 to 0.18 duration)
+      } else if (normalizedTime < 0.62) {
+        // formed line — hold (~4 seconds at 13s cycle)
         progress = 1;
-      } else if (normalizedTime < 0.83) {
+      } else if (normalizedTime < 0.82) {
         // scattering back out
-        const phaseT = (normalizedTime - 0.58) / 0.25;
+        const phaseT = (normalizedTime - 0.62) / 0.20;
         progress = 1 - easeInOutCubic(phaseT);
       } else {
         // scattered — hold before next cycle
         progress = 0;
       }
 
-      // When fully converged (progress > 0.95), draw a perfectly smooth line
-      if (progress > 0.95) {
-        ctx.strokeStyle = `rgba(${COLOR}, 0.7)`;
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-        ctx.beginPath();
-        ctx.moveTo(lineStartX, lineY);
-        ctx.lineTo(lineStartX + lineLength, lineY);
-        ctx.stroke();
-      } else {
-        // Draw particles
-        for (let i = 0; i < particles.length; i++) {
-          particles[i].draw(ctx, currentTime, progress);
-        }
+      // Always draw particles - they naturally form a line when fully converged
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].draw(ctx, currentTime, progress);
       }
 
       animFrameId = requestAnimationFrame(animate);

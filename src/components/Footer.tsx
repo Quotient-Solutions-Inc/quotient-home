@@ -72,7 +72,7 @@ function SubstackSubscribe() {
 export default function Footer() {
   return (
     <footer className='bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x pt-14 pb-10 relative overflow-hidden'>
-      <div>
+      <div className="max-w-content mx-auto">
         {/* Main grid with generous gap between brand block and nav columns */}
         <div className="grid max-md:grid-cols-1 gap-24 max-md:gap-10 pb-10 max-md:pb-8 mb-8 grid-cols-[200px_1fr] border-b border-white/20">
           {/* Left: Brand block */}

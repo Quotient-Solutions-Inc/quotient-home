@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export default function HowItWorks() {
   return (
-    <section className='bg-[#EDEDEA] rounded-tb-card px-8 lg:px-tb-section-x py-20 lg:py-24'>
+    <section className='bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-20 lg:py-24'>
       <div>
         <span className="block uppercase mb-4 font-mono text-tb-primary text-[11px] tracking-[0.08em]">
           How Q Works
