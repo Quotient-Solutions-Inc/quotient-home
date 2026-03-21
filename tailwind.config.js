@@ -26,15 +26,17 @@ module.exports = {
         },
         // Theme B palette (Design Addendum v1 colors)
         tb: {
-          primary:   '#F35B28',
-          cream:     '#EDEDEA',      // Card/section backgrounds on light pages
-          dark:      '#1C1A17',      // Hero, How It Works, Footer
-          page:      '#FAFAF7',      // Base page background
-          data:      '#3B98E6',
-          border:    '#D9D9D9',
-          muted:     '#888880',      // Muted text
-          lavender:  '#C596FE',      // Accent for hero headline, card outlines
-          'cta-hover': '#FF6B3D',
+          primary:      '#F35B28',          // Primary accent, CTAs, links
+          cream:        '#EDEDEA',          // Card/section backgrounds on light pages
+          dark:         '#1C1A17',          // Hero, How It Works, Footer, primary text
+          page:         '#FAFAF7',          // Base page background
+          data:         '#3B98E6',          // Data highlights, charts
+          border:       '#D9D9D9',          // Dividers, subtle borders
+          muted:        '#888880',          // Muted text
+          lavender:     '#C596FE',          // Accent for special highlights
+          'cta-hover':  '#FF6B3D',          // CTA hover state
+          'card-inner': '#F5F5F3',          // Inner/nested card backgrounds
+          'card-header':'#EAEAE8',          // Table headers, darker inner surfaces
         },
       },
       fontFamily: {
