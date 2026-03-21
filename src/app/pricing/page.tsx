@@ -10,7 +10,7 @@ export default function PricingPage() {
 
       {/* Pricing */}
       <section className="border-b bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y border-tb-border">
-        <div>
+        <div className="max-w-content mx-auto">
           <span className="block text-[11px] uppercase mb-4 font-mono tracking-[0.08em] text-gray-500">Pricing</span>
           <h1 className="font-headline font-bold text-[clamp(2.5rem,6vw,5rem)] leading-[0.85] uppercase text-tb-dark tracking-[-0.03em] mb-5">
             Simple. Transparent.<br />Three ways in.
@@ -82,7 +82,7 @@ export default function PricingPage() {
 
       {/* Feature comparison */}
       <section className="border-b bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y border-tb-border overflow-hidden">
-        <div>
+        <div className="max-w-content mx-auto">
           <h2 className="font-semibold tracking-[-0.02em] mb-6 font-headline font-bold text-[clamp(2rem,4vw,3.5rem)] uppercase text-tb-dark leading-[0.9]">Feature comparison</h2>
           <div className="overflow-x-auto -mx-8 px-8 lg:mx-0 lg:px-0">
             <table className="w-full text-[13px]">

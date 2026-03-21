@@ -8,13 +8,13 @@ const DOCS_HREF = 'https://dev.quotient.social'
 
 export default function BuildWithQPage() {
   return (
-    <div className='min-h-screen bg-[#FAFAF7] pt-[44px]'>
+    <div className='min-h-screen bg-tb-page pt-[44px]'>
       <Nav />
 
       <main className="flex flex-col p-tb-gap pt-0 w-full">
         <div className="flex flex-col gap-tb-gap">
           {/* Section 1: Hero + Available Data */}
-          <section className='bg-[#FAFAF7] rounded-tb-card'>
+          <section className='bg-tb-page rounded-tb-card'>
             <GridBlocksAnimation />
             <HeroAndAvailableData />
           </section>
@@ -38,6 +38,7 @@ export default function BuildWithQPage() {
 function HeroAndAvailableData() {
   return (
     <div className='px-8 lg:px-tb-section-x pb-tb-section-y'>
+      <div className="max-w-content mx-auto">
       {/* Hero */}
       <span className="block font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary mb-4">
         For Agents and Developers
@@ -63,17 +64,18 @@ function HeroAndAvailableData() {
         ].map((item) => (
           <div
             key={item.title}
-            className="bg-[#EDEDEA] rounded-[10px] p-5"
+            className="bg-tb-cream rounded-[10px] p-5"
             style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
           >
-            <h3 className="text-[14px] font-semibold mb-2 text-tb-dark">
+            <h3 className="text-[16px] font-semibold mb-2 text-tb-dark">
               {item.title}
             </h3>
-            <p className="text-[13px] leading-relaxed text-tb-dark/60">
+            <p className="text-[14px] leading-relaxed text-tb-dark/60">
               {item.desc}
             </p>
           </div>
         ))}
+      </div>
       </div>
     </div>
   )
@@ -81,8 +83,8 @@ function HeroAndAvailableData() {
 
 function EndpointOverview() {
   return (
-    <section className='bg-[#EDEDEA] rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
-      <div>
+    <section className='bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
+      <div className="max-w-content mx-auto">
         <span className="block font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary mb-4">
           Developer Access
         </span>
@@ -152,8 +154,8 @@ function WhatYouCanBuild() {
   ]
 
   return (
-    <section className='bg-[#FAFAF7] rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
-      <div>
+    <section className='bg-tb-page rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
+      <div className="max-w-content mx-auto">
         <span className="block font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary mb-4">
           Use Cases
         </span>
@@ -164,13 +166,13 @@ function WhatYouCanBuild() {
           {examples.map((item) => (
             <div
               key={item.title}
-              className="rounded-[10px] p-6 bg-[#EDEDEA]"
+              className="rounded-[10px] p-6 bg-tb-cream"
               style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
             >
-              <h3 className="text-[15px] font-semibold mb-2 text-tb-dark">
+              <h3 className="text-[16px] font-semibold mb-2 text-tb-dark">
                 {item.title}
               </h3>
-              <p className="text-[13px] leading-relaxed text-tb-dark/60">
+              <p className="text-[14px] leading-relaxed text-tb-dark/60">
                 {item.desc}
               </p>
             </div>
@@ -183,7 +185,7 @@ function WhatYouCanBuild() {
 
 function GetInTouchCTA() {
   return (
-    <section className='bg-[#F35B28] rounded-tb-card flex items-center justify-center px-8 max-md:px-6 py-16 lg:py-24 relative overflow-hidden'>
+    <section className='bg-tb-primary rounded-tb-card flex items-center justify-center px-8 max-md:px-6 py-16 lg:py-24 relative overflow-hidden'>
       <div className='text-center max-w-[680px] relative z-10'>
         <span className="block font-mono text-[11px] uppercase tracking-[0.08em] text-white/80 mb-4">
           Get Started
@@ -197,7 +199,7 @@ function GetInTouchCTA() {
         {/* DOCS LINK — Jordan to provide URL */}
         <Link
           href={DOCS_HREF}
-          className="inline-block text-[13px] font-mono uppercase tracking-[0.08em] px-7 py-3 border border-[#FAFAF7] text-white bg-transparent rounded-tb-card hover:bg-[#FAFAF7] hover:text-[#1C1A17] transition-all duration-200 ease-out"
+          className="inline-block text-[13px] font-mono uppercase tracking-[0.08em] px-7 py-3 border border-tb-page text-white bg-transparent rounded-tb-card hover:bg-tb-page hover:text-tb-dark transition-all duration-200 ease-out"
         >
           View API Docs &rarr;
         </Link>

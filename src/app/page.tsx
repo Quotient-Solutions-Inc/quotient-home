@@ -1,8 +1,9 @@
 import Nav from '@/components/Nav'
 import MarketplaceHero from '@/components/MarketplaceHero'
-import TrackRecord from '@/components/TrackRecord'
-import HowItWorks from '@/components/HowItWorks'
-import Ecosystem from '@/components/Ecosystem'
+import Performance from '@/components/Performance'
+import InsideAForecast from '@/components/InsideAForecast'
+import WhatPowersQ from '@/components/WhatPowersQ'
+import PutQToWork from '@/components/PutQToWork'
 import Footer from '@/components/Footer'
 
 export default function Home() {
@@ -12,9 +13,10 @@ export default function Home() {
       <main className="flex flex-col p-tb-gap pt-[52px] w-full">
         <div className="flex flex-col gap-tb-gap">
           <MarketplaceHero />
-          <TrackRecord />
-          <HowItWorks />
-          <Ecosystem />
+          <Performance />
+          <InsideAForecast />
+          <WhatPowersQ />
+          <PutQToWork />
           <Footer />
         </div>
       </main>

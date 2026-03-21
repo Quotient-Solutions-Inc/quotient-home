@@ -35,12 +35,14 @@ const faqItems = [
 function AboutHeroB() {
   return (
     <section className="bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-16 lg:py-24 text-center">
+      <div className="max-w-content mx-auto">
       <span className="block font-mono text-[11px] uppercase tracking-[0.08em] text-white/40 mb-6">
         About Quotient
       </span>
-      <h1 className="font-headline font-bold text-[32px] lg:text-[56px] leading-[0.95] text-white tracking-[-0.02em] max-w-[800px] mx-auto">
+      <h1 className="font-headline font-bold text-[32px] lg:text-[56px] leading-[0.95] text-white tracking-[-0.02em]">
         Where judgment becomes a product.
       </h1>
+      </div>
     </section>
   )
 }
@@ -49,8 +51,8 @@ function AboutHeroB() {
 function ProveItSection() {
   return (
     <section className='bg-tb-page rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
-      <div>
-        <div className="grid grid-cols-2 max-md:grid-cols-1 gap-12 max-md:gap-8">
+      <div className="max-w-content mx-auto">
+        <div className="grid grid-cols-2 max-md:grid-cols-1 gap-12 max-md:gap-8 max-w-[900px]">
           <div>
             <div className="text-[10px] uppercase mb-3 pb-2 font-mono tracking-[0.08em] text-gray-500 border-b border-tb-border">The problem</div>
             <h2 className="font-semibold tracking-[-0.02em] mb-4 font-headline font-bold text-[28px] text-tb-dark">Judgment is invisible</h2>
@@ -94,9 +96,9 @@ function ProveItSection() {
 function WhereThisIsGoing() {
   return (
     <section className='bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
-      <div>
-        <span className="block text-[11px] uppercase mb-4 font-mono tracking-[0.08em] text-tb-primary">Roadmap</span>
-        <h2 className='font-headline font-bold text-white text-[32px] lg:text-[48px] leading-[0.95] tracking-[-0.02em] mb-8'>Where this is going</h2>
+      <div className="max-w-content mx-auto">
+        <span className="block text-[11px] uppercase mb-3 font-mono tracking-[0.08em] text-tb-primary">Roadmap</span>
+        <h2 className='font-headline font-bold text-white text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-8'>Where this is going</h2>
         <div className="grid grid-cols-3 max-md:grid-cols-1 gap-[8px]">
           {[
             {
@@ -149,10 +151,10 @@ function CoachingLoopCompressed() {
 
   return (
     <section className='bg-tb-page rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
-      <div>
-        <span className="block text-[11px] uppercase mb-4 font-mono tracking-[0.08em] text-tb-primary">The coaching loop</span>
-        <h2 className='font-headline font-bold text-tb-dark text-[32px] lg:text-[48px] leading-[0.95] tracking-[-0.02em] mb-3'>How agents improve</h2>
-        <p className="text-[15px] leading-relaxed max-w-[600px] mb-8 text-tb-dark/70">
+      <div className="max-w-content mx-auto">
+        <span className="block text-[11px] uppercase mb-3 font-mono tracking-[0.08em] text-tb-primary">The coaching loop</span>
+        <h2 className='font-headline font-bold text-tb-dark text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-2'>How agents improve</h2>
+        <p className="text-[15px] leading-[1.7] max-w-[560px] mb-8 text-tb-dark/60">
           Every agent on the platform runs through a structured coaching loop
           that turns domain expertise into compounding accuracy.
         </p>
@@ -162,10 +164,10 @@ function CoachingLoopCompressed() {
               <div className="font-mono text-[10px] uppercase tracking-[0.08em] mb-2 text-tb-primary">
                 {step.n}
               </div>
-              <div className="text-[14px] font-semibold mb-1.5 text-tb-dark">
+              <div className="text-[16px] font-semibold mb-1.5 text-tb-dark">
                 {step.label}
               </div>
-              <div className="text-[12px] leading-relaxed text-tb-dark/50">
+              <div className="text-[14px] leading-relaxed text-tb-dark/60">
                 {step.desc}
               </div>
             </div>

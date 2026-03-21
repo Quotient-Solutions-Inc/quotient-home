@@ -41,6 +41,7 @@ const faqItems = [
 function ApiHeroB() {
   return (
     <section className="bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-12 lg:py-16">
+      <div className="max-w-content mx-auto">
       <h1 className="font-headline font-bold text-[32px] lg:text-[48px] leading-[0.95] uppercase text-tb-dark tracking-[-0.02em] mb-4">
         Q&apos;s intelligence layer, via API
       </h1>
@@ -65,6 +66,7 @@ function ApiHeroB() {
         </a>
       </div>
       <CodeBlock />
+      </div>
     </section>
   )
 }
@@ -74,9 +76,9 @@ function WhoItsFor() {
 
   return (
     <section className='bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
-      <div>
-        <span className="block text-[11px] uppercase mb-4 font-mono tracking-[0.08em] text-tb-primary">Who it&apos;s for</span>
-        <h2 className='font-headline font-bold uppercase text-tb-dark text-[32px] lg:text-[48px] leading-[0.95] tracking-[-0.02em] mb-8'>Built for every layer of the stack</h2>
+      <div className="max-w-content mx-auto">
+        <span className="block text-[11px] uppercase mb-3 font-mono tracking-[0.08em] text-tb-primary">Who it&apos;s for</span>
+        <h2 className='font-headline font-bold uppercase text-tb-dark text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-8'>Built for every layer of the stack</h2>
 
         {/* Tabs */}
         <div className="flex gap-0 mb-8">
@@ -172,10 +174,10 @@ function WhoItsFor() {
 function CoreEndpoints() {
   return (
     <section className='bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
-      <div>
-        <span className="block text-[11px] uppercase mb-4 font-mono tracking-[0.08em] text-tb-primary">Endpoints</span>
-        <h2 className='font-headline font-bold uppercase text-tb-cream text-[32px] lg:text-[48px] leading-[0.95] tracking-[-0.01em] mb-4'>Core endpoints</h2>
-        <p className="text-[15px] leading-relaxed max-w-[560px] mb-8 text-tb-cream/70">
+      <div className="max-w-content mx-auto">
+        <span className="block text-[11px] uppercase mb-3 font-mono tracking-[0.08em] text-tb-primary">Endpoints</span>
+        <h2 className='font-headline font-bold uppercase text-tb-cream text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-2'>Core endpoints</h2>
+        <p className="text-[15px] leading-[1.7] max-w-[560px] mb-8 text-tb-cream/60">
           Three endpoints cover most use cases. Start with /v1/markets to orient, then pull signal detail per market.
         </p>
         <div className="grid grid-cols-3 max-md:grid-cols-1 gap-[8px]">
@@ -199,10 +201,10 @@ function CoreEndpoints() {
 function FlexiblePayment() {
   return (
     <section className='bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
-      <div>
-        <span className="block text-[11px] uppercase mb-4 font-mono tracking-[0.08em] text-tb-primary">Pricing</span>
-        <h2 className='font-headline font-bold uppercase text-tb-dark text-[32px] lg:text-[48px] leading-[0.95] tracking-[-0.02em] mb-4'>Flexible payment</h2>
-        <p className="text-[15px] leading-relaxed max-w-[560px] mb-8 text-tb-dark/70">
+      <div className="max-w-content mx-auto">
+        <span className="block text-[11px] uppercase mb-3 font-mono tracking-[0.08em] text-tb-primary">Pricing</span>
+        <h2 className='font-headline font-bold uppercase text-tb-dark text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-2'>Flexible payment</h2>
+        <p className="text-[15px] leading-[1.7] max-w-[560px] mb-8 text-tb-dark/60">
           Agent-native via x402. Human-friendly via Stripe.
         </p>
         <div className="grid grid-cols-3 max-md:grid-cols-1 gap-[8px]">
