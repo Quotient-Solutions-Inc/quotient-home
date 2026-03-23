@@ -1,10 +1,14 @@
-import Link from 'next/link'
+'use client'
 
-// VAULT WAITLIST DESTINATION — Jordan to provide form URL or endpoint
-const VAULT_WAITLIST_HREF = '#'
+import { useState } from 'react'
+import Link from 'next/link'
+import EarlyAccessModal from './EarlyAccessModal'
 
 export default function Ecosystem() {
+  const [earlyAccessOpen, setEarlyAccessOpen] = useState(false)
+
   return (
+    <>
     <section className="bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y">
       {/* Centered headline */}
       <h2 className="font-headline font-bold text-tb-page text-[28px] lg:text-[42px] tracking-[-0.01em] leading-[0.95] mb-12 uppercase text-center">
@@ -47,15 +51,17 @@ export default function Ecosystem() {
             Deposit capital and let Q trade on your behalf.
           </p>
           <div className="mt-auto">
-            <Link
-              href={VAULT_WAITLIST_HREF}
+            <button
+              onClick={() => setEarlyAccessOpen(true)}
               className="inline-block font-mono text-[11px] uppercase tracking-[0.08em] px-5 py-2.5 bg-tb-primary text-white rounded-tb-card hover:bg-tb-cta-hover transition-colors"
             >
               Get Early Access &rarr;
-            </Link>
+            </button>
           </div>
         </div>
       </div>
     </section>
+    <EarlyAccessModal isOpen={earlyAccessOpen} onClose={() => setEarlyAccessOpen(false)} />
+    </>
   )
 }

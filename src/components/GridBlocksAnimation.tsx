@@ -13,7 +13,7 @@ import { useEffect, useRef } from 'react';
 // Recommended container height: 180-220px.
 
 const GRID_SIZE = 16;
-const LOOP_DURATION = 15000;
+const LOOP_DURATION = 8000; // Faster animation - 8 seconds instead of 15
 const NUM_PARTICLES = 300;
 
 interface Particle {
@@ -151,14 +151,16 @@ export default function GridBlocksAnimation() {
   return (
     // Container sits in the space between nav and eyebrow
     // Adjust height to taste — recommended 180-220px
-    // Fades at left and right edges to feel contained
+    // Fades at left, right, and bottom edges to feel contained
     <div
-      className="w-full pointer-events-none"
+      className="w-full pointer-events-none mb-12"
       style={{
         height: '200px',
-        maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
+        maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%), linear-gradient(to bottom, black 0%, black 70%, transparent 100%)',
         WebkitMaskImage:
-          'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
+          'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%), linear-gradient(to bottom, black 0%, black 70%, transparent 100%)',
+        maskComposite: 'intersect',
+        WebkitMaskComposite: 'source-in',
       }}
     >
       <canvas ref={canvasRef} className="w-full h-full" />

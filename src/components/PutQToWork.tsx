@@ -1,7 +1,9 @@
-import Link from 'next/link'
+'use client'
 
-// VAULT WAITLIST DESTINATION — Jordan to provide form URL or endpoint
-const VAULT_WAITLIST_HREF = '#'
+import { useState } from 'react'
+import Link from 'next/link'
+import { PRODUCT_HREF } from '@/lib/links'
+import EarlyAccessModal from './EarlyAccessModal'
 
 // SVG Icons
 function DashboardIcon() {
@@ -38,8 +40,8 @@ const CARDS = [
     eyebrow: 'Explore Directly',
     title: "View Q's intelligence",
     body: 'Log in to explore live forecasts, signal divergence, market reasoning, and recent calls.',
-    cta: 'Explore the Product →',
-    href: '#', // TODO: Update when product dashboard is live
+    cta: 'Open Quotient →',
+    href: PRODUCT_HREF,
   },
   {
     icon: TerminalIcon,
@@ -55,59 +57,73 @@ const CARDS = [
     title: 'Run a trading agent',
     body: "Use Q's signals as input into your own strategy and build automated trading workflows.",
     cta: 'Get Early Access →',
-    href: VAULT_WAITLIST_HREF,
+    opensModal: true,
   },
 ]
 
 export default function PutQToWork() {
+  const [earlyAccessOpen, setEarlyAccessOpen] = useState(false)
+
   return (
-    <section className="bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y">
-      <div className="max-w-content mx-auto">
-      {/* Centered headline */}
-      <h2 className="font-headline font-bold text-tb-page text-[28px] lg:text-[42px] tracking-[-0.01em] leading-[0.95] mb-12 uppercase text-center">
-        PUT Q TO WORK.
-      </h2>
+    <>
+      <section className="bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y">
+        <div className="max-w-content mx-auto">
+        {/* Centered headline */}
+        <h2 className="font-headline font-bold text-tb-page text-[28px] lg:text-[42px] tracking-[-0.01em] leading-[0.95] mb-12 uppercase text-center">
+          PUT Q TO WORK.
+        </h2>
 
-      {/* Three cards */}
-      <div className="grid grid-cols-3 max-md:grid-cols-1 gap-4 max-w-4xl mx-auto">
-        {CARDS.map((card) => (
-          <div
-            key={card.title}
-            className="rounded-[10px] bg-white/[0.06] p-6 text-left flex flex-col"
-          >
-            {/* Icon */}
-            <div className="text-tb-page/60 mb-4">
-              <card.icon />
+        {/* Three cards */}
+        <div className="grid grid-cols-3 max-md:grid-cols-1 gap-4 max-w-4xl mx-auto">
+          {CARDS.map((card) => (
+            <div
+              key={card.title}
+              className="rounded-[10px] bg-white/[0.06] p-6 text-left flex flex-col"
+            >
+              {/* Icon */}
+              <div className="text-tb-page/60 mb-4">
+                <card.icon />
+              </div>
+
+              {/* Eyebrow */}
+              <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-tb-page/50 mb-2">
+                {card.eyebrow}
+              </span>
+
+              {/* Title */}
+              <h3 className="text-[16px] font-semibold mb-3 text-tb-page">
+                {card.title}
+              </h3>
+
+              {/* Body */}
+              <p className="text-[14px] leading-relaxed text-tb-page/60 mb-6 flex-1">
+                {card.body}
+              </p>
+
+              {/* CTA */}
+              <div className="mt-auto">
+                {card.opensModal ? (
+                  <button
+                    onClick={() => setEarlyAccessOpen(true)}
+                    className="font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors"
+                  >
+                    {card.cta}
+                  </button>
+                ) : (
+                  <Link
+                    href={card.href!}
+                    className="font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors"
+                  >
+                    {card.cta}
+                  </Link>
+                )}
+              </div>
             </div>
-
-            {/* Eyebrow */}
-            <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-tb-page/50 mb-2">
-              {card.eyebrow}
-            </span>
-
-            {/* Title */}
-            <h3 className="text-[16px] font-semibold mb-3 text-tb-page">
-              {card.title}
-            </h3>
-
-            {/* Body */}
-            <p className="text-[14px] leading-relaxed text-tb-page/60 mb-6 flex-1">
-              {card.body}
-            </p>
-
-            {/* CTA */}
-            <div className="mt-auto">
-              <Link
-                href={card.href}
-                className="font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors"
-              >
-                {card.cta}
-              </Link>
-            </div>
-          </div>
-        ))}
-      </div>
-      </div>
-    </section>
+          ))}
+        </div>
+        </div>
+      </section>
+      <EarlyAccessModal isOpen={earlyAccessOpen} onClose={() => setEarlyAccessOpen(false)} />
+    </>
   )
 }

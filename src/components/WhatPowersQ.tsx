@@ -61,9 +61,14 @@ export default function WhatPowersQ() {
         </span>
 
         {/* Headline */}
-        <h2 className="font-headline font-bold text-tb-dark text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-8 uppercase">
-          Q COMBINES BROAD COVERAGE, STRUCTURED REASONING, AND HUMAN INPUT
+        <h2 className="font-headline font-bold text-tb-dark text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-3 uppercase">
+          Built to find what others miss.
         </h2>
+
+        {/* Subhead */}
+        <p className="text-[15px] leading-relaxed text-tb-dark/70 mb-8 max-w-[560px]">
+          Three inputs work together so Q sees further, reasons better, and gets sharper over time.
+        </p>
 
         {/* Three cards */}
         <div className="grid grid-cols-3 max-md:grid-cols-1 gap-[8px]">

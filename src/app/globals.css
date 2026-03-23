@@ -11,4 +11,43 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid #ee6f4b;
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .skip-link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1000;
+    transform: translateY(-160%);
+    border-radius: 10px;
+    background: #1c1a17;
+    color: #f5f0e8;
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    font-family: var(--font-dm-mono), monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: transform 0.2s ease;
+  }
+
+  .skip-link:focus-visible {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }

@@ -1,12 +1,12 @@
 'use client'
 
-import Link from 'next/link'
+import { useState } from 'react'
 import HeroAnimation from './HeroAnimation'
-
-// VAULT WAITLIST DESTINATION — Jordan to provide form URL or endpoint
-const VAULT_WAITLIST_HREF = '#'
+import EarlyAccessModal from './EarlyAccessModal'
 
 export default function MarketplaceHero() {
+  const [earlyAccessOpen, setEarlyAccessOpen] = useState(false)
+
   return (
     <section className="relative overflow-hidden bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-20 lg:py-28">
       {/* Full-spread particle animation behind all content */}
@@ -37,13 +37,15 @@ export default function MarketplaceHero() {
         </p>
 
         {/* Single CTA - white outline at rest, orange fill on hover */}
-        <Link
-          href={VAULT_WAITLIST_HREF}
+        <button
+          onClick={() => setEarlyAccessOpen(true)}
           className="px-8 h-[50px] flex items-center border border-tb-page text-tb-page font-mono text-[14px] uppercase tracking-[0.08em] rounded-tb-card hover:bg-tb-primary hover:border-tb-primary transition-all duration-200 ease-out"
         >
           Get Early Access
-        </Link>
+        </button>
       </div>
+
+      <EarlyAccessModal isOpen={earlyAccessOpen} onClose={() => setEarlyAccessOpen(false)} />
     </section>
   )
 }

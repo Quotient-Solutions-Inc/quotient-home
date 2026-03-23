@@ -27,6 +27,7 @@ module.exports = {
         // Theme B palette (Design Addendum v1 colors)
         tb: {
           primary:      '#F35B28',          // Primary accent, CTAs, links
+          'primary-matte': '#C44A20',       // Matte/darker orange for sections with white text
           cream:        '#EDEDEA',          // Card/section backgrounds on light pages
           dark:         '#1C1A17',          // Hero, How It Works, Footer, primary text
           page:         '#FAFAF7',          // Base page background

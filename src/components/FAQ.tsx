@@ -27,22 +27,26 @@ export default function FAQ({
 
 function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false)
+  const answerId = `faq-answer-${q.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
 
   return (
-    <div
-      className="cursor-pointer border-b border-tb-border"
-      onClick={() => setOpen(!open)}
-    >
-      <div className="flex justify-between items-center py-4 gap-4">
+    <div className="border-b border-tb-border">
+      <button
+        type="button"
+        className="flex w-full justify-between items-center py-4 gap-4 text-left"
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-controls={answerId}
+      >
         <span className="text-[15px] font-medium text-tb-dark">
           {q}
         </span>
         <span className="font-mono text-xs flex-shrink-0 text-gray-300">
           {open ? '−' : '+'}
         </span>
-      </div>
+      </button>
       {open && (
-        <div className="text-sm leading-relaxed pb-4 pr-8 text-tb-dark/60">
+        <div id={answerId} className="text-sm leading-relaxed pb-4 pr-8 text-tb-dark/60">
           {a}
         </div>
       )}

@@ -1,3 +1,6 @@
+import Link from 'next/link'
+import { PRODUCT_HREF } from '@/lib/links'
+
 export default function QCalledIt() {
   return (
     <section className='relative bg-tb-page rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
@@ -43,9 +46,12 @@ export default function QCalledIt() {
         </div>
 
         <div className="flex justify-end">
-          <span className="text-xs cursor-pointer transition-colors font-mono text-gray-400 hover:text-tb-primary">
-            View all resolved markets &rarr;
-          </span>
+          <Link
+            href={PRODUCT_HREF}
+            className="text-xs transition-colors font-mono text-gray-400 hover:text-tb-primary"
+          >
+            View more resolved markets &rarr;
+          </Link>
         </div>
       </div>
     </section>

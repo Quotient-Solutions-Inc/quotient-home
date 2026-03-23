@@ -9,10 +9,19 @@ import { useEffect, useRef } from 'react';
 // Line is LEFT-ALIGNED to match the copy position (using section padding).
 // Line is positioned at roughly 48% height (between headline and subhead).
 // ~11-second loop.
+// Supports inverted mode for light backgrounds (dark particles).
+
+interface HeroAnimationProps {
+  inverted?: boolean;
+  footerMode?: boolean; // When true, line is positioned at footer divider location (~80% height)
+}
 
 const PARTICLE_COUNT = 200;
 const CYCLE_DURATION = 13000; // ms per full cycle (extended for longer line hold)
-const COLOR = '255, 255, 255'; // Pure white
+const FOOTER_CYCLE_DURATION = 10400; // 20% faster for footer (13000 * 0.8)
+const COLOR_LIGHT = '255, 255, 255'; // White particles for dark backgrounds
+const COLOR_DARK = '28, 26, 23'; // tb-dark particles for light backgrounds
+const COLOR_FOOTER = '255, 255, 255'; // Footer particles match text-white/40
 
 function easeInOutCubic(x: number): number {
   return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
@@ -56,7 +65,7 @@ class Particle {
     this.baseOpacity = Math.random() * 0.12 + 0.10;
   }
 
-  draw(ctx: CanvasRenderingContext2D, time: number, progress: number) {
+  draw(ctx: CanvasRenderingContext2D, time: number, progress: number, color: string, footerMode: boolean = false) {
     // Reduce drift as particles converge for smoother alignment
     const driftFactor = 1 - progress * 0.9;
 
@@ -71,7 +80,9 @@ class Particle {
     const y = currentNoiseY + (this.targetY - currentNoiseY) * progress;
 
     // Opacity increases as particles converge - brighter when forming line
-    const currentOpacity = this.baseOpacity + progress * (0.65 - this.baseOpacity);
+    // Footer mode uses lower opacity to match text-white/40
+    const maxOpacity = footerMode ? 0.40 : 0.65;
+    const currentOpacity = this.baseOpacity + progress * (maxOpacity - this.baseOpacity);
 
     // Size: slightly larger dots when scattered, uniform tight dots when converged
     // Use a fixed random seed based on index for consistent size (no flickering)
@@ -80,17 +91,20 @@ class Particle {
     const convergedSize = 1.0;
     const size = scatteredSize * (1 - progress) + convergedSize * progress;
 
-    ctx.fillStyle = `rgba(${COLOR}, ${currentOpacity})`;
+    ctx.fillStyle = `rgba(${color}, ${currentOpacity})`;
     ctx.beginPath();
     ctx.arc(x, y, size, 0, Math.PI * 2);
     ctx.fill();
   }
 }
 
-export default function HeroAnimation() {
+export default function HeroAnimation({ inverted = false, footerMode = false }: HeroAnimationProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // Footer uses same white but with lower opacity matching text-white/40
+  const color = inverted ? COLOR_DARK : (footerMode ? COLOR_FOOTER : COLOR_LIGHT);
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -106,21 +120,37 @@ export default function HeroAnimation() {
     let lineY = 0;
 
     const initParticles = () => {
-      // Line positioned between headline and subhead
-      // Desktop: py-28 (112px) + eyebrow (~43px) + headline (~200px) = ~355px
-      // Mobile: py-20 (80px) + eyebrow (~43px) + headline (~120px) = ~243px
-      // Calculate as percentage based on typical hero heights
       const isMobile = width < 1024;
+      const sectionPadding = isMobile ? 32 : 48; // px-8 on mobile, lg:px-tb-section-x on desktop
+      const maxContentWidth = 1020; // max-w-content from tailwind config
 
-      // Position line at the spacer location (after headline, before subhead)
-      // Approximately 55% on desktop, 50% on mobile
-      lineY = isMobile ? height * 0.50 : height * 0.55;
+      // Calculate where the max-w-content container actually starts
+      // On wide screens, it's centered within the section padding
+      const availableWidth = width - (sectionPadding * 2);
+      const contentWidth = Math.min(availableWidth, maxContentWidth);
+      const contentStartX = sectionPadding + (availableWidth - contentWidth) / 2;
 
-      // Line starts at same left position as content (matches section padding: 32px on mobile, 48px on desktop)
-      lineStartX = isMobile ? 32 : 48;
+      if (footerMode) {
+        // Footer mode: line positioned at the divider location
+        // Move line up a bit to give breathing room from bottom bar
+        lineY = height * 0.72;
 
-      // Line length matches "YOU COLLECT THE RETURNS." text width - approximately 500-600px
-      lineLength = Math.min(width * 0.45, 580);
+        // Line is CENTERED on the page (not aligned to content)
+        lineLength = contentWidth * 0.85; // Tighter line - 85% of content width
+        lineStartX = (width - lineLength) / 2; // Center the line horizontally
+      } else {
+        // Hero mode: line positioned between headline and subhead
+        // Position line at the spacer location (after headline, before subhead)
+        // Approximately 55% on desktop, 50% on mobile
+        lineY = isMobile ? height * 0.50 : height * 0.55;
+
+        // Line starts at same left position as content (where text starts)
+        lineStartX = contentStartX;
+
+        // Line extends across almost the full content width, left-aligned to copy
+        // Extended longer to the right while keeping left alignment
+        lineLength = contentWidth * 0.92;
+      }
 
       particles = [];
       for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -147,8 +177,10 @@ export default function HeroAnimation() {
     const animate = (currentTime: number) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const cycleTime = currentTime % CYCLE_DURATION;
-      const normalizedTime = cycleTime / CYCLE_DURATION;
+      // Footer mode uses faster cycle duration (20% faster)
+      const cycleDuration = footerMode ? FOOTER_CYCLE_DURATION : CYCLE_DURATION;
+      const cycleTime = currentTime % cycleDuration;
+      const normalizedTime = cycleTime / cycleDuration;
 
       let progress = 0;
 
@@ -173,7 +205,7 @@ export default function HeroAnimation() {
 
       // Always draw particles - they naturally form a line when fully converged
       for (let i = 0; i < particles.length; i++) {
-        particles[i].draw(ctx, currentTime, progress);
+        particles[i].draw(ctx, currentTime, progress, color, footerMode);
       }
 
       animFrameId = requestAnimationFrame(animate);
@@ -184,6 +216,14 @@ export default function HeroAnimation() {
 
     const timer = setTimeout(() => {
       resize();
+      if (prefersReducedMotion) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < particles.length; i++) {
+          particles[i].draw(ctx, 0, 1, color, footerMode);
+        }
+        return;
+      }
+
       animFrameId = requestAnimationFrame(animate);
     }, 50);
 
@@ -192,13 +232,14 @@ export default function HeroAnimation() {
       window.removeEventListener('resize', handleResize);
       if (animFrameId) cancelAnimationFrame(animFrameId);
     };
-  }, []);
+  }, [footerMode, color]);
 
   return (
     <div className="relative w-full h-full pointer-events-none">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
+        aria-hidden="true"
       />
     </div>
   );
