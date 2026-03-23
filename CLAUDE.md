@@ -13,66 +13,24 @@ This site is editorial-grade marketing: authoritative, restrained, and evidence-
 
 ---
 
+## Canonical Docs
+
+Before making structural or visual changes, check these first:
+
+- `docs/design-system.md` — canonical visual and design guidance
+- `docs/site-architecture.md` — canonical route and navigation reference
+
+If a reusable visual rule changes, update `docs/design-system.md`.
+If routes, redirects, or public IA change, update `docs/site-architecture.md`.
+
+---
+
 ## Stack
 
 - **Framework:** Next.js 14 (App Router)
 - **Styling:** Tailwind CSS
 - **Fonts:** Google Fonts (Newsreader, DM Mono, Inter) + Instrument Sans for wordmark
 - **Deploy:** Vercel (auto-deploy on push to main)
-
----
-
-## Page Routes
-
-| Route | Purpose |
-|-------|---------|
-| `/` | Homepage — Hero, Track Record preview, How It Works, Ecosystem CTA, Footer |
-| `/agents/q/track-record` | Q's Track Record — SignalLinesAnimation, QCallsFeed table, QCalledIt section, Vault CTA |
-| `/agents` | Build with Q — Developer/API landing page with GridBlocksAnimation, endpoints, use cases |
-| `/agents/q/api` | API Documentation — Code examples, FAQs, detailed endpoint docs |
-| `/about` | About page — Company info, FAQs |
-| `/team` | Team page |
-| `/pricing` | Pricing page |
-| `/api` | Redirects to `/agents/q/api` |
-| `/platforms` | Redirects to `/agents/q/api` |
-| `/signal` | Redirects to `/agents/q/track-record` |
-| `/agents/q` | Redirects to `/agents/q/track-record` |
-
----
-
-## Components
-
-| Component | Used By | Purpose |
-|-----------|---------|---------|
-| `Nav.tsx` | All pages | Fixed top nav with wordmark, links, mobile menu, CTA button |
-| `Footer.tsx` | All pages | Dark footer with nav columns, Substack subscribe, social links |
-| `MarketplaceHero.tsx` | Homepage | Dark hero section with HeroAnimation, headline, CTAs |
-| `HeroAnimation.tsx` | MarketplaceHero | Canvas particle animation for homepage hero |
-| `TrackRecord.tsx` | Homepage | Preview section linking to full track record |
-| `HowItWorks.tsx` | Homepage | Three-step explanation of Q's process |
-| `Ecosystem.tsx` | Homepage | "Put Q to Work" CTA section with two cards |
-| `QCallsFeed.tsx` | Track Record | Table of Q's open forecasts with mock data |
-| `QCalledIt.tsx` | Track Record | Past resolved calls showcase |
-| `SignalLinesAnimation.tsx` | Track Record | Canvas animation — converging signal lines |
-| `GridBlocksAnimation.tsx` | Build with Q | Canvas animation — particles assembling into grid |
-| `CodeBlock.tsx` | API Docs | Syntax-highlighted code examples |
-| `QTabBar.tsx` | API Docs | Tab navigation between code examples |
-| `FAQ.tsx` | About, API Docs | Expandable FAQ accordion |
-
----
-
-## Nav Structure
-
-**Desktop:**
-- Wordmark (links to `/`)
-- Track Record → `/agents/q/track-record`
-- Build with Q → `/agents`
-- About → `/about`
-- Get Early Access (CTA button) → Vault waitlist
-
-**Mobile:**
-- Wordmark + Get Early Access button + hamburger menu
-- Dropdown: Track Record, Build with Q, About
 
 ---
 
@@ -113,37 +71,10 @@ Eyebrow pattern: `font-mono text-[11px] uppercase tracking-[0.08em] text-tb-prim
 
 ---
 
-## Placeholder Comments — Jordan To Provide
+## Working Rules
 
-| Location | What's Needed |
-|----------|---------------|
-| `src/components/Nav.tsx:6` | Vault waitlist form URL or endpoint |
-| `src/components/MarketplaceHero.tsx:6` | Vault waitlist form URL or endpoint |
-| `src/components/Ecosystem.tsx:3` | Vault waitlist form URL or endpoint |
-| `src/app/agents/q/track-record/page.tsx:8` | Vault waitlist form URL or endpoint |
-| `src/components/QCallsFeed.tsx:1` | API endpoint to replace mock forecast data |
-| `src/app/agents/page.tsx:6` | Final API docs URL (currently `https://dev.quotient.social`) |
-
-All vault waitlist links currently point to `#` as a placeholder.
-
----
-
-## Design Patterns
-
-- **Section backgrounds:** Alternate between `#FAFAF7` (light) and `#1C1A17` (dark)
-- **Card styling:** `rounded-[10px]` with `boxShadow: '0 1px 4px rgba(0,0,0,0.08)'`
-- **Section padding:** `px-8 lg:px-tb-section-x py-tb-section-y`
-- **Animations:** Canvas-based, 200px height, CSS mask for left/right edge fade
-- **CTA buttons:** Orange fill (`bg-tb-primary`) or white outline on orange backgrounds
-
----
-
-## Commit Workflow
-
-After each meaningful change, commit in small logical chunks. Keep commit messages short and descriptive.
-
----
-
-## Reference Files
-
-The `/reference` folder contains HTML wireframes and UI pattern references from initial planning. These are historical context — the implemented site has evolved beyond them.
+- Keep `CLAUDE.md` lightweight and tool-facing.
+- Put stable human-facing visual rules in `docs/design-system.md`.
+- Put stable route and IA details in `docs/site-architecture.md`.
+- Do not use this file as the home for temporary handoff notes or action items.
+- Keep commit messages small, logical, and reviewable.
