@@ -28,7 +28,7 @@ export default function Ecosystem() {
           </p>
           <div className="mt-auto">
             <Link
-              href="/agents"
+              href="/build-with-q"
               className="font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors"
             >
               Get Started &rarr;

@@ -116,11 +116,9 @@ export default function Footer() {
             {/* Product Column (renamed from Agentic Trading) */}
             <div className="flex flex-col gap-3">
               <FooterLabel>Product</FooterLabel>
-              <FooterLink href="/agents/q/case-studies/geopolitical">Geopolitical Case Study</FooterLink>
-              <FooterLink href="/agents/q/case-studies/culture">Culture Case Study</FooterLink>
-              <FooterLink href="/agents">Build with Q</FooterLink>
+              <FooterLink href="/case-studies/geopolitical">Geopolitical Case Study</FooterLink>
+              <FooterLink href="/build-with-q">Build with Q</FooterLink>
               <FooterLink href="https://dev.quotient.social/docs#tag/markets/GET/api/v1/markets">API Docs</FooterLink>
-              <FooterLink href="/agents/q/api#pricing">Pricing</FooterLink>
             </div>
 
             {/* Company Column */}

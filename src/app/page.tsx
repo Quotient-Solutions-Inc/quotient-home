@@ -10,7 +10,7 @@ import { buildPageMetadata } from '@/lib/metadata'
 export const metadata = buildPageMetadata({
   title: 'Prediction Agent Platform',
   description:
-    'Quotient turns global signals into high-conviction forecasts, track records, and APIs for traders, builders, and agents.',
+    'Quotient turns global signals into high-conviction forecasts, public case studies, and APIs for traders, builders, and agents.',
   path: '/',
 })
 

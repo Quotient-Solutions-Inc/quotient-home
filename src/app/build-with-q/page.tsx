@@ -3,29 +3,27 @@ import ApiCodeBlock from '@/components/ApiCodeBlock'
 import FooterLight from '@/components/FooterLight'
 import DotGridBackground from '@/components/DotGridBackground'
 import Link from 'next/link'
-import { CONTACT_HREF } from '@/lib/links'
 import { buildPageMetadata } from '@/lib/metadata'
 
 export const metadata = buildPageMetadata({
-  title: 'Build with Q API',
+  title: 'Build with Q',
   description:
     'Access Q forecasts, signals, mispriced markets, and structured trading intelligence through the Quotient API.',
-  path: '/agents/q/api',
+  path: '/build-with-q',
 })
 
-export default function ApiPage() {
+export default function BuildWithQPage() {
   return (
     <div className='min-h-screen bg-tb-page pt-[44px]'>
       <Nav />
 
       <main id="main-content" className="flex flex-col p-tb-gap pt-0 w-full">
         <div className="flex flex-col gap-tb-gap">
-          <ApiHero />
-          <ApiIntro />
+          <BuildWithQHero />
+          <BuildWithQIntro />
           <WhatsAvailable />
           <BankrPartnership />
           <CoreEndpoints />
-          <Pricing />
           <FooterLight />
         </div>
       </main>
@@ -34,7 +32,7 @@ export default function ApiPage() {
 }
 
 // Section 1: Hero (dark, dot grid, 3px left border)
-function ApiHero() {
+function BuildWithQHero() {
   return (
     <section className="bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-16 lg:py-24 relative overflow-hidden">
       <DotGridBackground />
@@ -74,8 +72,8 @@ function ApiHero() {
   )
 }
 
-// Section 2: API Intro (dark, two-column with code block)
-function ApiIntro() {
+// Section 2: Build with Q intro (dark, two-column with code block)
+function BuildWithQIntro() {
   return (
     <section className="bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-8 lg:py-12 relative overflow-hidden">
       <DotGridBackground />
@@ -269,7 +267,7 @@ function BankrPartnership() {
 
           {/* Headline */}
           <h2 className="font-headline font-bold uppercase text-tb-dark text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-2">
-            Q now lives on Bankr
+            Trade with Q on Bankr
           </h2>
 
           {/* Subhead (italic) */}
@@ -376,114 +374,6 @@ function CoreEndpoints() {
               </div>
             </div>
           ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// Section 6: Pricing (dark, 3 tier cards + route table)
-function Pricing() {
-  const tiers = [
-    {
-      label: 'PER CALL',
-      price: '$0.01',
-      unit: 'PER REQUEST',
-      desc: 'x402 micropayments for agentic workflows. No API key needed. USDC on Base.',
-      cta: 'Start building',
-      href: 'https://dev.quotient.social/docs#tag/markets/GET/api/v1/markets',
-    },
-    {
-      label: 'SUBSCRIPTION',
-      price: '$99',
-      unit: 'PER MONTH',
-      desc: 'Unlimited calls. Stripe billing for developers and small teams. API key access.',
-      cta: 'Subscribe',
-      href: 'https://dev.quotient.social/docs#tag/markets/GET/api/v1/markets',
-    },
-    {
-      label: 'VOLUME',
-      price: 'Custom',
-      unit: 'PER MONTH',
-      desc: 'For platforms, wallets, and high frequency agents. Dedicated support and SLAs.',
-      cta: 'Contact us',
-      href: CONTACT_HREF,
-    },
-  ]
-
-  const routes = [
-    { route: '/markets/*/intelligence', credits: '250', price: '$0.25' },
-    { route: '/markets/*/signals', credits: '25', price: '$0.025' },
-    { route: '/markets/mispriced', credits: '100', price: '$0.10' },
-    { route: '/markets', credits: '5', price: '$0.005' },
-    { route: '/markets/lookup', credits: '5', price: '$0.005' },
-  ]
-
-  return (
-    <section id="pricing" className="bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y scroll-mt-20">
-      <div className="max-w-content mx-auto">
-        <span className="block font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary mb-3">
-          Pricing
-        </span>
-        <h2 className="font-headline font-bold uppercase text-white text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-2">
-          Flexible payment
-        </h2>
-        <p className="text-[15px] text-white/60 mb-7">
-          Agent native via x402. Human friendly via Stripe.
-        </p>
-
-        {/* Three pricing tier cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-[720px] mb-8">
-          {tiers.map((tier) => (
-            <div
-              key={tier.label}
-              className="bg-white/[0.06] rounded-[10px] p-6 border border-white/[0.05]"
-            >
-              <span className="block font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary mb-2">
-                {tier.label}
-              </span>
-              <div className="font-headline text-[32px] font-bold text-white mb-0.5">{tier.price}</div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.06em] text-white/60 mb-4">
-                {tier.unit}
-              </div>
-              <p className="text-[13px] text-white/60 leading-[1.5] mb-4">{tier.desc}</p>
-              <a
-                href={tier.href}
-                className="font-mono text-[12px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors"
-              >
-                {tier.cta} &rarr;
-              </a>
-            </div>
-          ))}
-        </div>
-
-        {/* Route level pricing table */}
-        <div className="max-w-[720px]">
-          <span className="block font-mono text-[11px] uppercase tracking-[0.08em] text-white/60 mb-2">
-            Route Level Pricing
-          </span>
-          <div className="bg-white/[0.04] rounded-[10px] border border-white/[0.05] overflow-hidden">
-            {/* Header row */}
-            <div className="flex px-4 py-2.5 text-white/60 font-mono text-[10px] uppercase tracking-[0.06em] border-b border-white/[0.08]">
-              <div className="flex-[2]">Route</div>
-              <div className="flex-1 text-right">Credits</div>
-              <div className="flex-1 text-right">x402</div>
-            </div>
-            {/* Data rows */}
-            {routes.map((r, i) => (
-              <div
-                key={r.route}
-                className={`flex px-4 py-3 items-center ${i !== routes.length - 1 ? 'border-b border-white/[0.08]' : ''}`}
-              >
-                <div className="font-mono text-[13px] text-white flex-[2]">{r.route}</div>
-                <div className="font-mono text-[13px] text-white/60 flex-1 text-right">{r.credits}</div>
-                <div className="font-mono text-[13px] text-white font-bold flex-1 text-right">{r.price}</div>
-              </div>
-            ))}
-          </div>
-          <p className="text-[10px] text-white/50 mt-2">
-            Pricing is policy driven at the gateway.
-          </p>
         </div>
       </div>
     </section>

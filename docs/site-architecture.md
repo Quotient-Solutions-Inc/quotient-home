@@ -28,45 +28,28 @@ This repo is a Next.js App Router marketing site for Quotient. The current publi
 
 ## Route Inventory
 
-### Rendered pages
-
 | Route | Purpose |
 | --- | --- |
 | `/` | Main marketing landing page |
+| `/build-with-q` | Q API landing page |
+| `/case-studies/geopolitical` | Public geopolitical case study |
 | `/about` | Company / platform narrative |
 | `/team` | Team page |
-| `/agents/q/api` | Q API landing page |
-| `/agents/q/case-studies/geopolitical` | Public geopolitical case study |
-| `/agents/q/case-studies/culture` | Public culture case study |
-
-### Redirect-only routes
-
-| Route | Redirect target |
-| --- | --- |
-| `/agents` | `/agents/q/api` |
-| `/agents/q` | `/agents/q/api` |
-| `/agents/q/track-record` | `/` |
-| `/signal` | `/` |
-| `/pricing` | `/agents/q/api#pricing` |
-| `/api` | `/agents/q/api` |
-| `/platforms` | `/agents/q/api` |
 
 ## Site Flow
 
 ```text
 Home (/)
   -> Case Studies (dropdown)
-  -> Build with Q (/agents -> /agents/q/api)
+  -> Build with Q (/build-with-q)
   -> About (/about)
   -> Early access / contact / Substack
 
 Case Studies
-  -> Geopolitical (/agents/q/case-studies/geopolitical)
-  -> Culture (/agents/q/case-studies/culture)
+  -> Geopolitical (/case-studies/geopolitical)
 
-Q API (/agents/q/api)
+Build with Q (/build-with-q)
   -> Docs
-  -> Pricing
   -> Integration inquiry
 
 About (/about)
@@ -76,8 +59,7 @@ About (/about)
 
 ## Notes
 
-- The former standalone pricing page now redirects to the API pricing section to avoid shipping placeholder pricing.
+- The public IA is intentionally flat: home, build with Q, two case studies, about, and team.
 - Case studies are part of the public primary navigation via a dropdown that forces a child-page choice instead of a generic index page.
-- The former track-record route now redirects to the homepage because the proof surface lives in the homepage sections.
 - Early-access destinations are currently `mailto:` fallbacks and should be replaced with final form URLs when available.
 - Discoverability routes include `robots.txt`, `sitemap.xml`, manifest metadata, generated icons, and generated social-sharing images.

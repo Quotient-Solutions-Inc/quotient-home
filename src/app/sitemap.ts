@@ -3,17 +3,10 @@ import { absoluteUrl } from '@/lib/site'
 
 const routes = [
   '/',
+  '/build-with-q',
+  '/case-studies/geopolitical',
   '/about',
   '/team',
-  '/agents',
-  '/agents/q',
-  '/agents/q/case-studies/geopolitical',
-  '/agents/q/case-studies/culture',
-  '/agents/q/api',
-  '/api',
-  '/platforms',
-  '/pricing',
-  '/signal',
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

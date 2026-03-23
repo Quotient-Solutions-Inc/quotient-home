@@ -5,17 +5,10 @@ Marketing site for Quotient, built with Next.js App Router and Tailwind CSS.
 ## Current public flow
 
 - `/` homepage
+- `/build-with-q` API and developer landing page
+- `/case-studies/geopolitical` geopolitical case study
 - `/about` company narrative
 - `/team` team page
-- `/agents` redirects to the Q API landing page
-- `/agents/q` redirects to the Q API landing page
-- `/agents/q/api` API and developer landing page
-- `/agents/q/case-studies/geopolitical` geopolitical case study
-- `/agents/q/case-studies/culture` culture case study
-- `/agents/q/track-record` redirects to `/`
-- `/signal` redirects to `/`
-- `/api` and `/platforms` redirect to the API page
-- `/pricing` redirects to the API pricing section
 
 ## Commands
 

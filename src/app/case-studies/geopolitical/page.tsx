@@ -1,6 +1,14 @@
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import { buildPageMetadata } from '@/lib/metadata'
+
+export const metadata = buildPageMetadata({
+  title: 'Geopolitical Case Study',
+  description:
+    'A closer look at the calls, evidence, and outcomes behind Q’s strongest geopolitical reads.',
+  path: '/case-studies/geopolitical',
+})
 
 // Case study data structure for easy updates
 interface CaseStudy {
@@ -234,12 +242,6 @@ export default function GeopoliticalCaseStudiesPage() {
                 >
                   Log in to Quotient
                   <span className="ml-2">&rarr;</span>
-                </Link>
-                <Link
-                  href="/agents/q/case-studies/culture"
-                  className="font-mono text-[13px] uppercase tracking-[0.08em] text-white/80 hover:text-white transition-colors"
-                >
-                  Next case study: Culture &rarr;
                 </Link>
               </div>
             </div>

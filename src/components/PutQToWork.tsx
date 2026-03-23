@@ -49,7 +49,7 @@ const CARDS = [
     title: 'Build with the API',
     body: 'Access forecasts, signals, and structured market intelligence through endpoints for apps, workflows, and agents.',
     cta: 'View Docs →',
-    href: '/agents/q/api',
+    href: '/build-with-q',
   },
   {
     icon: BoltIcon,

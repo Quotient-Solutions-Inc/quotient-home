@@ -378,7 +378,7 @@ export default function Performance({ showCta = true }: PerformanceProps) {
         {showCta && (
           <div className="max-w-[720px] mt-8">
             <a
-              href="/agents/q/case-studies/geopolitical"
+              href="/case-studies/geopolitical"
               className="inline-flex items-center font-mono text-[13px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors"
             >
               See the geopolitical case study &rarr;

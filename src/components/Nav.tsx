@@ -10,11 +10,7 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
 
   let isActive = pathname === href
 
-  if (href === '/agents') {
-    isActive = pathname === '/agents' || (pathname?.startsWith('/agents/q/api') ?? false)
-  } else if (href === '/agents/q/case-studies') {
-    isActive = pathname === href || (pathname?.startsWith('/agents/q/case-studies') ?? false)
-  } else if (pathname?.startsWith(href + '/')) {
+  if (pathname?.startsWith(href + '/')) {
     isActive = true
   }
 
@@ -43,7 +39,7 @@ function CaseStudiesDropdown() {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const menuId = 'case-studies-menu'
-  const isActive = pathname?.startsWith('/agents/q/case-studies')
+  const isActive = pathname?.startsWith('/case-studies')
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -100,28 +96,16 @@ function CaseStudiesDropdown() {
           className="absolute top-full left-0 mt-0 bg-tb-page border border-tb-border/30 rounded-tb-card shadow-sm min-w-[180px] overflow-hidden"
         >
           <Link
-            href="/agents/q/case-studies/geopolitical"
+            href="/case-studies/geopolitical"
             role="menuitem"
             onClick={() => setIsOpen(false)}
             className={`block px-4 py-2 font-mono text-[12px] uppercase tracking-[0.06em] transition-colors ${
-              pathname === '/agents/q/case-studies/geopolitical'
+              pathname === '/case-studies/geopolitical'
                 ? 'text-tb-primary bg-tb-primary/5 border-l-[3px] border-tb-primary pl-[13px]'
                 : 'text-tb-dark/70 hover:text-tb-dark hover:bg-tb-dark/5'
             }`}
           >
             Geopolitical
-          </Link>
-          <Link
-            href="/agents/q/case-studies/culture"
-            role="menuitem"
-            onClick={() => setIsOpen(false)}
-            className={`block px-4 py-2 font-mono text-[12px] uppercase tracking-[0.06em] transition-colors ${
-              pathname === '/agents/q/case-studies/culture'
-                ? 'text-tb-primary bg-tb-primary/5 border-l-[3px] border-tb-primary pl-[13px]'
-                : 'text-tb-dark/70 hover:text-tb-dark hover:bg-tb-dark/5'
-            }`}
-          >
-            Culture
           </Link>
         </div>
       )}
@@ -133,9 +117,7 @@ function MobileNavLink({ href, onClick, children, indent = false }: { href: stri
   const pathname = usePathname()
 
   let isActive = pathname === href
-  if (href === '/agents') {
-    isActive = pathname === '/agents' || (pathname?.startsWith('/agents/q/api') ?? false)
-  } else if (pathname?.startsWith(href + '/')) {
+  if (pathname?.startsWith(href + '/')) {
     isActive = true
   }
 
@@ -181,7 +163,7 @@ export default function Nav() {
         {/* Desktop nav */}
         <div className="hidden lg:flex items-stretch gap-0">
           <CaseStudiesDropdown />
-          <NavLink href="/agents">Build with Q</NavLink>
+          <NavLink href="/build-with-q">Build with Q</NavLink>
           <NavLink href="/about">About</NavLink>
           <button
             onClick={() => setEarlyAccessOpen(true)}
@@ -227,13 +209,10 @@ export default function Nav() {
             <span className="px-6 py-2 font-mono text-[11px] uppercase tracking-[0.08em] text-tb-dark/50">
               Case Studies
             </span>
-            <MobileNavLink href="/agents/q/case-studies/geopolitical" onClick={() => setMobileOpen(false)} indent>
+            <MobileNavLink href="/case-studies/geopolitical" onClick={() => setMobileOpen(false)} indent>
               Geopolitical
             </MobileNavLink>
-            <MobileNavLink href="/agents/q/case-studies/culture" onClick={() => setMobileOpen(false)} indent>
-              Culture
-            </MobileNavLink>
-            <MobileNavLink href="/agents" onClick={() => setMobileOpen(false)}>
+            <MobileNavLink href="/build-with-q" onClick={() => setMobileOpen(false)}>
               Build with Q
             </MobileNavLink>
             <MobileNavLink href="/about" onClick={() => setMobileOpen(false)}>
