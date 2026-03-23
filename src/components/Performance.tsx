@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
 
 // Star icon for Q row
 function StarIcon() {
@@ -62,7 +61,7 @@ function PulseDot() {
   return (
     <span className="relative inline-flex mr-2">
       <span className="w-2 h-2 bg-green-500 rounded-full" />
-      <span className="absolute w-2 h-2 bg-green-500 rounded-full animate-ping opacity-75" />
+      <span className="absolute w-2 h-2 bg-green-500 rounded-full motion-safe:animate-ping opacity-75" />
     </span>
   )
 }
@@ -103,7 +102,31 @@ const RECENT_CALLS = [
   },
 ]
 
-export default function Performance() {
+// JORDAN: Replace with actual missed calls and dates
+const MISSED_CALLS = [
+  {
+    market: 'U.S. strike on Iran by [date]?',
+    qCalled: 'No',
+    qCalledColor: 'text-tb-primary',
+    marketOdds: '40%',
+    whatHappened: 'Yes',
+    miss: 'Underpriced escalation risk',
+  },
+  {
+    market: 'Israeli strike triggers U.S. action?',
+    qCalled: 'Low',
+    qCalledColor: 'text-tb-primary',
+    marketOdds: '[TBD]%',
+    whatHappened: 'Yes',
+    miss: 'Treated as independent market',
+  },
+]
+
+interface PerformanceProps {
+  showCta?: boolean
+}
+
+export default function Performance({ showCta = true }: PerformanceProps) {
   return (
     <section
       id="performance"
@@ -292,15 +315,77 @@ export default function Performance() {
           </div>
         </div>
 
-        {/* CTA Link */}
-        <div className="mt-6">
-          <Link
-            href="/agents/q/case-studies"
-            className="inline-block text-[13px] font-mono uppercase tracking-[0.08em] transition-colors text-tb-primary hover:text-tb-cta-hover"
+        {/* Block D: Where Q got it wrong */}
+        <div className="max-w-[720px] mt-8">
+          {/* Label — outside card */}
+          <h3 className="text-[15px] font-semibold mb-1 text-tb-dark">
+            Where Q called it wrong and what we learned
+          </h3>
+          <p className="text-[13px] text-tb-dark/50 mb-3">
+            Q is always learning. When a forecast misses, we trace the reasoning, find the breakdown, and come back sharper.
+          </p>
+
+          {/* Card — contains only table */}
+          <div
+            className="rounded-[10px] bg-white overflow-hidden"
+            style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
           >
-            See Case Studies &rarr;
-          </Link>
+            {/* Table */}
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-tb-dark/10 bg-tb-card-inner">
+                  <th className="text-left px-3 py-2.5 font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">Market</th>
+                  <th className="text-left px-3 py-2.5 font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">Q Called</th>
+                  <th className="text-left px-3 py-2.5 font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50 max-md:hidden">Market Odds</th>
+                  <th className="text-left px-3 py-2.5 font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">What Happened</th>
+                  <th className="text-right px-3 py-2.5 font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">Miss</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MISSED_CALLS.map((call, i) => (
+                  <tr key={i} className={i < MISSED_CALLS.length - 1 ? 'border-b border-tb-dark/10' : ''}>
+                    <td className="px-3 py-2.5 text-[13px] text-tb-dark">{call.market}</td>
+                    <td className={`px-3 py-2.5 font-mono text-[13px] font-medium ${call.qCalledColor}`}>{call.qCalled}</td>
+                    <td className="px-3 py-2.5 font-mono text-[13px] text-tb-dark/40 max-md:hidden">{call.marketOdds}</td>
+                    <td className="px-3 py-2.5 text-[13px] text-tb-dark">{call.whatHappened}</td>
+                    <td className="px-3 py-2.5 text-right text-[13px] text-tb-primary">{call.miss}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* What we fixed block */}
+          <div className="border-l-[3px] border-tb-primary rounded-r-[6px] pl-4 py-3 bg-white mt-4" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
+            <h4 className="text-[14px] font-semibold text-tb-dark mb-2">What we fixed</h4>
+            <p className="text-[13px] leading-relaxed text-tb-dark/60">
+              Q was treating each market independently, but correlated outcomes matter. An Israeli strike on Iran makes a U.S. strike more likely, not less. These dependencies weren&apos;t flowing between forecasts. We updated the pipeline to incorporate correlated outcome analysis. Early results show better calibrated forecasts on escalation markets, and Q&apos;s assessments now show a wider, more thoughtful spread.
+            </p>
+          </div>
+
+          {/* CTA */}
+          <a
+            href="https://quotient.substack.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center font-mono text-[13px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors mt-4"
+          >
+            Read the full postmortem on Substack &rarr;
+          </a>
         </div>
+
+        {/* CTA Link */}
+        {showCta && (
+          <div className="max-w-[720px] mt-8">
+            <a
+              href="/agents/q/case-studies/geopolitical"
+              className="inline-flex items-center font-mono text-[13px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors"
+            >
+              See the geopolitical case study &rarr;
+            </a>
+          </div>
+        )}
+
       </div>
     </section>
   )

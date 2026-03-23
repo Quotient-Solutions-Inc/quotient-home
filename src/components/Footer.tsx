@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { CONTACT_HREF } from '@/lib/links'
+import HeroAnimation from './HeroAnimation'
 
 function FooterLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -22,6 +24,8 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
 function SubstackSubscribe() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const inputId = 'footer-subscribe-email'
+  const statusId = 'footer-subscribe-status'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -42,21 +46,29 @@ function SubstackSubscribe() {
 
   if (status === 'success') {
     return (
-      <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary">
-        Subscribed. Check your inbox.
+      <div id={statusId} aria-live="polite" className="font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary">
+        Request submitted. Check your inbox for confirmation.
       </div>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-0">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+      <label htmlFor={inputId} className="sr-only">
+        Email address
+      </label>
+      <div className="flex gap-0">
       <input
+        id={inputId}
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="YOUR EMAIL"
+        autoComplete="email"
+        inputMode="email"
         required
-        className="font-mono text-[11px] uppercase tracking-[0.04em] px-3 py-2 w-full outline-none transition-colors bg-white/[0.06] border border-white/20 text-white/80 placeholder:text-white/30 focus:border-tb-primary rounded-l-[6px]"
+        aria-describedby={status !== 'idle' ? statusId : undefined}
+        className="font-mono text-[11px] uppercase tracking-[0.04em] px-3 py-2 w-full transition-colors bg-white/[0.06] border border-white/20 text-white/80 placeholder:text-white/30 focus:border-tb-primary rounded-l-[6px]"
       />
       <button
         type="submit"
@@ -65,6 +77,12 @@ function SubstackSubscribe() {
       >
         {status === 'loading' ? '...' : 'Subscribe'}
       </button>
+      </div>
+      <div id={statusId} aria-live="polite" className="font-mono text-[10px] uppercase tracking-[0.08em] text-white/40">
+        {status === 'error'
+          ? 'Subscription failed. Open Substack directly if the issue persists.'
+          : 'We will only use this to process your Substack subscription.'}
+      </div>
     </form>
   )
 }
@@ -72,9 +90,13 @@ function SubstackSubscribe() {
 export default function Footer() {
   return (
     <footer className='bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x pt-14 pb-10 relative overflow-hidden'>
-      <div className="max-w-content mx-auto">
+      {/* Particle animation background - forms the divider line */}
+      <div className="absolute inset-0 pointer-events-none">
+        <HeroAnimation footerMode />
+      </div>
+      <div className="max-w-content mx-auto relative z-10">
         {/* Main grid with generous gap between brand block and nav columns */}
-        <div className="grid max-md:grid-cols-1 gap-24 max-md:gap-10 pb-10 max-md:pb-8 mb-8 grid-cols-[200px_1fr] border-b border-white/20">
+        <div className="grid max-md:grid-cols-1 gap-24 max-md:gap-10 pb-10 max-md:pb-8 mb-8 grid-cols-[200px_1fr]">
           {/* Left: Brand block */}
           <div>
             {/* White SVG wordmark - preserves negative space in Q */}
@@ -84,19 +106,20 @@ export default function Footer() {
               className="h-5 w-auto mb-2"
             />
             <div className="font-mono text-white/60 text-[12px] uppercase tracking-[0.04em] leading-relaxed mb-5">
-              AI-powered prediction<br />market intelligence.
+              Super forecasting for<br />prediction market traders.
             </div>
             <SubstackSubscribe />
           </div>
 
           {/* Right: Nav columns - pushed further right with ml-auto and larger gap */}
           <div className="grid grid-cols-4 max-md:grid-cols-2 gap-12 max-md:gap-x-8 max-md:gap-y-6 ml-auto max-md:ml-0">
-            {/* Agentic Trading Column (renamed from Q) */}
+            {/* Product Column (renamed from Agentic Trading) */}
             <div className="flex flex-col gap-3">
-              <FooterLabel>Agentic Trading</FooterLabel>
-              <FooterLink href="/agents/q/case-studies">Case Studies</FooterLink>
+              <FooterLabel>Product</FooterLabel>
+              <FooterLink href="/agents/q/case-studies/geopolitical">Geopolitical Case Study</FooterLink>
+              <FooterLink href="/agents/q/case-studies/culture">Culture Case Study</FooterLink>
               <FooterLink href="/agents">Build with Q</FooterLink>
-              <FooterLink href="/agents/q/api">API Docs</FooterLink>
+              <FooterLink href="https://dev.quotient.social/docs#tag/markets/GET/api/v1/markets">API Docs</FooterLink>
               <FooterLink href="/agents/q/api#pricing">Pricing</FooterLink>
             </div>
 
@@ -105,7 +128,7 @@ export default function Footer() {
               <FooterLabel>Company</FooterLabel>
               <FooterLink href="/about">About</FooterLink>
               <FooterLink href="/team">Team</FooterLink>
-              <FooterLink href="mailto:hello@quotient.social">Contact</FooterLink>
+              <FooterLink href={CONTACT_HREF}>Contact</FooterLink>
             </div>
 
             {/* Contributors Column (renamed from Signal) */}
