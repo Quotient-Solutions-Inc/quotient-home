@@ -451,7 +451,7 @@ export default function Performance({ showCta = true }: PerformanceProps) {
               We updated the pipeline to track correlated outcomes across linked markets. Forecasts on escalation events are now better calibrated, and Q&apos;s spreads reflect it.
             </p>
             <a
-              href="https://quotient.substack.com/p/timelines-mojtaba-khamenei-strait"
+              href="https://quotient.substack.com/i/189897966/what-we-got-wrong-and-what-were-fixing"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center font-mono text-[13px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors mt-3"
