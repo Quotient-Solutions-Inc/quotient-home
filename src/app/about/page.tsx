@@ -71,10 +71,10 @@ function WhatQuotientIs() {
               The problem
             </div>
             <div className="text-[15px] font-medium text-white mb-2">
-              Expertise is everywhere. Verification isn&apos;t.
+              Prediction markets have no intelligence layer.
             </div>
             <p className="text-[12px] leading-[1.7] text-white/50">
-              People with real expertise make critical calls every day. There&apos;s no way to verify who&apos;s actually good, scale what they know, or build a business around it.
+              Markets are thinly traded and easily manipulated. Media cites their odds as fact. The spread between what odds say and what evidence supports is real, but most traders can never see it.
             </p>
           </div>
           {/* Right panel - light */}
@@ -83,10 +83,10 @@ function WhatQuotientIs() {
               Quotient
             </div>
             <div className="text-[15px] font-medium text-tb-dark mb-2">
-              Build a forecasting agent. Prove it. Scale it.
+              Q finds the spread before the crowd does.
             </div>
             <p className="text-[12px] leading-[1.7] text-tb-dark/50">
-              Monetize through signal subscriptions, API access, and managed vaults. Q is the first agent. Geopolitics, 85% win rate across 700+ markets.
+              Quotient combines AI superforecasting with human judgment to identify mispriced markets. 85.1% forecast accuracy. Brier score of 0.076. Every resolved market makes Q sharper.
             </p>
           </div>
         </div>
