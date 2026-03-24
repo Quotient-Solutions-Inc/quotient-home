@@ -53,7 +53,7 @@ const CARDS = [
 
 export default function WhatPowersQ() {
   return (
-    <section className="bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y">
+    <section className="section-shell bg-tb-cream rounded-tb-card py-16 sm:py-20 lg:py-tb-section-y">
       <div className="max-w-content mx-auto">
         {/* Eyebrow */}
         <span className="block uppercase mb-3 font-mono text-tb-primary text-[11px] tracking-[0.08em]">
@@ -71,14 +71,14 @@ export default function WhatPowersQ() {
         </p>
 
         {/* Three cards */}
-        <div className="grid grid-cols-3 max-md:grid-cols-1 gap-[8px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-[8px]">
           {CARDS.map((card) => (
             <div
               key={card.title}
-              className="rounded-[10px] p-7 flex flex-col bg-white"
+              className="rounded-[10px] p-6 sm:p-7 flex flex-col bg-white"
               style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
             >
-              <div className="text-tb-dark/60 mb-4">
+              <div className="flex-shrink-0 w-10 h-10 rounded-[6px] bg-tb-dark/[0.06] flex items-center justify-center mb-4 text-tb-dark/60">
                 <card.icon />
               </div>
               <h3 className="text-[16px] font-semibold mb-3 text-tb-dark">

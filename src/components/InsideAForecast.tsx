@@ -1,13 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
-import { PRODUCT_HREF } from '@/lib/links'
 
-// SVG Icons for "What's inside every forecast" section
+// SVG Icons for legend cards - using brand orange stroke
 function TargetIcon() {
   return (
-    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#F35B28" strokeWidth={1.5}>
       <circle cx="12" cy="12" r="10" />
       <circle cx="12" cy="12" r="6" />
       <circle cx="12" cy="12" r="2" />
@@ -17,7 +15,7 @@ function TargetIcon() {
 
 function GridIcon() {
   return (
-    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#F35B28" strokeWidth={1.5}>
       <rect x="3" y="3" width="7" height="7" />
       <rect x="14" y="3" width="7" height="7" />
       <rect x="3" y="14" width="7" height="7" />
@@ -28,7 +26,7 @@ function GridIcon() {
 
 function DocumentIcon() {
   return (
-    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#F35B28" strokeWidth={1.5}>
       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
       <polyline points="14,2 14,8 20,8" />
       <line x1="16" y1="13" x2="8" y2="13" />
@@ -43,6 +41,28 @@ const FORECAST_ITEMS = [
   { icon: GridIcon, title: 'Key factors', desc: "Ranked and weighted evidence driving Q's view" },
   { icon: DocumentIcon, title: 'Full analysis', desc: 'Reasoning, assumptions, and scenario analysis' },
 ]
+
+// Legend card component
+function LegendCard({ icon: Icon, title, desc }: { icon: React.ComponentType; title: string; desc: string }) {
+  return (
+    <div
+      className="bg-white rounded-[10px] border border-tb-border p-4 flex items-start gap-3"
+      style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
+    >
+      <div className="flex-shrink-0 w-8 h-8 rounded-[6px] bg-tb-primary/10 flex items-center justify-center">
+        <Icon />
+      </div>
+      <div>
+        <h4 className="font-headline text-[15px] font-semibold text-tb-dark mb-1">
+          {title}
+        </h4>
+        <p className="text-[13px] leading-relaxed text-tb-dark/50">
+          {desc}
+        </p>
+      </div>
+    </div>
+  )
+}
 
 // Info button component
 function InfoButton({ isHovered }: { isHovered: boolean }) {
@@ -91,10 +111,12 @@ function MetricTile({
   isEdge?: boolean
 }) {
   const [hovered, setHovered] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+  const visible = hovered || expanded
 
   return (
     <div
-      className={`relative flex-1 py-4 px-4 cursor-default ${isEdge ? 'bg-tb-primary/10' : ''}`}
+      className={`relative rounded-[8px] border border-tb-border/60 py-4 px-4 ${isEdge ? 'bg-tb-primary/10' : 'bg-white/70'}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -102,7 +124,15 @@ function MetricTile({
         <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">
           {label}
         </span>
-        <InfoButton isHovered={hovered} />
+        <button
+          type="button"
+          onClick={() => setExpanded((open) => !open)}
+          className="inline-flex"
+          aria-expanded={visible}
+          aria-label={`More information about ${label}`}
+        >
+          <InfoButton isHovered={visible} />
+        </button>
       </div>
       <span className={`block font-headline text-[24px] font-semibold mb-1 ${valueColor}`}>
         {value}
@@ -110,7 +140,16 @@ function MetricTile({
       <span className="block text-[11px] text-tb-dark/40">
         {descriptor}
       </span>
-      <Tooltip visible={hovered}>{tooltip}</Tooltip>
+      <div className="mt-3 md:hidden">
+        {visible && (
+          <div className="rounded-[6px] bg-tb-dark px-3 py-2 text-[12px] leading-relaxed text-tb-page">
+            {tooltip}
+          </div>
+        )}
+      </div>
+      <div className="hidden md:block">
+        <Tooltip visible={visible}>{tooltip}</Tooltip>
+      </div>
     </div>
   )
 }
@@ -124,16 +163,16 @@ const KEY_FACTORS = [
 
 export default function InsideAForecast() {
   return (
-    <section className="bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y">
+    <section className="section-shell bg-tb-cream rounded-tb-card py-16 sm:py-20 lg:py-tb-section-y">
       <div className="max-w-content mx-auto">
         {/* Eyebrow */}
         <span className="block uppercase mb-3 font-mono text-tb-primary text-[11px] tracking-[0.08em]">
-          Inside a Q Forecast
+          Q in Action
         </span>
 
         {/* Headline */}
         <h2 className="font-headline font-bold text-tb-dark text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-2 uppercase">
-          SEE WHAT Q ACTUALLY PRODUCES
+          SEE INSIDE A Q FORECAST
         </h2>
 
         {/* Subhead */}
@@ -141,10 +180,11 @@ export default function InsideAForecast() {
           Each forecast includes a directional call, the key factors driving the view, and the full analysis reasoning behind.
         </p>
 
-        {/* Example Forecast Card */}
-        <div>
+        {/* Two-column layout: Forecast card (max 720px to match Performance charts) + Legend (wider, vertically centered) */}
+        <div className="flex max-lg:flex-col gap-6 items-center">
+          {/* Left column: Forecast card - matches Performance section chart widths */}
           <div
-            className="rounded-tb-card overflow-hidden border border-tb-border"
+            className="max-w-[720px] w-full rounded-tb-card overflow-hidden border border-tb-border flex-shrink-0"
             style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
           >
             {/* Section 1: Header - Dark background */}
@@ -159,7 +199,7 @@ export default function InsideAForecast() {
 
             {/* Section 2: Metrics row */}
             <div className="bg-tb-card-inner">
-              <div className="flex max-md:flex-wrap">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 p-4">
                 <MetricTile
                   label="Q's Call"
                   value="Yes"
@@ -167,7 +207,6 @@ export default function InsideAForecast() {
                   descriptor="What Q predicts"
                   tooltip="This is the direction Q is betting. Yes or No. The probability comes separately."
                 />
-                <div className="w-px bg-tb-border max-md:hidden" />
                 <MetricTile
                   label="Q's Forecast"
                   value="52%"
@@ -175,7 +214,6 @@ export default function InsideAForecast() {
                   descriptor="Q's probability estimate"
                   tooltip="Q thinks there's a 52% chance this happens. This is Q's independent probability estimate."
                 />
-                <div className="w-px bg-tb-border max-md:hidden" />
                 <MetricTile
                   label="Market Odds"
                   value="63%"
@@ -183,7 +221,6 @@ export default function InsideAForecast() {
                   descriptor="What the crowd is pricing"
                   tooltip="What Polymarket was pricing when Q made this call. This is the crowd's view, not Q's."
                 />
-                <div className="w-px bg-tb-border max-md:hidden" />
                 <MetricTile
                   label="Q's Edge"
                   value="11 pts"
@@ -195,39 +232,70 @@ export default function InsideAForecast() {
               </div>
             </div>
 
-            {/* Section 3: Key Factors */}
+            {/* Section 3: Key Factors - Table layout */}
             <div className="bg-tb-card-inner px-6 py-5 border-t border-tb-border">
               <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50 mb-4">
                 Key Factors
               </span>
-              <div className="space-y-2">
+              <div className="md:hidden space-y-2">
                 {KEY_FACTORS.map((factor, i) => (
                   <div
                     key={i}
-                    className={`flex items-center bg-white rounded-[6px] border border-tb-border/50 py-3 px-4 border-l-2 ${
+                    className={`rounded-[6px] border border-tb-border/50 bg-white p-4 ${
                       factor.weight === 'critical'
-                        ? 'border-l-tb-primary'
-                        : 'border-l-tb-dark/20'
+                        ? 'border-l-[3px] border-l-tb-primary'
+                        : 'border-l-[3px] border-l-tb-dark/20'
                     }`}
                   >
-                    <span
-                      className={`inline-block w-[90px] flex-shrink-0 px-2 py-0.5 rounded text-[10px] uppercase tracking-[0.04em] font-medium text-center ${
-                        factor.weight === 'critical'
-                          ? 'bg-tb-primary/10 text-tb-primary'
-                          : 'bg-tb-dark/5 text-tb-dark/50'
-                      }`}
-                    >
-                      {factor.weight}
-                    </span>
-                    <span className="font-mono text-[12px] text-tb-dark/40 w-[40px] text-right flex-shrink-0 mx-3">
-                      {factor.percentage}
-                    </span>
-                    <span className="text-[13px] text-tb-dark/80 flex-1">
-                      {factor.text}
-                    </span>
+                    <div className="flex items-center justify-between gap-3 mb-2">
+                      <span
+                        className={`inline-block px-2 py-0.5 rounded text-[10px] uppercase tracking-[0.04em] font-medium text-center ${
+                          factor.weight === 'critical'
+                            ? 'bg-tb-primary/10 text-tb-primary'
+                            : 'bg-tb-dark/5 text-tb-dark/50'
+                        }`}
+                      >
+                        {factor.weight}
+                      </span>
+                      <span className="font-mono text-[12px] text-tb-dark/40">{factor.percentage}</span>
+                    </div>
+                    <p className="text-[13px] leading-relaxed text-tb-dark/80">{factor.text}</p>
                   </div>
                 ))}
               </div>
+              <table className="hidden md:table w-full">
+                <tbody>
+                  {KEY_FACTORS.map((factor, i) => (
+                    <tr
+                      key={i}
+                      className={`bg-white border border-tb-border/50 ${
+                        factor.weight === 'critical'
+                          ? 'border-l-2 border-l-tb-primary'
+                          : 'border-l-2 border-l-tb-dark/20'
+                      } ${i > 0 ? 'mt-2' : ''}`}
+                      style={{ display: 'table', width: '100%', marginBottom: i < KEY_FACTORS.length - 1 ? '8px' : '0', borderRadius: '6px' }}
+                    >
+                      <td className="py-3 px-4 whitespace-nowrap" style={{ width: '90px' }}>
+                        <span
+                          className={`inline-block w-[80px] px-2 py-0.5 rounded text-[10px] uppercase tracking-[0.04em] font-medium text-center ${
+                            factor.weight === 'critical'
+                              ? 'bg-tb-primary/10 text-tb-primary'
+                              : 'bg-tb-dark/5 text-tb-dark/50'
+                          }`}
+                        >
+                          {factor.weight}
+                        </span>
+                      </td>
+                      <td className="py-3 px-2 font-mono text-[12px] text-tb-dark/40 text-right whitespace-nowrap" style={{ width: '50px' }}>
+                        {factor.percentage}
+                      </td>
+                      <td className="py-3 px-4 text-[13px] text-tb-dark/80">
+                        {factor.text}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
 
             {/* Section 4: Full Analysis */}
@@ -235,40 +303,26 @@ export default function InsideAForecast() {
               <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50 mb-4">
                 Full Analysis
               </span>
-              <p className="text-[14px] text-tb-dark/50 leading-relaxed italic mb-3">
+              <p className="text-[14px] text-tb-dark/50 leading-relaxed italic">
                 The current military posture closely mirrors the configuration observed before the June 2025 strikes. Combined with Iran&apos;s degraded nuclear capabilities and explicit deadline language from the administration, Q assesses near-term strike probability higher than the market is pricing...
               </p>
-              <Link
-                href={PRODUCT_HREF}
-                className="group inline-flex items-center font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors duration-150"
-              >
-                Log in to read full analysis
-                <span className="ml-1 transition-transform duration-150 group-hover:translate-x-0.5">&rarr;</span>
-              </Link>
             </div>
+          </div>
 
-            {/* What's inside every forecast - inside card */}
-            <div className="bg-tb-cream px-6 py-5 border-t border-tb-border">
-              <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/40 mb-5">
-                WHAT&apos;S INSIDE EVERY FORECAST
-              </span>
-              <div className="grid grid-cols-3 max-md:grid-cols-1 gap-6">
-                {FORECAST_ITEMS.map((item) => (
-                  <div key={item.title} className="flex items-start gap-3">
-                    <div className="text-tb-primary flex-shrink-0 mt-0.5">
-                      <item.icon />
-                    </div>
-                    <div>
-                      <h4 className="font-headline text-[16px] font-semibold text-tb-dark mb-1">
-                        {item.title}
-                      </h4>
-                      <p className="text-[13px] leading-relaxed text-tb-dark/50">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+          {/* Right column: Legend cards - vertically centered, wider than before */}
+          <div className="w-full max-w-[320px] max-lg:max-w-none">
+            <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/40 mb-4">
+              What&apos;s inside every forecast
+            </span>
+            <div className="flex flex-col gap-2">
+              {FORECAST_ITEMS.map((item) => (
+                <LegendCard
+                  key={item.title}
+                  icon={item.icon}
+                  title={item.title}
+                  desc={item.desc}
+                />
+              ))}
             </div>
           </div>
         </div>

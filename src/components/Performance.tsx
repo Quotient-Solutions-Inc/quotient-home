@@ -69,9 +69,9 @@ function PulseDot() {
 // Win rate comparison data
 const WIN_RATE_DATA = [
   { name: 'Q', value: 85.1, isQ: true },
-  { name: 'Claude Opus 4.6', value: 43.5, isQ: false },
-  { name: 'GPT-4o', value: null, isQ: false },
-  { name: 'Gemini', value: null, isQ: false },
+  { name: 'Gemini 3.1 Pro', value: 50.9, isQ: false },
+  { name: 'Claude Opus 4.6', value: 42.6, isQ: false },
+  { name: 'GLM 5', value: 25.0, isQ: false },
 ]
 
 // Brier score data (lower is better)
@@ -110,7 +110,7 @@ const MISSED_CALLS = [
     qCalledColor: 'text-tb-primary',
     marketOdds: '40%',
     whatHappened: 'Yes',
-    miss: 'Underpriced escalation risk',
+    miss: 'Escalation risk',
   },
   {
     market: 'Israeli strike triggers U.S. action?',
@@ -118,7 +118,7 @@ const MISSED_CALLS = [
     qCalledColor: 'text-tb-primary',
     marketOdds: '[TBD]%',
     whatHappened: 'Yes',
-    miss: 'Treated as independent market',
+    miss: 'Linked markets',
   },
 ]
 
@@ -130,7 +130,7 @@ export default function Performance({ showCta = true }: PerformanceProps) {
   return (
     <section
       id="performance"
-      className="bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y"
+      className="section-shell bg-tb-cream rounded-tb-card py-16 sm:py-20 lg:py-tb-section-y"
     >
       <div className="max-w-content mx-auto">
         {/* Eyebrow */}
@@ -167,7 +167,7 @@ export default function Performance({ showCta = true }: PerformanceProps) {
               <div className="space-y-3">
                 {WIN_RATE_DATA.map((item) => (
                   <div key={item.name} className="flex items-center gap-3">
-                    <span className={`w-[110px] text-[13px] flex items-center ${item.isQ ? 'font-bold text-tb-dark' : 'text-tb-dark/40'}`}>
+                    <span className={`w-[96px] sm:w-[110px] text-[12px] sm:text-[13px] flex items-center ${item.isQ ? 'font-bold text-tb-dark' : 'text-tb-dark/40'}`}>
                       {item.name}
                       {item.isQ && <StarIcon />}
                     </span>
@@ -179,7 +179,7 @@ export default function Performance({ showCta = true }: PerformanceProps) {
                         />
                       )}
                     </div>
-                    <span className={`w-[55px] text-right font-mono ${item.isQ ? 'text-[16px] font-bold text-tb-dark' : 'text-[13px] text-tb-dark/40'}`}>
+                    <span className={`w-[48px] sm:w-[55px] text-right font-mono ${item.isQ ? 'text-[15px] sm:text-[16px] font-bold text-tb-dark' : 'text-[12px] sm:text-[13px] text-tb-dark/40'}`}>
                       {item.value !== null ? (
                         item.isQ ? <AnimatedNumber value={item.value} /> : `${item.value}%`
                       ) : (
@@ -193,18 +193,27 @@ export default function Performance({ showCta = true }: PerformanceProps) {
 
             {/* Footnote — outside card */}
             <p className="text-[10px] text-tb-dark/40 mt-2">
-              Based on 120+ resolved forecasts. Frontier model data via PredictionArena.
+              Based on 120+ resolved forecasts. Frontier model data via{' '}
+              <a
+                href="https://www.predictionarena.ai/?platform=polymarket"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-tb-dark/60 transition-colors"
+              >
+                PredictionArena
+              </a>
+              . As of March 23, 2026.
             </p>
         </div>
 
         {/* Block B: Brier Score Benchmark */}
-        <div className="max-w-[720px] mt-8">
+        <div className="max-w-[720px] mt-12">
           {/* Label — outside card */}
           <h3 className="text-[15px] font-semibold mb-1 text-tb-dark">
             Q vs. top forecasting benchmarks
           </h3>
           <p className="text-[13px] text-tb-dark/50 mb-3">
-            Lower is better. Q scores alongside elite human superforecasters and ahead of leading AI model benchmarks.
+            Lower is better. Brier score measures forecast accuracy and Q scores alongside elite human superforecasters and ahead of leading AI model benchmarks.
           </p>
 
             {/* Card — contains only data */}
@@ -256,8 +265,9 @@ export default function Performance({ showCta = true }: PerformanceProps) {
                         style={{ backgroundColor: item.color }}
                       />
                       <div>
-                        <div className="font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">
+                        <div className={`font-mono text-[10px] uppercase tracking-[0.08em] flex items-center ${item.name === 'Q' ? 'font-bold text-tb-dark' : 'text-tb-dark/50'}`}>
                           {item.name}
+                          {item.name === 'Q' && <StarIcon />}
                         </div>
                         <div
                           className={`font-mono text-[18px] ${item.name === 'Q' ? 'font-bold text-tb-dark' : ''}`}
@@ -274,7 +284,7 @@ export default function Performance({ showCta = true }: PerformanceProps) {
         </div>
 
         {/* Block C: Recent Calls */}
-        <div className="max-w-[720px] mt-8">
+        <div className="max-w-[720px] mt-12">
           {/* Label — outside card */}
           <h3 className="text-[15px] font-semibold mb-1 text-tb-dark flex items-center">
               <PulseDot />
@@ -285,12 +295,48 @@ export default function Performance({ showCta = true }: PerformanceProps) {
           </p>
 
           {/* Card — contains only table */}
+          <div className="md:hidden space-y-3">
+            {RECENT_CALLS.map((call, i) => (
+              <div
+                key={i}
+                className="rounded-[10px] bg-white p-4"
+                style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
+              >
+                <div className="text-[13px] font-medium text-tb-dark mb-3">{call.market}</div>
+                <div className="grid grid-cols-2 gap-3 text-[12px]">
+                  <div>
+                    <div className="font-mono uppercase tracking-[0.08em] text-tb-dark/40 text-[10px] mb-1">Q Called</div>
+                    <div className={`font-mono font-medium ${call.qCalledColor}`}>{call.qCalled}</div>
+                  </div>
+                  <div>
+                    <div className="font-mono uppercase tracking-[0.08em] text-tb-dark/40 text-[10px] mb-1">Outcome</div>
+                    <div className="text-tb-dark">{call.whatHappened}</div>
+                  </div>
+                  <div>
+                    <div className="font-mono uppercase tracking-[0.08em] text-tb-dark/40 text-[10px] mb-1">Market Odds</div>
+                    <div className="font-mono text-tb-dark/60">{call.marketOdds}</div>
+                  </div>
+                  <div>
+                    <div className="font-mono uppercase tracking-[0.08em] text-tb-dark/40 text-[10px] mb-1">Return</div>
+                    <div className="font-mono font-bold text-green-600">{call.returnPct}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
           <div
-            className="rounded-[10px] bg-white overflow-hidden"
+            className="hidden md:block rounded-[10px] bg-white overflow-hidden"
             style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
           >
             {/* Table */}
-            <table className="w-full">
+            <table className="w-full table-fixed">
+              <colgroup>
+                <col className="w-[35%]" />
+                <col className="w-[12%]" />
+                <col className="w-[15%] max-md:hidden" />
+                <col className="w-[18%]" />
+                <col className="w-[20%]" />
+              </colgroup>
               <thead>
                 <tr className="border-b border-tb-dark/10 bg-tb-card-inner">
                   <th className="text-left px-3 py-2.5 font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">Market</th>
@@ -316,29 +362,69 @@ export default function Performance({ showCta = true }: PerformanceProps) {
         </div>
 
         {/* Block D: Where Q got it wrong */}
-        <div className="max-w-[720px] mt-8">
+        <div className="max-w-[720px] mt-12">
           {/* Label — outside card */}
-          <h3 className="text-[15px] font-semibold mb-1 text-tb-dark">
-            Where Q called it wrong and what we learned
+          <h3 className="text-[15px] font-semibold mb-1 text-tb-dark flex items-center">
+            <span className="relative inline-flex mr-2">
+              <span className="w-2 h-2 bg-tb-primary rounded-full" />
+              <span className="absolute w-2 h-2 bg-tb-primary rounded-full motion-safe:animate-ping opacity-75" />
+            </span>
+            Where Q missed and what we learned
           </h3>
           <p className="text-[13px] text-tb-dark/50 mb-3">
             Q is always learning. When a forecast misses, we trace the reasoning, find the breakdown, and come back sharper.
           </p>
 
           {/* Card — contains only table */}
+          <div className="md:hidden space-y-3">
+            {MISSED_CALLS.map((call, i) => (
+              <div
+                key={i}
+                className="rounded-[10px] bg-white p-4"
+                style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
+              >
+                <div className="text-[13px] font-medium text-tb-dark mb-3">{call.market}</div>
+                <div className="grid grid-cols-2 gap-3 text-[12px]">
+                  <div>
+                    <div className="font-mono uppercase tracking-[0.08em] text-tb-dark/40 text-[10px] mb-1">Q Called</div>
+                    <div className={`font-mono font-medium ${call.qCalledColor}`}>{call.qCalled}</div>
+                  </div>
+                  <div>
+                    <div className="font-mono uppercase tracking-[0.08em] text-tb-dark/40 text-[10px] mb-1">Outcome</div>
+                    <div className="text-tb-dark">{call.whatHappened}</div>
+                  </div>
+                  <div>
+                    <div className="font-mono uppercase tracking-[0.08em] text-tb-dark/40 text-[10px] mb-1">Market Odds</div>
+                    <div className="font-mono text-tb-dark/60">{call.marketOdds}</div>
+                  </div>
+                  <div>
+                    <div className="font-mono uppercase tracking-[0.08em] text-tb-dark/40 text-[10px] mb-1">Miss</div>
+                    <div className="font-mono text-[11px] text-tb-primary">{call.miss}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
           <div
-            className="rounded-[10px] bg-white overflow-hidden"
+            className="hidden md:block rounded-[10px] bg-white overflow-hidden"
             style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
           >
             {/* Table */}
-            <table className="w-full">
+            <table className="w-full table-fixed">
+              <colgroup>
+                <col className="w-[35%]" />
+                <col className="w-[12%]" />
+                <col className="w-[15%] max-md:hidden" />
+                <col className="w-[18%]" />
+                <col className="w-[20%]" />
+              </colgroup>
               <thead>
                 <tr className="border-b border-tb-dark/10 bg-tb-card-inner">
                   <th className="text-left px-3 py-2.5 font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">Market</th>
                   <th className="text-left px-3 py-2.5 font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">Q Called</th>
                   <th className="text-left px-3 py-2.5 font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50 max-md:hidden">Market Odds</th>
                   <th className="text-left px-3 py-2.5 font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">What Happened</th>
-                  <th className="text-right px-3 py-2.5 font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">Miss</th>
+                  <th className="text-left px-3 py-2.5 font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">Miss</th>
                 </tr>
               </thead>
               <tbody>
@@ -348,7 +434,9 @@ export default function Performance({ showCta = true }: PerformanceProps) {
                     <td className={`px-3 py-2.5 font-mono text-[13px] font-medium ${call.qCalledColor}`}>{call.qCalled}</td>
                     <td className="px-3 py-2.5 font-mono text-[13px] text-tb-dark/40 max-md:hidden">{call.marketOdds}</td>
                     <td className="px-3 py-2.5 text-[13px] text-tb-dark">{call.whatHappened}</td>
-                    <td className="px-3 py-2.5 text-right text-[13px] text-tb-primary">{call.miss}</td>
+                    <td className="px-3 py-2.5 text-left font-mono text-[11px] text-tb-primary whitespace-nowrap">
+                      {call.miss}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -356,22 +444,21 @@ export default function Performance({ showCta = true }: PerformanceProps) {
           </div>
 
           {/* What we fixed block */}
-          <div className="border-l-[3px] border-tb-primary rounded-r-[6px] pl-4 py-3 bg-white mt-4" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
+          <div className="border-l-[3px] border-tb-primary rounded-[6px] pl-4 py-3 mt-3 bg-white" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
             <h4 className="text-[14px] font-semibold text-tb-dark mb-2">What we fixed</h4>
             <p className="text-[13px] leading-relaxed text-tb-dark/60">
-              Q was treating each market independently, but correlated outcomes matter. An Israeli strike on Iran makes a U.S. strike more likely, not less. These dependencies weren&apos;t flowing between forecasts. We updated the pipeline to incorporate correlated outcome analysis. Early results show better calibrated forecasts on escalation markets, and Q&apos;s assessments now show a wider, more thoughtful spread.
+              Markets don&apos;t move in isolation. An Israeli strike on Iran raises the odds of a U.S. strike too. Q was missing that dependency.<br /><br />
+              We updated the pipeline to track correlated outcomes across linked markets. Forecasts on escalation events are now better calibrated, and Q&apos;s spreads reflect it.
             </p>
+            <a
+              href="https://quotient.substack.com/p/timelines-mojtaba-khamenei-strait"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center font-mono text-[13px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors mt-3"
+            >
+              Read the full postmortem on Substack &rarr;
+            </a>
           </div>
-
-          {/* CTA */}
-          <a
-            href="https://quotient.substack.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center font-mono text-[13px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors mt-4"
-          >
-            Read the full postmortem on Substack &rarr;
-          </a>
         </div>
 
         {/* CTA Link */}

@@ -44,7 +44,7 @@ const LEADERBOARD_DATA = [
 
 export default function ContributorLeaderboard() {
   return (
-    <section className="bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y">
+    <section className="section-shell bg-tb-cream rounded-tb-card py-16 sm:py-20 lg:py-tb-section-y">
       <div className="max-w-content mx-auto">
         {/* Eyebrow */}
         <span className="block uppercase mb-3 font-mono text-tb-primary text-[11px] tracking-[0.08em]">
@@ -79,13 +79,13 @@ export default function ContributorLeaderboard() {
         >
           {/* Table header */}
           <div className="flex px-4 py-2.5 bg-tb-card-inner border-b border-tb-dark/10">
-            <div className="w-[60px] font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">
+            <div className="w-[52px] sm:w-[60px] font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">
               Rank
             </div>
             <div className="flex-1 font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">
               Contributor
             </div>
-            <div className="w-[80px] text-right font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">
+            <div className="w-[64px] sm:w-[80px] text-right font-mono text-[10px] uppercase tracking-[0.08em] text-tb-dark/50">
               Score
             </div>
           </div>
@@ -96,7 +96,7 @@ export default function ContributorLeaderboard() {
               key={row.contributor}
               className={`flex items-center px-4 py-3 ${i < LEADERBOARD_DATA.length - 1 ? 'border-b border-tb-dark/10' : ''} ${row.rank === 1 ? 'bg-tb-primary/[0.03]' : ''}`}
             >
-              <div className={`w-[60px] font-mono text-[14px] ${row.rank === 1 ? 'font-bold text-tb-primary' : 'text-tb-dark/40'}`}>
+              <div className={`w-[52px] sm:w-[60px] font-mono text-[14px] ${row.rank === 1 ? 'font-bold text-tb-primary' : 'text-tb-dark/40'}`}>
                 #{row.rank}
               </div>
               <div className="flex-1 flex items-center gap-2">
@@ -105,7 +105,7 @@ export default function ContributorLeaderboard() {
                   {row.contributor}
                 </span>
               </div>
-              <div className={`w-[80px] text-right font-mono text-[14px] ${row.rank === 1 ? 'font-bold text-tb-dark' : 'text-tb-dark/60'}`}>
+              <div className={`w-[64px] sm:w-[80px] text-right font-mono text-[14px] ${row.rank === 1 ? 'font-bold text-tb-dark' : 'text-tb-dark/60'}`}>
                 {row.score.toFixed(1)}
               </div>
             </div>

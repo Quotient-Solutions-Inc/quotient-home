@@ -30,7 +30,7 @@ export default function ApiCodeBlock() {
       {/* Code block inner */}
       <div className="relative z-10 bg-[#0D0C0A] rounded-[11px] overflow-hidden">
         {/* Top bar with macOS dots and tabs */}
-        <div className="flex items-center px-4 py-2.5 bg-[#161820] border-b border-white/5">
+        <div className="flex flex-wrap items-center gap-y-2 px-4 py-2.5 bg-[#161820] border-b border-white/5">
           {/* macOS dots */}
           <div className="flex gap-1.5">
             <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(255,99,71,0.3)', border: '1px solid rgba(255,99,71,0.5)' }} />
@@ -39,7 +39,7 @@ export default function ApiCodeBlock() {
           </div>
 
           {/* Tabs */}
-          <div className="flex ml-4">
+          <div className="flex ml-0 sm:ml-4">
             <TabButton label="curl" tab="curl" active={activeTab} onSelect={setActiveTab} />
             <TabButton label="Python" tab="python" active={activeTab} onSelect={setActiveTab} />
             <TabButton label="Node" tab="node" active={activeTab} onSelect={setActiveTab} />
@@ -47,7 +47,7 @@ export default function ApiCodeBlock() {
         </div>
 
         {/* Code body - fixed height with scroll for consistent sizing */}
-        <div className="relative p-5">
+        <div className="relative p-4 sm:p-5">
           {/* Copy button */}
           <button
             onClick={handleCopy}
@@ -56,7 +56,7 @@ export default function ApiCodeBlock() {
             {copied ? 'COPIED' : 'COPY'}
           </button>
 
-          <div className="h-[260px] overflow-y-auto overflow-x-auto pr-2">
+          <div className="h-[240px] sm:h-[260px] overflow-y-auto overflow-x-auto pr-2">
             <pre className="text-[12px] leading-[1.8] font-mono text-white/70">
               {activeTab === 'curl' && <CurlExample />}
               {activeTab === 'python' && <PythonExample />}

@@ -24,6 +24,10 @@
 }
 
 @layer components {
+  .section-shell {
+    @apply px-5 sm:px-6 lg:px-tb-section-x;
+  }
+
   .skip-link {
     position: fixed;
     top: 12px;

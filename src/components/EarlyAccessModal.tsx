@@ -85,7 +85,7 @@ export default function EarlyAccessModal({ isOpen, onClose }: EarlyAccessModalPr
     <>
       <Script src="https://tally.so/widgets/embed.js" strategy="lazyOnload" />
       <div
-        className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+        className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4"
         onClick={onClose}
       >
         {/* Backdrop */}
@@ -104,7 +104,7 @@ export default function EarlyAccessModal({ isOpen, onClose }: EarlyAccessModalPr
           <button
             ref={closeButtonRef}
             onClick={onClose}
-            className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-tb-dark/10 hover:bg-tb-dark/20 transition-colors"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-tb-dark/10 hover:bg-tb-dark/20 transition-colors"
             aria-label="Close modal"
           >
             <svg className="w-4 h-4 text-tb-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -113,7 +113,7 @@ export default function EarlyAccessModal({ isOpen, onClose }: EarlyAccessModalPr
           </button>
 
           {/* Inner card with content */}
-          <div className="bg-white rounded-tb-card m-4 p-6" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
+          <div className="bg-white rounded-tb-card m-3 sm:m-4 p-5 sm:p-6" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
             {/* Header */}
             <h2 id="early-access-modal-title" className="font-headline font-bold text-[24px] lg:text-[28px] leading-[0.95] uppercase text-tb-dark tracking-[-0.01em] mb-6">
               Quotient Early Access
