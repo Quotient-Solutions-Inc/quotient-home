@@ -63,7 +63,6 @@ function MarketOddsChart() {
     // Custom plugin to draw the vertical line and label
     const qCallPlugin = {
       id: 'qCallAnnotation',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       afterDraw: (chart: any) => {
         const ctx = chart.ctx
         const xScale = chart.scales.x
@@ -159,7 +158,6 @@ function MarketOddsChart() {
             min: 0,
             max: 100,
             grid: {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               color: (context: any) => {
                 const value = context.tick.value
                 if (value === 25 || value === 50 || value === 75) {
@@ -176,7 +174,6 @@ function MarketOddsChart() {
                 family: 'monospace'
               },
               color: '#1A1A1A50',
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               callback: function(value: any) {
                 return value + '%'
               }
