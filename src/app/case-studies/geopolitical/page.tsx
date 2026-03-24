@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import { APP_HREF } from '@/lib/links'
 import {
   Chart,
   LineElement,
@@ -382,7 +383,7 @@ export default function GeopoliticalCaseStudiesPage() {
 
               <div className="flex items-center justify-center gap-6 flex-wrap">
                 <Link
-                  href="https://quotient.social"
+                  href={APP_HREF}
                   className="inline-block font-mono text-[13px] uppercase tracking-[0.08em] px-7 py-3 border border-white text-white bg-transparent rounded-tb-card hover:bg-white hover:text-tb-dark transition-all"
                 >
                   Log in

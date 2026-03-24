@@ -1,12 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import Link from 'next/link'
 import HeroAnimation from './HeroAnimation'
-import EarlyAccessModal from './EarlyAccessModal'
+import { APP_HREF } from '@/lib/links'
 
 export default function MarketplaceHero() {
-  const [earlyAccessOpen, setEarlyAccessOpen] = useState(false)
-
   return (
     <section className="section-shell relative overflow-hidden bg-tb-dark rounded-tb-card py-16 sm:py-20 lg:py-28">
       {/* Full-spread particle animation behind all content */}
@@ -37,15 +35,13 @@ export default function MarketplaceHero() {
         </p>
 
         {/* Single CTA - white outline at rest, orange fill on hover */}
-        <button
-          onClick={() => setEarlyAccessOpen(true)}
+        <Link
+          href={APP_HREF}
           className="px-6 sm:px-8 h-[48px] sm:h-[50px] flex items-center border border-tb-page text-tb-page font-mono text-[13px] sm:text-[14px] uppercase tracking-[0.08em] rounded-tb-card hover:bg-tb-primary hover:border-tb-primary transition-all duration-200 ease-out"
         >
           Log in
-        </button>
+        </Link>
       </div>
-
-      <EarlyAccessModal isOpen={earlyAccessOpen} onClose={() => setEarlyAccessOpen(false)} />
     </section>
   )
 }

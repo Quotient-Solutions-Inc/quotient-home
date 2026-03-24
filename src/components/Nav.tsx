@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import EarlyAccessModal from './EarlyAccessModal'
+import { APP_HREF } from '@/lib/links'
 
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
   const pathname = usePathname()
@@ -146,7 +146,6 @@ function MobileNavLink({ href, onClick, children, indent = false }: { href: stri
 
 export default function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [earlyAccessOpen, setEarlyAccessOpen] = useState(false)
   const mobileMenuId = 'primary-mobile-menu'
 
   useEffect(() => {
@@ -172,21 +171,21 @@ export default function Nav() {
           <CaseStudiesDropdown />
           <NavLink href="/build-with-q">Build with Q</NavLink>
           <NavLink href="/about">About</NavLink>
-          <button
-            onClick={() => setEarlyAccessOpen(true)}
+          <Link
+            href={APP_HREF}
             className="flex items-center px-5 bg-tb-primary text-white font-mono text-[13px] uppercase tracking-[0.08em] rounded-tb-card hover:bg-tb-cta-hover transition-colors"
           >
             Log in
-          </button>
+          </Link>
         </div>
         {/* Mobile: hamburger + CTA */}
         <div className="lg:hidden flex items-stretch gap-0">
-          <button
-            onClick={() => setEarlyAccessOpen(true)}
+          <Link
+            href={APP_HREF}
             className="flex items-center px-3 sm:px-4 bg-tb-primary text-white font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.08em] rounded-tb-card"
           >
             Log in
-          </button>
+          </Link>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="flex items-center px-3 text-tb-dark/70"
@@ -228,8 +227,6 @@ export default function Nav() {
           </div>
         </div>
       )}
-
-      <EarlyAccessModal isOpen={earlyAccessOpen} onClose={() => setEarlyAccessOpen(false)} />
     </>
   )
 }
