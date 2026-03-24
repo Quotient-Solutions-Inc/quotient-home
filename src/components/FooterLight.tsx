@@ -14,6 +14,14 @@ function FooterLabel({ children }: { children: React.ReactNode }) {
 }
 
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+  if (href.startsWith('mailto:')) {
+    return (
+      <a href={href} className="text-[12px] leading-none transition-colors text-tb-dark/60 hover:text-tb-primary">
+        {children}
+      </a>
+    )
+  }
+
   return (
     <Link href={href} className="text-[12px] leading-none transition-colors text-tb-dark/60 hover:text-tb-primary">
       {children}
