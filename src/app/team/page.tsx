@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import { buildPageMetadata } from '@/lib/metadata'
@@ -151,12 +150,12 @@ export default function TeamPage() {
               <h2 className="font-headline font-bold text-[24px] lg:text-[32px] leading-[0.95] text-white uppercase mb-6">
                 Interested in working with us?
               </h2>
-              <Link
+              <a
                 href="mailto:jordan@quotient.social?subject=Interest%20in%20Working%20With%20Quotient"
                 className="inline-block font-mono text-[13px] uppercase tracking-[0.08em] px-7 py-3 bg-tb-primary text-white rounded-tb-card hover:bg-tb-cta-hover transition-colors"
               >
                 Get in touch &rarr;
-              </Link>
+              </a>
             </div>
           </section>
 
