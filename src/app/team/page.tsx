@@ -35,8 +35,8 @@ const team = [
     tag: 'TECHNICAL SYSTEMS \u00B7 CRYPTO INFRASTRUCTURE',
   },
   {
-    initials: 'MO',
-    name: 'Matt Olmstead',
+    initials: 'MF',
+    name: 'Matthew Ferrick',
     title: 'COO & Co-Founder',
     function: 'Leads operations, partnerships, and business development.',
     bio: 'Background in strategy, commercial operations, and enterprise relationship building. Drives execution and partnership growth.',
@@ -152,7 +152,7 @@ export default function TeamPage() {
                 Interested in working with us?
               </h2>
               <Link
-                href="mailto:hello@quotient.social"
+                href="mailto:jordan@quotient.social?subject=Interest%20in%20Working%20With%20Quotient"
                 className="inline-block font-mono text-[13px] uppercase tracking-[0.08em] px-7 py-3 bg-tb-primary text-white rounded-tb-card hover:bg-tb-cta-hover transition-colors"
               >
                 Get in touch &rarr;
