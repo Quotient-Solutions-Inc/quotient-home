@@ -1,9 +1,4 @@
-'use client'
-
-import { useState } from 'react'
 import Link from 'next/link'
-import { PRODUCT_HREF } from '@/lib/links'
-import EarlyAccessModal from './EarlyAccessModal'
 
 // SVG Icons
 function DashboardIcon() {
@@ -40,8 +35,8 @@ const CARDS = [
     eyebrow: 'Explore Directly',
     title: "View Q's intelligence",
     body: 'Log in to explore live forecasts, signal divergence, market reasoning, and recent calls.',
-    cta: 'Open Quotient →',
-    href: PRODUCT_HREF,
+    cta: 'Log In →',
+    href: 'https://app.quotient.social',
   },
   {
     icon: TerminalIcon,
@@ -49,39 +44,36 @@ const CARDS = [
     title: 'Build with the API',
     body: 'Access forecasts, signals, and structured market intelligence through endpoints for apps, workflows, and agents.',
     cta: 'View Docs →',
-    href: '/build-with-q',
+    href: 'https://dev.quotient.social/docs',
   },
   {
     icon: BoltIcon,
     eyebrow: 'For Traders',
     title: 'Run a trading agent',
     body: "Use Q's signals as input into your own strategy and build automated trading workflows.",
-    cta: 'Get Early Access →',
-    opensModal: true,
+    cta: 'View Docs →',
+    href: 'https://dev.quotient.social/docs',
   },
 ]
 
 export default function PutQToWork() {
-  const [earlyAccessOpen, setEarlyAccessOpen] = useState(false)
-
   return (
-    <>
-      <section className="bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y">
+      <section className="section-shell bg-tb-dark rounded-tb-card py-16 sm:py-20 lg:py-tb-section-y">
         <div className="max-w-content mx-auto">
         {/* Centered headline */}
-        <h2 className="font-headline font-bold text-tb-page text-[28px] lg:text-[42px] tracking-[-0.01em] leading-[0.95] mb-12 uppercase text-center">
+        <h2 className="font-headline font-bold text-tb-page text-[26px] sm:text-[28px] lg:text-[42px] tracking-[-0.01em] leading-[0.95] mb-10 sm:mb-12 uppercase text-center">
           PUT Q TO WORK.
         </h2>
 
         {/* Three cards */}
-        <div className="grid grid-cols-3 max-md:grid-cols-1 gap-4 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
           {CARDS.map((card) => (
             <div
               key={card.title}
               className="rounded-[10px] bg-white/[0.06] p-6 text-left flex flex-col"
             >
               {/* Icon */}
-              <div className="text-tb-page/60 mb-4">
+              <div className="flex-shrink-0 w-10 h-10 rounded-[6px] bg-white/[0.08] flex items-center justify-center mb-4 text-tb-page/60">
                 <card.icon />
               </div>
 
@@ -102,28 +94,17 @@ export default function PutQToWork() {
 
               {/* CTA */}
               <div className="mt-auto">
-                {card.opensModal ? (
-                  <button
-                    onClick={() => setEarlyAccessOpen(true)}
-                    className="font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors"
-                  >
-                    {card.cta}
-                  </button>
-                ) : (
-                  <Link
-                    href={card.href!}
-                    className="font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors"
-                  >
-                    {card.cta}
-                  </Link>
-                )}
+                <Link
+                  href={card.href}
+                  className="font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary hover:text-tb-cta-hover transition-colors"
+                >
+                  {card.cta}
+                </Link>
               </div>
             </div>
           ))}
         </div>
         </div>
-      </section>
-      <EarlyAccessModal isOpen={earlyAccessOpen} onClose={() => setEarlyAccessOpen(false)} />
-    </>
+    </section>
   )
 }

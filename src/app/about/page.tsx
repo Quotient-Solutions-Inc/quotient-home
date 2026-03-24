@@ -33,7 +33,7 @@ export default function AboutPage() {
 
 function AboutHero() {
   return (
-    <section className="bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-16 lg:py-24">
+    <section className="section-shell bg-tb-dark rounded-tb-card py-16 lg:py-24">
       <div className="max-w-content mx-auto">
         {/* Content with 3px orange left border */}
         <div className="border-l-[3px] border-tb-primary pl-5">
@@ -56,26 +56,37 @@ function AboutHero() {
 
 function WhatQuotientIs() {
   return (
-    <section className='bg-tb-page rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
-      <div className="max-w-content mx-auto">
-        <div className="grid grid-cols-2 max-md:grid-cols-1 gap-12 max-md:gap-8 max-w-[900px]">
-          <div>
-            <div className="font-mono text-[10px] uppercase mb-3 pb-2 tracking-[0.08em] text-tb-dark/50 border-b border-tb-border">
+    <section className='section-shell bg-tb-page rounded-tb-card py-16 sm:py-20 lg:py-tb-section-y'>
+      <div className="max-w-content mx-auto text-center">
+        <span className="block text-[11px] uppercase mb-3 font-mono tracking-[0.08em] text-tb-primary">
+          Our Thinking
+        </span>
+        <h2 className='font-headline font-bold uppercase text-tb-dark text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-8'>
+          Why Quotient Exists
+        </h2>
+        <div className="flex max-md:flex-col rounded-[10px] overflow-hidden border border-tb-border max-w-[900px] mx-auto">
+          {/* Left panel - dark */}
+          <div className="flex-1 p-7 bg-tb-dark">
+            <div className="font-mono text-[10px] uppercase tracking-[0.08em] text-white/40 mb-3">
               The problem
             </div>
-            <p className="text-[15px] leading-[1.8] text-tb-dark/70">
-              People with real expertise make critical calls every day, but there&apos;s no way to verify who&apos;s actually good, scale what they know, or build a business around it.
+            <div className="text-[15px] font-medium text-white mb-2">
+              Expertise is everywhere. Verification isn&apos;t.
+            </div>
+            <p className="text-[12px] leading-[1.7] text-white/50">
+              People with real expertise make critical calls every day. There&apos;s no way to verify who&apos;s actually good, scale what they know, or build a business around it.
             </p>
           </div>
-          <div>
-            <div className="font-mono text-[10px] uppercase mb-3 pb-2 tracking-[0.08em] text-tb-dark/50 border-b border-tb-border">
+          {/* Right panel - light */}
+          <div className="flex-1 p-7 bg-white">
+            <div className="font-mono text-[10px] uppercase tracking-[0.08em] text-tb-primary mb-3">
               Quotient
             </div>
-            <p className="text-[15px] leading-[1.8] text-tb-dark/70 mb-4">
-              Build a forecasting agent. Prove it against real outcomes. Monetize it through signal subscriptions, API access, and managed vaults.
-            </p>
-            <p className="text-[15px] leading-[1.8] text-tb-dark/70">
-              Q is the first agent &mdash; geopolitics, 85% win rate across 700+ markets.
+            <div className="text-[15px] font-medium text-tb-dark mb-2">
+              Build a forecasting agent. Prove it. Scale it.
+            </div>
+            <p className="text-[12px] leading-[1.7] text-tb-dark/50">
+              Monetize through signal subscriptions, API access, and managed vaults. Q is the first agent. Geopolitics, 85% win rate across 700+ markets.
             </p>
           </div>
         </div>
@@ -87,24 +98,24 @@ function WhatQuotientIs() {
 function ImprovementLoop() {
   const steps = [
     {
-      n: '01',
+      num: 1,
       title: 'Forecast',
       desc: 'Q analyzes markets, sources context, and assigns probabilities with structured confidence.',
     },
     {
-      n: '02',
+      num: 2,
       title: 'Review',
       desc: 'Contributors surface context, flag errors, and add signal that Q may have missed.',
     },
     {
-      n: '03',
+      num: 3,
       title: 'Learn',
       desc: 'Every resolved market feeds back into the system. Q gets sharper with each outcome.',
     },
   ]
 
   return (
-    <section className='bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
+    <section className='section-shell bg-tb-cream rounded-tb-card py-16 sm:py-20 lg:py-tb-section-y'>
       <div className="max-w-content mx-auto">
         <span className="block text-[11px] uppercase mb-3 font-mono tracking-[0.08em] text-tb-primary">
           The Improvement Loop
@@ -113,31 +124,33 @@ function ImprovementLoop() {
           How Quotient Gets Better
         </h2>
         <p className="text-[15px] leading-[1.7] max-w-[560px] mb-8 text-tb-dark/60">
-          Quotient improves through a loop of forecasting, review, and feedback &mdash; each cycle tightening the signal.
+          Quotient improves through a loop of forecasting, review, and feedback. Each cycle tightens the signal.
         </p>
 
-        <div className="flex items-start max-md:flex-col gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-0 items-stretch">
           {steps.map((step, i) => (
-            <div key={step.n} className="flex items-start flex-1">
-              <div className='bg-white rounded-[10px] p-6 flex-1' style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
-                <div className="font-mono text-[11px] uppercase tracking-[0.08em] mb-2 text-tb-primary">
-                  {step.n}
-                </div>
-                <div className="text-[16px] font-semibold mb-2 text-tb-dark">
-                  {step.title}
-                </div>
-                <div className="text-[14px] leading-relaxed text-tb-dark/60">
-                  {step.desc}
+            <>
+              <div key={step.num} className='bg-white rounded-[10px] p-6 h-full' style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-7 h-7 rounded-[4px] bg-tb-primary flex items-center justify-center">
+                    <span className="text-white text-[13px] font-semibold">{step.num}</span>
+                  </div>
+                  <div>
+                    <div className="text-[15px] font-semibold mb-1 text-tb-dark">
+                      {step.title}
+                    </div>
+                    <div className="text-[13px] leading-relaxed text-tb-dark/60">
+                      {step.desc}
+                    </div>
+                  </div>
                 </div>
               </div>
               {i < steps.length - 1 && (
-                <div className="flex-shrink-0 px-3 py-6 max-md:hidden">
-                  <svg className="w-6 h-6 text-tb-dark/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+                <div key={`arrow-${i}`} className="hidden md:flex items-center justify-center px-3">
+                  <span className="text-tb-dark/30 text-[18px]">&rarr;</span>
                 </div>
               )}
-            </div>
+            </>
           ))}
         </div>
       </div>
@@ -165,7 +178,7 @@ function WhereThisIsGoing() {
   ]
 
   return (
-    <section className='bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
+    <section className='section-shell bg-tb-dark rounded-tb-card py-16 sm:py-20 lg:py-tb-section-y'>
       <div className="max-w-content mx-auto">
         <span className="block text-[11px] uppercase mb-3 font-mono tracking-[0.08em] text-tb-primary">
           Roadmap
@@ -199,7 +212,7 @@ function WhereThisIsGoing() {
 
 function WhyThisTeam() {
   return (
-    <section className='bg-tb-page rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'>
+    <section className='section-shell bg-tb-page rounded-tb-card py-16 sm:py-20 lg:py-tb-section-y'>
       <div className="max-w-content mx-auto">
         <span className="block text-[11px] uppercase mb-3 font-mono tracking-[0.08em] text-tb-primary">
           Why This Team

@@ -149,6 +149,13 @@ export default function Nav() {
   const [earlyAccessOpen, setEarlyAccessOpen] = useState(false)
   const mobileMenuId = 'primary-mobile-menu'
 
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileOpen])
+
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-tb-page h-[44px] flex items-stretch px-4 border-b border-tb-border/30">
@@ -169,16 +176,16 @@ export default function Nav() {
             onClick={() => setEarlyAccessOpen(true)}
             className="flex items-center px-5 bg-tb-primary text-white font-mono text-[13px] uppercase tracking-[0.08em] rounded-tb-card hover:bg-tb-cta-hover transition-colors"
           >
-            Get Early Access
+            Log in
           </button>
         </div>
         {/* Mobile: hamburger + CTA */}
         <div className="lg:hidden flex items-stretch gap-0">
           <button
             onClick={() => setEarlyAccessOpen(true)}
-            className="flex items-center px-4 bg-tb-primary text-white font-mono text-[11px] uppercase tracking-[0.08em] rounded-tb-card"
+            className="flex items-center px-3 sm:px-4 bg-tb-primary text-white font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.08em] rounded-tb-card"
           >
-            Get Early Access
+            Log in
           </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -203,9 +210,9 @@ export default function Nav() {
       {mobileOpen && (
         <div
           id={mobileMenuId}
-          className="fixed top-[44px] left-0 right-0 z-40 bg-tb-page border-t border-tb-border/30 lg:hidden"
+          className="fixed top-[44px] left-0 right-0 bottom-0 z-40 bg-tb-page border-t border-tb-border/30 overflow-y-auto lg:hidden"
         >
-          <div className="flex flex-col py-2">
+          <div className="flex flex-col py-3 pb-6">
             <span className="px-6 py-2 font-mono text-[11px] uppercase tracking-[0.08em] text-tb-dark/50">
               Case Studies
             </span>

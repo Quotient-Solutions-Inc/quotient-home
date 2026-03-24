@@ -60,7 +60,7 @@ export default function TeamPage() {
       <main id="main-content" className="flex flex-col p-tb-gap pt-0 w-full">
         <div className="flex flex-col gap-tb-gap">
           {/* Hero - Dark section */}
-          <section className="bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-16 lg:py-24">
+          <section className="section-shell bg-tb-dark rounded-tb-card py-16 lg:py-24">
             <div className="max-w-content mx-auto">
               {/* Content with 3px orange left border */}
               <div className="border-l-[3px] border-tb-primary pl-5">
@@ -78,7 +78,7 @@ export default function TeamPage() {
           </section>
 
           {/* Capability Strip - Cream section */}
-          <section className="bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-12">
+          <section className="section-shell bg-tb-cream rounded-tb-card py-12">
             <div className="max-w-content mx-auto">
               <div className="grid grid-cols-4 max-md:grid-cols-2 gap-4">
                 {capabilities.map((cap) => (
@@ -97,7 +97,7 @@ export default function TeamPage() {
           </section>
 
           {/* Leadership - Light section */}
-          <section className="bg-tb-page rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y">
+          <section className="section-shell bg-tb-page rounded-tb-card py-16 sm:py-20 lg:py-tb-section-y">
             <div className="max-w-content mx-auto">
               <div className="grid grid-cols-2 max-md:grid-cols-1 gap-6">
                 {team.map((member) => (
@@ -146,7 +146,7 @@ export default function TeamPage() {
           </section>
 
           {/* CTA - Dark section */}
-          <section className="bg-tb-dark rounded-tb-card px-8 lg:px-tb-section-x py-16 lg:py-20">
+          <section className="section-shell bg-tb-dark rounded-tb-card py-16 lg:py-20">
             <div className="max-w-content mx-auto text-center">
               <h2 className="font-headline font-bold text-[24px] lg:text-[32px] leading-[0.95] text-white uppercase mb-6">
                 Interested in working with us?

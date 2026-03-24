@@ -21,7 +21,7 @@ export default function Home() {
       <main id="main-content" className="flex flex-col p-tb-gap pt-0 w-full">
         <div className="flex flex-col gap-tb-gap">
           <MarketplaceHero />
-          <Performance />
+          <Performance showCta={false} />
           <InsideAForecast />
           <WhatPowersQ />
           <PutQToWork />
