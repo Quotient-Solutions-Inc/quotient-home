@@ -443,9 +443,9 @@ export default function Performance({ showCta = true }: PerformanceProps) {
             </table>
           </div>
 
-          {/* What we fixed block */}
+          {/* What we learned block */}
           <div className="border-l-[3px] border-tb-primary rounded-[6px] pl-4 py-3 mt-3 bg-white" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
-            <h4 className="text-[14px] font-semibold text-tb-dark mb-2">What we fixed</h4>
+            <h4 className="text-[14px] font-semibold text-tb-dark mb-2">What we learned</h4>
             <p className="text-[13px] leading-relaxed text-tb-dark/60">
               Markets don&apos;t move in isolation. An Israeli strike on Iran raises the odds of a U.S. strike too. Q was missing that dependency.<br /><br />
               We updated the pipeline to track correlated outcomes across linked markets. Forecasts on escalation events are now better calibrated, and Q&apos;s spreads reflect it.
