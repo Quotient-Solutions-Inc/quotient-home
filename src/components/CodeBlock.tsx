@@ -1,28 +1,21 @@
 'use client'
 
 import { useState } from 'react'
-import { useTheme } from '@/lib/ThemeContext'
 
 type Tab = 'curl' | 'python' | 'node'
 
 export default function CodeBlock() {
   const [active, setActive] = useState<Tab>('curl')
-  const { theme } = useTheme()
-  const isB = theme === 'B'
 
   return (
-    <div className={`overflow-hidden ${
-      isB ? 'border border-tb-border rounded-tb-card' : 'border border-border-thin rounded-sm'
-    }`}>
-      <div className={`flex gap-0 border-b ${isB ? 'border-tb-border' : 'border-border-thin'}`}>
-        <TabButton label="curl" tab="curl" active={active} onSelect={setActive} isB={isB} />
-        <TabButton label="Python" tab="python" active={active} onSelect={setActive} isB={isB} />
-        <TabButton label="Node" tab="node" active={active} onSelect={setActive} isB={isB} />
+    <div className="overflow-hidden border border-tb-border rounded-tb-card">
+      <div className="flex gap-0 border-b border-tb-border">
+        <TabButton label="curl" tab="curl" active={active} onSelect={setActive} />
+        <TabButton label="Python" tab="python" active={active} onSelect={setActive} />
+        <TabButton label="Node" tab="node" active={active} onSelect={setActive} />
       </div>
-      <pre className={`p-5 text-[12px] leading-relaxed overflow-x-auto ${
-        isB ? 'bg-tb-dark font-mono' : 'bg-[#0a0a0a] font-mono'
-      }`}>
-        {active === 'curl' && <CurlExample isB={isB} />}
+      <pre className="p-5 text-[12px] leading-relaxed overflow-x-auto bg-tb-dark font-mono">
+        {active === 'curl' && <CurlExample />}
         {active === 'python' && <PythonExample />}
         {active === 'node' && <NodeExample />}
       </pre>
@@ -35,25 +28,19 @@ function TabButton({
   tab,
   active,
   onSelect,
-  isB = false,
 }: {
   label: string
   tab: Tab
   active: Tab
   onSelect: (t: Tab) => void
-  isB?: boolean
 }) {
   const isActive = tab === active
   return (
     <button
       onClick={() => onSelect(tab)}
-      className={`text-[11px] px-4 py-2.5 transition-colors ${
-        isB ? 'font-mono' : 'font-mono'
-      } ${
+      className={`text-[11px] px-4 py-2.5 transition-colors font-mono ${
         isActive
-          ? isB
-            ? 'text-tb-dark bg-white border-b-2 border-tb-primary'
-            : 'text-brand-black bg-surface-off border-b-2 border-brand-blue'
+          ? 'text-tb-dark bg-white border-b-2 border-tb-primary'
           : 'text-gray-400 hover:text-gray-600'
       }`}
     >
@@ -62,8 +49,8 @@ function TabButton({
   )
 }
 
-function CurlExample({ isB = false }: { isB?: boolean }) {
-  const accent = isB ? 'text-tb-primary' : 'text-brand-blue'
+function CurlExample() {
+  const accent = 'text-tb-primary'
   return (
     <>
       <span className="text-gray-600"># Get signal for a specific market</span>{'\n'}

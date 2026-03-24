@@ -1,12 +1,11 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import {
   Newsreader,
   DM_Mono,
   Inter,
   Instrument_Sans,
 } from 'next/font/google'
-import { ThemeProvider } from '@/lib/ThemeContext'
-import ThemeToggle from '@/components/ThemeToggle'
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/site'
 import './globals.css'
 
 const newsreader = Newsreader({
@@ -39,9 +38,46 @@ const instrumentSans = Instrument_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Quotient | The Prediction Agent Platform',
-  description:
-    'Build, prove, and monetize prediction agents. Verified track records. Structured evidence. Judgment that compounds.',
+  metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
+  title: {
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    siteName: SITE_NAME,
+    type: 'website',
+    locale: 'en_US',
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} social sharing image`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: ['/twitter-image'],
+  },
+  icons: {
+    icon: '/icon',
+    apple: '/apple-icon',
+  },
+  manifest: '/manifest.webmanifest',
+}
+
+export const viewport: Viewport = {
+  themeColor: '#ee6f4b',
 }
 
 export default function RootLayout({
@@ -56,13 +92,42 @@ export default function RootLayout({
     instrumentSans.variable,
   ].join(' ')
 
+  const structuredData = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: SITE_NAME,
+      url: SITE_URL,
+      description: SITE_DESCRIPTION,
+      sameAs: [
+        'https://x.com/QuotientHQ',
+        'https://farcaster.xyz/quotient',
+        'https://quotient.substack.com/',
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: SITE_NAME,
+      url: SITE_URL,
+      description: SITE_DESCRIPTION,
+    },
+  ]
+
   return (
     <html lang="en" className={fontVars}>
       <body className="font-body text-brand-black bg-brand-white text-sm leading-relaxed">
-        <ThemeProvider>
-          {children}
-          <ThemeToggle />
-        </ThemeProvider>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+        {structuredData.map((entry) => (
+          <script
+            key={entry['@type']}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(entry) }}
+          />
+        ))}
+        {children}
       </body>
     </html>
   )

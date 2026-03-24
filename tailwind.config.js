@@ -24,15 +24,20 @@ module.exports = {
           light: '#F4F4F4',
           off: '#FAFAF8',
         },
-        // Theme B palette
+        // Theme B palette (Design Addendum v1 colors)
         tb: {
-          primary:   '#F35B28',
-          cream:     '#F5F0E1',
-          dark:      '#25110F',
-          page:      '#FAFAFA',
-          data:      '#3B98E6',
-          border:    '#D9D9D9',
-          'cta-hover': '#FF6B3D',
+          primary:      '#F35B28',          // Primary accent, CTAs, links
+          'primary-matte': '#C44A20',       // Matte/darker orange for sections with white text
+          cream:        '#EDEDEA',          // Card/section backgrounds on light pages
+          dark:         '#1C1A17',          // Hero, How It Works, Footer, primary text
+          page:         '#FAFAF7',          // Base page background
+          data:         '#3B98E6',          // Data highlights, charts
+          border:       '#D9D9D9',          // Dividers, subtle borders
+          muted:        '#888880',          // Muted text
+          lavender:     '#C596FE',          // Accent for special highlights
+          'cta-hover':  '#FF6B3D',          // CTA hover state
+          'card-inner': '#F5F5F3',          // Inner/nested card backgrounds
+          'card-header':'#EAEAE8',          // Table headers, darker inner surfaces
         },
       },
       fontFamily: {
@@ -53,7 +58,7 @@ module.exports = {
       },
       spacing: {
         'tb-gap':       '8px',
-        'tb-section-y': '64px',
+        'tb-section-y': '80px',
         'tb-section-x': '48px',
       },
       letterSpacing: {

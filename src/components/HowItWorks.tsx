@@ -1,110 +1,79 @@
-'use client'
-
-import { useTheme } from '@/lib/ThemeContext'
-import FingerprintArc from '@/components/decorative/FingerprintArc'
+import Image from 'next/image'
 
 export default function HowItWorks() {
-  const { theme } = useTheme()
-  const isB = theme === 'B'
-
   return (
-    <section
-      className={isB
-        ? 'bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y relative overflow-hidden'
-        : 'border-b border-border-thin py-20 px-10 max-md:px-6'
-      }
-    >
-      {isB && <FingerprintArc className="absolute right-[-40px] top-[-20px] text-tb-dark/[0.04] z-[1]" />}
-      <div className={isB ? 'relative z-10' : 'max-w-content mx-auto'}>
-        <span
-          className={`block uppercase mb-4 ${isB
-            ? 'font-mono text-tb-primary text-tb-label tracking-[0.08em]'
-            : 'font-mono text-[11px] tracking-eyebrow text-gray-500'
-          }`}
-        >
-          How it works
+    <section className='bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-20 lg:py-24'>
+      <div>
+        <span className="block uppercase mb-4 font-mono text-tb-primary text-[11px] tracking-[0.08em]">
+          How Q Works
         </span>
-        <h2
-          className={isB
-            ? 'font-headline font-bold uppercase text-tb-dark text-[48px] lg:text-[72px] leading-[0.9] tracking-[-0.02em] mb-3'
-            : 'text-[32px] font-semibold tracking-[-0.02em] leading-[1.2] mb-3 max-w-[520px] text-brand-black'
-          }
-        >
-          The coaching loop
+        <h2 className='font-headline font-bold text-tb-dark text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-10 uppercase'>
+          AN AI SUPERFORECASTER.<br />BUILT TO STAY AHEAD.
         </h2>
-        <p
-          className={`text-[15px] leading-relaxed max-w-[560px] mb-12 ${isB
-            ? 'text-tb-dark/70'
-            : 'text-gray-500'
-          }`}
-        >
-          Quotient doesn&apos;t just host agents. It trains them. Every agent on
-          the platform runs through a structured coaching loop that turns domain
-          expertise into compounding accuracy.
-        </p>
 
-        <div
-          className={`grid grid-cols-5 max-md:grid-cols-1 gap-px overflow-hidden mb-10 ${isB
-            ? 'bg-tb-border rounded-tb-card border border-tb-border'
-            : 'bg-border-thin border border-border-thin rounded-sm'
-          }`}
-        >
-          <Step number="01" title="Decompose" body="Break complex questions into measurable sub-components. Structure the problem before attempting to forecast it." isB={isB} />
-          <Step number="02" title="Calibrate" body="Assign probabilities using base rates and evidence weighting. Map confidence to historical accuracy." isB={isB} />
-          <Step number="03" title="Coach" body="Structured feedback on every resolved forecast. Identify systematic biases and close the gap between confidence and accuracy." isB={isB} />
-          <Step number="04" title="Productize" body="Package proven judgment into a signal product. Verified track record, sourced reasoning, and structured output." isB={isB} />
-          <Step number="05" title="Compound" body="Each resolved outcome refines the model. Accuracy compounds over time. Poor calibration self-corrects." isB={isB} />
-        </div>
-
-        <div
-          className={`p-7 ${isB
-            ? 'bg-white border border-tb-border rounded-tb-card'
-            : 'border border-border-thin rounded-sm bg-white'
-          }`}
-        >
+        <div className="grid grid-cols-3 max-md:grid-cols-1 gap-[8px]">
+          {/* Card 1: Informed at scale */}
           <div
-            className={`text-[10px] uppercase mb-3 ${isB
-              ? 'font-mono tracking-[0.08em] text-tb-primary'
-              : 'font-mono tracking-eyebrow text-gray-400'
-            }`}
+            className="rounded-[10px] p-7 flex flex-col bg-white"
+            style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
           >
-            In practice &mdash; Q
+            <h3 className="text-[18px] font-semibold mb-3 text-tb-dark">
+              Informed at scale
+            </h3>
+            <p className="text-[14px] leading-relaxed text-tb-dark/60">
+              1,600+ global sources across news, data, and events tracked around the clock across geographies and markets.
+            </p>
+            {/* LOGOS — dark versions on light card */}
+            <div className="mt-auto pt-6">
+              <div className="flex gap-6 items-center">
+                <Image
+                  src="/logos/reuters.png"
+                  alt="Reuters"
+                  width={100}
+                  height={28}
+                  className="h-7 w-auto opacity-50"
+                />
+                <Image
+                  src="/logos/cnet.png"
+                  alt="CNET"
+                  width={80}
+                  height={24}
+                  className="h-6 w-auto opacity-50"
+                />
+                <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-tb-dark/50">
+                  +more
+                </span>
+              </div>
+            </div>
           </div>
-          <p className={`text-[14px] leading-[1.8] max-w-[640px] ${isB ? 'text-tb-dark/70' : 'text-gray-500'}`}>
-            Q is the first agent to complete this loop. It decomposes geopolitical
-            questions across 600+ markets, calibrates against 1,600+ ranked
-            sources and verified human forecasters, and publishes sourced
-            reasoning for every call. Its track record is public, independently
-            benchmarked, and continuously improving.
-          </p>
+
+          {/* Card 2: Refined by agentic teams */}
+          <div
+            className="rounded-[10px] p-7 flex flex-col bg-white"
+            style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
+          >
+            <h3 className="text-[18px] font-semibold mb-3 text-tb-dark">
+              Refined by agentic teams
+            </h3>
+            <p className="text-[14px] leading-relaxed text-tb-dark/60">
+              A team of agents finds where the market is wrong using structured reasoning, calibrated probability, and iterative refinement.
+            </p>
+          </div>
+
+          {/* Card 3: Sharpened by humans */}
+          <div
+            className="rounded-[10px] p-7 flex flex-col bg-white"
+            style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
+          >
+            <h3 className="text-[18px] font-semibold mb-3 text-tb-dark">
+              Sharpened by humans
+            </h3>
+            <p className="text-[14px] leading-relaxed text-tb-dark/60">
+              Human contributors review Q&apos;s forecasts and expand the context graph. The leaderboard surfaces the most accurate forecasters over time.
+            </p>
+          </div>
         </div>
       </div>
     </section>
-  )
-}
-
-function Step({
-  number,
-  title,
-  body,
-  isB,
-}: {
-  number: string
-  title: string
-  body: string
-  isB: boolean
-}) {
-  return (
-    <div className={`p-7 ${isB ? 'bg-white' : 'bg-surface-off'}`}>
-      <div className={`text-[11px] mb-3.5 font-mono ${isB ? 'text-tb-primary' : 'text-gray-400'}`}>
-        {number}
-      </div>
-      <div className={`text-[15px] font-semibold mb-2.5 ${isB ? 'text-tb-dark' : 'text-brand-black'}`}>
-        {title}
-      </div>
-      <div className={`text-[13px] leading-relaxed ${isB ? 'text-tb-dark/60' : 'text-gray-500'}`}>
-        {body}
-      </div>
-    </div>
   )
 }

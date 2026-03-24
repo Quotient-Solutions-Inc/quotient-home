@@ -1,372 +1,232 @@
-'use client'
-
-import MarketplaceNav from '@/components/MarketplaceNav'
-import HowItWorks from '@/components/HowItWorks'
-import FAQ from '@/components/FAQ'
+import Link from 'next/link'
+import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import { useTheme } from '@/lib/ThemeContext'
+import ContributorLeaderboard from '@/components/ContributorLeaderboard'
+import { buildPageMetadata } from '@/lib/metadata'
+
+export const metadata = buildPageMetadata({
+  title: 'About',
+  description:
+    'Learn how Quotient combines structured AI reasoning, broad source coverage, and contributor signal to improve market forecasts.',
+  path: '/about',
+})
 
 export default function AboutPage() {
-  const { theme } = useTheme()
-  const isB = theme === 'B'
-
   return (
-    <div className={isB ? 'min-h-screen bg-tb-page' : 'min-h-screen'}>
-      <MarketplaceNav />
+    <div className='min-h-screen bg-tb-page pt-[44px]'>
+      <Nav />
 
-      {/* Hero */}
-      <section
-        className={`py-20 ${
-          isB
-            ? 'border-b border-tb-border px-8 lg:px-tb-section-x'
-            : 'border-b border-border-thin px-10 max-md:px-6'
-        }`}
-      >
-        <div className={isB ? '' : 'max-w-content mx-auto'}>
-          <span
-            className={`block text-[11px] uppercase mb-4 ${
-              isB
-                ? 'font-mono tracking-[0.08em] text-gray-500'
-                : 'font-mono tracking-eyebrow text-gray-500'
-            }`}
-          >
+      <main id="main-content" className="flex flex-col p-tb-gap pt-0 w-full">
+        <div className="flex flex-col gap-tb-gap">
+          <AboutHero />
+          <WhatQuotientIs />
+          <ImprovementLoop />
+          <WhereThisIsGoing />
+          <ContributorLeaderboard />
+          <WhyThisTeam />
+          <Footer />
+        </div>
+      </main>
+    </div>
+  )
+}
+
+function AboutHero() {
+  return (
+    <section className="section-shell bg-tb-dark rounded-tb-card py-16 lg:py-24">
+      <div className="max-w-content mx-auto">
+        {/* Content with 3px orange left border */}
+        <div className="border-l-[3px] border-tb-primary pl-5">
+          <span className="block font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary mb-3">
             About Quotient
           </span>
-          {isB ? (
-            <>
-              <h1 className="font-headline font-bold text-[clamp(3rem,7vw,6rem)] uppercase leading-[0.85] tracking-[-0.03em] text-tb-dark mb-6">
-                Judgment creates
-                <br />
-                enormous value.
-              </h1>
-              <p className="font-headline text-[clamp(1.1rem,1.8vw,1.4rem)] text-gray-400 leading-[1.5] max-w-[600px]">
-                There&apos;s no infrastructure for proving it. People with real
-                expertise make critical calls every day. There&apos;s no way to
-                verify who&apos;s actually good, scale what they know, or build a
-                business around it. Quotient is that infrastructure.
-              </p>
-            </>
-          ) : (
-            <>
-              <h1 className="font-headline text-[42px] max-md:text-[32px] font-normal leading-[1.15] tracking-[-0.02em] text-brand-black mb-5">
-                Judgment creates enormous value.
-                <br />
-                <em className="text-gray-400">
-                  There&apos;s no infrastructure for proving it.
-                </em>
-              </h1>
-              <p className="text-[15px] text-gray-500 leading-relaxed max-w-[560px]">
-                People with real expertise make critical calls every day.
-                There&apos;s no way to verify who&apos;s actually good, scale what
-                they know, or build a business around it. Quotient is that
-                infrastructure.
-              </p>
-            </>
-          )}
-        </div>
-      </section>
-
-      {/* Problem / Solution */}
-      <section
-        className={`py-20 ${
-          isB
-            ? 'bg-tb-dark text-white border-b border-gray-800 px-8 lg:px-tb-section-x'
-            : 'bg-surface-off border-b border-border-thin px-10 max-md:px-6'
-        }`}
-      >
-        <div className={isB ? '' : 'max-w-content mx-auto'}>
-          <div className="grid grid-cols-2 max-md:grid-cols-1 gap-12">
-            <div>
-              <div
-                className={`text-[10px] uppercase mb-3 pb-2 ${
-                  isB
-                    ? 'font-mono tracking-[0.08em] text-gray-500 border-b border-gray-700'
-                    : 'font-mono tracking-eyebrow text-gray-400 border-b border-border-thin'
-                }`}
-              >
-                The problem
-              </div>
-              <h2
-                className={`text-[22px] font-semibold tracking-[-0.02em] mb-4 ${
-                  isB ? 'font-headline font-bold uppercase text-[28px] text-white' : 'text-brand-black'
-                }`}
-              >
-                Judgment has no infrastructure
-              </h2>
-              <div className="flex flex-col gap-4">
-                <p
-                  className={`text-[14px] leading-[1.8] ${
-                    isB ? 'font-headline text-gray-400' : 'text-gray-500'
-                  }`}
-                >
-                  AI is replacing execution at scale. The scarce resource is
-                  judgment &mdash; the ability to read ambiguous situations and
-                  make the right call when the data is incomplete.
-                </p>
-                <p
-                  className={`text-[14px] leading-[1.8] ${
-                    isB ? 'font-headline text-gray-400' : 'text-gray-500'
-                  }`}
-                >
-                  But judgment is invisible. Credentials don&apos;t equal track
-                  records. Expertise can&apos;t compound if it isn&apos;t
-                  measured. And the people who are genuinely good at forecasting
-                  have no way to prove it, scale it, or get paid for it.
-                </p>
-              </div>
-            </div>
-            <div>
-              <div
-                className={`text-[10px] uppercase mb-3 pb-2 ${
-                  isB
-                    ? 'font-mono tracking-[0.08em] text-gray-500 border-b border-gray-700'
-                    : 'font-mono tracking-eyebrow text-gray-400 border-b border-border-thin'
-                }`}
-              >
-                What Quotient does
-              </div>
-              <h2
-                className={`text-[22px] font-semibold tracking-[-0.02em] mb-4 ${
-                  isB ? 'font-headline font-bold uppercase text-[28px] text-white' : 'text-brand-black'
-                }`}
-              >
-                The platform for verified forecasting agents
-              </h2>
-              <div className="flex flex-col gap-4">
-                <p
-                  className={`text-[14px] leading-[1.8] ${
-                    isB ? 'font-headline text-gray-400' : 'text-gray-500'
-                  }`}
-                >
-                  Quotient is where domain experts build forecasting agents,
-                  prove them against real outcomes, and monetize them. We provide
-                  the coaching framework, the evaluation layer, and the
-                  marketplace.
-                </p>
-                <p
-                  className={`text-[14px] leading-[1.8] ${
-                    isB ? 'font-headline text-gray-400' : 'text-gray-500'
-                  }`}
-                >
-                  Prediction markets are the starting point &mdash; they generate
-                  questions with verifiable outcomes. But the thesis is broader:
-                  any domain where judgment matters and outcomes are measurable.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <HowItWorks />
-
-      {/* Accountability architecture */}
-      <section
-        className={`${
-          isB
-            ? 'bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'
-            : 'py-20 bg-surface-off border-b border-border-thin px-10 max-md:px-6'
-        }`}
-      >
-        <div className={isB ? '' : 'max-w-content mx-auto'}>
-          <span
-            className={`block text-[11px] uppercase mb-4 ${
-              isB
-                ? 'font-mono tracking-[0.08em] text-gray-500'
-                : 'font-mono tracking-eyebrow text-gray-500'
-            }`}
-          >
-            The evaluation layer
-          </span>
-          <h2
-            className={`font-semibold tracking-[-0.02em] mb-2 ${
-              isB
-                ? 'font-headline font-bold text-[clamp(1.8rem,3.5vw,3rem)] uppercase text-tb-dark leading-[0.9]'
-                : 'text-[28px] text-brand-black'
-            }`}
-          >
-            The accountability layer every agent marketplace is missing
-          </h2>
-          <p
-            className={`text-[15px] leading-relaxed max-w-[560px] mb-10 ${
-              isB ? 'font-headline text-gray-500' : 'text-gray-500'
-            }`}
-          >
-            Most agent platforms optimize for engagement. Quotient optimizes for
-            accuracy &mdash; and makes the proof public. The difference compounds.
+          <h1 className="font-headline font-bold text-[32px] lg:text-[48px] leading-[0.95] text-white uppercase tracking-[-0.02em] mb-4 max-w-[640px]">
+            Turns market noise<br />
+            into actionable<br />
+            trading strategies.
+          </h1>
+          <p className="text-[15px] leading-relaxed text-white/70 max-w-[560px]">
+            We combine broad source coverage, structured AI reasoning, and human contributor signal to surface where consensus breaks down.
           </p>
+        </div>
+      </div>
+    </section>
+  )
+}
 
-          <div
-            className={`grid grid-cols-3 max-md:grid-cols-1 gap-px overflow-hidden mb-10 ${
-              isB
-                ? 'border border-tb-border rounded-tb-card'
-                : 'bg-border-thin border border-border-thin rounded-sm'
-            }`}
-          >
-            {[
-              { n: '01', title: 'Outcomes that resolve', desc: 'Every forecast is tied to a question with a verifiable outcome and a resolution date. No vague predictions. No unfalsifiable claims.' },
-              { n: '02', title: 'Public track records', desc: "Every agent and forecaster has a public accuracy history. Performance is measured against calibration, not confidence. Reputation is earned, not claimed." },
-              { n: '03', title: 'Auditable reasoning', desc: "Every call is grounded in specific sources and forecaster input. When an agent is wrong, the failure is traceable. When it's right, the reasoning is citable." },
-            ].map((item, i) => (
-              <div
-                key={item.n}
-                className={`p-7 ${
-                  isB
-                    ? 'bg-white'
-                    : i % 2 === 0
-                      ? 'bg-white'
-                      : 'bg-surface-off'
-                }`}
-              >
-                <div
-                  className={`text-[11px] mb-3.5 ${
-                    isB ? 'font-mono tracking-[0.08em] text-gray-400' : 'font-mono text-gray-400'
-                  }`}
-                >
-                  {item.n}
-                </div>
-                <div
-                  className={`text-[15px] font-semibold mb-2.5 ${
-                    isB ? 'font-headline text-tb-dark' : 'text-brand-black'
-                  }`}
-                >
-                  {item.title}
-                </div>
-                <div
-                  className={`text-[13px] leading-relaxed ${
-                    isB ? 'font-headline text-gray-500' : 'text-gray-500'
-                  }`}
-                >
-                  {item.desc}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div
-            className={`p-7 ${
-              isB
-                ? 'border border-tb-border rounded-tb-card'
-                : 'border border-border-thin rounded-sm bg-white'
-            }`}
-          >
-            <div
-              className={`text-[10px] uppercase mb-3 ${
-                isB
-                  ? 'font-mono tracking-[0.08em] text-gray-500'
-                  : 'font-mono tracking-eyebrow text-gray-400'
-              }`}
-            >
-              Q &mdash; proof of concept
+function WhatQuotientIs() {
+  return (
+    <section className='section-shell bg-tb-page rounded-tb-card py-16 sm:py-20 lg:py-tb-section-y'>
+      <div className="max-w-content mx-auto text-center">
+        <span className="block text-[11px] uppercase mb-3 font-mono tracking-[0.08em] text-tb-primary">
+          Our Thinking
+        </span>
+        <h2 className='font-headline font-bold uppercase text-tb-dark text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-8'>
+          Why Quotient Exists
+        </h2>
+        <div className="flex max-md:flex-col rounded-[10px] overflow-hidden border border-tb-border max-w-[900px] mx-auto">
+          {/* Left panel - dark */}
+          <div className="flex-1 p-7 bg-tb-dark">
+            <div className="font-mono text-[10px] uppercase tracking-[0.08em] text-white/40 mb-3">
+              The problem
             </div>
-            <p
-              className={`text-[14px] leading-[1.8] max-w-[640px] ${
-                isB ? 'font-headline text-gray-500' : 'text-gray-500'
-              }`}
-            >
-              Q is Quotient&apos;s first forecasting agent. It processes 1,600+
-              ranked sources daily, integrates verified human forecaster input,
-              and publishes sourced reasoning for every call. Q&apos;s public
-              track record is the template every agent on the platform will
-              follow.
+            <div className="text-[15px] font-medium text-white mb-2">
+              Prediction markets have no intelligence layer.
+            </div>
+            <p className="text-[12px] leading-[1.7] text-white/50">
+              Markets are thinly traded and easily manipulated. Media cites their odds as fact. The spread between what odds say and what evidence supports is real, but most traders can never see it.
+            </p>
+          </div>
+          {/* Right panel - light */}
+          <div className="flex-1 p-7 bg-white">
+            <div className="font-mono text-[10px] uppercase tracking-[0.08em] text-tb-primary mb-3">
+              Quotient
+            </div>
+            <div className="text-[15px] font-medium text-tb-dark mb-2">
+              Q finds the spread before the crowd does.
+            </div>
+            <p className="text-[12px] leading-[1.7] text-tb-dark/50">
+              Quotient combines AI superforecasting with human judgment to identify mispriced markets. 85.1% forecast accuracy. Brier score of 0.076. Every resolved market makes Q sharper.
             </p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  )
+}
 
-      {/* Research */}
-      <section
-        className={`${
-          isB
-            ? 'bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y'
-            : 'py-20 border-b border-border-thin px-10 max-md:px-6'
-        }`}
-      >
-        <div className={isB ? '' : 'max-w-content mx-auto'}>
-          <span
-            className={`block text-[11px] uppercase mb-4 ${
-              isB
-                ? 'font-mono tracking-[0.08em] text-gray-500'
-                : 'font-mono tracking-eyebrow text-gray-500'
-            }`}
-          >
-            Research foundation
-          </span>
-          <h2
-            className={`font-semibold tracking-[-0.02em] mb-2 ${
-              isB
-                ? 'font-headline font-bold text-[clamp(1.8rem,3.5vw,3rem)] uppercase text-tb-dark leading-[0.9]'
-                : 'text-[28px] text-brand-black'
-            }`}
-          >
-            Built on a body of evidence
-          </h2>
-          <p
-            className={`text-[15px] leading-relaxed max-w-[560px] mb-10 ${
-              isB ? 'font-headline text-gray-500' : 'text-gray-500'
-            }`}
-          >
-            Quotient&apos;s coaching framework and evaluation methodology draw on
-            decades of forecasting research and intelligence work.
-          </p>
-          <div className="grid grid-cols-2 max-md:grid-cols-1 gap-4">
-            {[
-              { source: 'Tetlock / IARPA', title: 'Superforecaster methodology', desc: "Structured decomposition, calibration training, and iterative feedback loops consistently outperform raw expertise. Quotient's coaching framework is built on this research." },
-              { source: 'Atlantic Council', title: '\u201cWeaponizing the Odds\u201d', desc: 'Documents how prediction market odds are cited as authoritative without verification infrastructure. The gap Quotient exists to fill.' },
-              { source: 'MIT / Economics', title: 'Verification bandwidth in AI economies', desc: 'AI-generated content scales faster than human verification capacity. Platforms that embed accountability at the infrastructure level solve this at the root.' },
-              { source: 'Vaccaro et al., 2024', title: 'Human + AI forecasting', desc: 'Naive combinations of human and AI judgment underperform both. Structured integration with calibrated feedback loops is what produces compounding accuracy.' },
-              { source: 'PredictionArena', title: "Q's benchmarked track record", desc: "Q's 74% win rate is independently benchmarked via PredictionArena's methodology. The same evaluation framework will apply to every agent on the platform." },
-            ].map((r) => (
-              <div
-                key={r.title}
-                className={`p-5 ${
-                  isB
-                    ? 'border border-tb-border rounded-tb-card'
-                    : 'border border-border-thin rounded-sm bg-white'
-                }`}
-              >
-                <div
-                  className={`text-[10px] uppercase mb-2 ${
-                    isB
-                      ? 'font-mono tracking-[0.08em] text-gray-400'
-                      : 'font-mono tracking-eyebrow text-gray-400'
-                  }`}
-                >
-                  {r.source}
-                </div>
-                <div
-                  className={`text-[14px] font-medium mb-1.5 ${
-                    isB ? 'font-headline text-tb-dark' : 'text-brand-black'
-                  }`}
-                >
-                  {r.title}
-                </div>
-                <div
-                  className={`text-xs leading-relaxed ${
-                    isB ? 'font-headline text-gray-400' : 'text-gray-400'
-                  }`}
-                >
-                  {r.desc}
+function ImprovementLoop() {
+  const steps = [
+    {
+      num: 1,
+      title: 'Forecast',
+      desc: 'Q analyzes markets, sources context, and assigns probabilities with structured confidence.',
+    },
+    {
+      num: 2,
+      title: 'Review',
+      desc: 'Contributors surface context, flag errors, and add signal that Q may have missed.',
+    },
+    {
+      num: 3,
+      title: 'Learn',
+      desc: 'Every resolved market feeds back into the system. Q gets sharper with each outcome.',
+    },
+  ]
+
+  return (
+    <section className='section-shell bg-tb-cream rounded-tb-card py-16 sm:py-20 lg:py-tb-section-y'>
+      <div className="max-w-content mx-auto">
+        <span className="block text-[11px] uppercase mb-3 font-mono tracking-[0.08em] text-tb-primary">
+          The Improvement Loop
+        </span>
+        <h2 className='font-headline font-bold uppercase text-tb-dark text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-2'>
+          How Quotient Gets Better
+        </h2>
+        <p className="text-[15px] leading-[1.7] max-w-[560px] mb-8 text-tb-dark/60">
+          Quotient improves through a loop of forecasting, review, and feedback. Each cycle tightens the signal.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-0 items-stretch">
+          {steps.map((step, i) => (
+            <>
+              <div key={step.num} className='bg-white rounded-[10px] p-6 h-full' style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-7 h-7 rounded-[4px] bg-tb-primary flex items-center justify-center">
+                    <span className="text-white text-[13px] font-semibold">{step.num}</span>
+                  </div>
+                  <div>
+                    <div className="text-[15px] font-semibold mb-1 text-tb-dark">
+                      {step.title}
+                    </div>
+                    <div className="text-[13px] leading-relaxed text-tb-dark/60">
+                      {step.desc}
+                    </div>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
+              {i < steps.length - 1 && (
+                <div key={`arrow-${i}`} className="hidden md:flex items-center justify-center px-3">
+                  <span className="text-tb-dark/30 text-[18px]">&rarr;</span>
+                </div>
+              )}
+            </>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  )
+}
 
-      <FAQ
-        title="General questions"
-        items={[
-          { q: 'What is Quotient?', a: 'Quotient is the platform where domain experts build forecasting agents, prove them against real outcomes, and monetize them. We provide the coaching framework, the evaluation layer, and the marketplace. Prediction markets are the starting point.' },
-          { q: 'What is a prediction agent?', a: "A prediction agent is an AI system that forecasts outcomes on verifiable questions. On Quotient, every agent has a public track record, sources its reasoning, and is evaluated against real-world results. Q is Quotient's first agent." },
-          { q: 'How do I build an agent on Quotient?', a: "Quotient provides a coaching framework that helps domain experts decompose questions, calibrate confidence, and iterate through structured feedback. You bring the expertise — Quotient turns it into a product. Builder program launching soon." },
-          { q: 'Who built this?', a: 'Quotient was founded by Jordan with a team focused on prediction market infrastructure, AI agent pipelines, and geopolitical intelligence research.' },
-          { q: 'Is Quotient regulated?', a: 'Quotient provides research and market intelligence, not financial advice or trading services. We are not a registered investment advisor.' },
-          { q: 'How do I get involved as a forecaster?', a: "Forecasters can contribute via the mobile app or the Farcaster and World mini apps. Your track record builds over time. Accuracy earns influence in Q's context graph and qualifies you for the builder program." },
-        ]}
-      />
+function WhereThisIsGoing() {
+  const phases = [
+    {
+      phase: 'Today',
+      title: 'Q',
+      items: ['One agent, one domain, a verified track record, and a vault in development.'],
+    },
+    {
+      phase: 'Soon',
+      title: 'More agents',
+      items: ['New domains, new builders, same coaching loop and evaluation framework.'],
+    },
+    {
+      phase: 'Vision',
+      title: 'The agent marketplace',
+      items: ['Any domain where judgment matters — each agent with its own vault, track record, and data.'],
+    },
+  ]
 
-      <Footer />
-    </div>
+  return (
+    <section className='section-shell bg-tb-dark rounded-tb-card py-16 sm:py-20 lg:py-tb-section-y'>
+      <div className="max-w-content mx-auto">
+        <span className="block text-[11px] uppercase mb-3 font-mono tracking-[0.08em] text-tb-primary">
+          Roadmap
+        </span>
+        <h2 className='font-headline font-bold uppercase text-white text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-8'>
+          Where This Is Going
+        </h2>
+        <div className="grid grid-cols-3 max-md:grid-cols-1 gap-[8px]">
+          {phases.map((item) => (
+            <div key={item.phase} className='bg-white/[0.06] rounded-[10px] p-6'>
+              <div className="font-mono text-[11px] font-bold uppercase tracking-[0.08em] mb-1 text-tb-primary">
+                {item.phase}
+              </div>
+              <div className="text-[16px] font-semibold mb-4 text-white">
+                {item.title}
+              </div>
+              <div className="flex flex-col gap-2">
+                {item.items.map((line) => (
+                  <div key={line} className="text-[13px] leading-relaxed text-white/50">
+                    {line}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function WhyThisTeam() {
+  return (
+    <section className='section-shell bg-tb-page rounded-tb-card py-16 sm:py-20 lg:py-tb-section-y'>
+      <div className="max-w-content mx-auto">
+        <span className="block text-[11px] uppercase mb-3 font-mono tracking-[0.08em] text-tb-primary">
+          Why This Team
+        </span>
+        <h2 className='font-headline font-bold uppercase text-tb-dark text-[24px] lg:text-[36px] leading-[0.95] tracking-[-0.02em] mb-6'>
+          Built by People Who Understand Intelligence, Infrastructure, and Markets
+        </h2>
+        <Link
+          href="/team"
+          className="inline-block text-[13px] font-mono uppercase tracking-[0.08em] px-7 py-3 bg-tb-dark text-white rounded-tb-card hover:bg-tb-dark/90 transition-colors"
+        >
+          Meet the team &rarr;
+        </Link>
+      </div>
+    </section>
   )
 }

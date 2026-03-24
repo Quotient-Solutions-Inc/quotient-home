@@ -7,7 +7,7 @@ import HeroAnimation from './HeroAnimation'
 
 function FooterLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="font-mono text-[10px] uppercase mb-1 tracking-[0.08em] text-white/50">
+    <div className="font-mono text-[10px] uppercase mb-1 tracking-[0.08em] text-tb-dark/50">
       {children}
     </div>
   )
@@ -15,7 +15,7 @@ function FooterLabel({ children }: { children: React.ReactNode }) {
 
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link href={href} className="text-[12px] leading-none transition-colors text-white/60 hover:text-tb-primary">
+    <Link href={href} className="text-[12px] leading-none transition-colors text-tb-dark/60 hover:text-tb-primary">
       {children}
     </Link>
   )
@@ -24,8 +24,8 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
 function SubstackSubscribe() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-  const inputId = 'footer-subscribe-email'
-  const statusId = 'footer-subscribe-status'
+  const inputId = 'footer-light-subscribe-email'
+  const statusId = 'footer-light-subscribe-status'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -68,17 +68,17 @@ function SubstackSubscribe() {
         inputMode="email"
         required
         aria-describedby={status !== 'idle' ? statusId : undefined}
-        className="font-mono text-[11px] uppercase tracking-[0.04em] px-3 py-2 w-full transition-colors bg-white/[0.06] border border-white/20 text-white/80 placeholder:text-white/30 focus:border-tb-primary rounded-[6px] sm:rounded-r-none"
+        className="font-mono text-[11px] uppercase tracking-[0.04em] px-3 py-2 w-full transition-colors bg-white border border-tb-border text-tb-dark/80 placeholder:text-tb-dark/30 focus:border-tb-primary rounded-[6px] sm:rounded-r-none"
       />
       <button
         type="submit"
         disabled={status === 'loading'}
-        className={`font-mono text-[11px] uppercase tracking-[0.08em] px-4 py-2 whitespace-nowrap transition-colors bg-transparent border border-white/30 text-white/70 hover:border-white/60 hover:text-white rounded-[6px] sm:rounded-l-none ${status === 'loading' ? 'opacity-60' : ''}`}
+        className={`font-mono text-[11px] uppercase tracking-[0.08em] px-4 py-2 whitespace-nowrap transition-colors bg-tb-dark border border-tb-dark text-white hover:bg-tb-dark/80 rounded-[6px] sm:rounded-l-none ${status === 'loading' ? 'opacity-60' : ''}`}
       >
         {status === 'loading' ? '...' : 'Subscribe'}
       </button>
       </div>
-      <div id={statusId} aria-live="polite" className="font-mono text-[9px] uppercase tracking-[0.08em] text-white/30">
+      <div id={statusId} aria-live="polite" className="font-mono text-[9px] uppercase tracking-[0.08em] text-tb-dark/30">
         {status === 'error'
           ? 'Subscription failed. Open Substack directly if the issue persists.'
           : 'Used only to process your Substack subscription.'}
@@ -87,25 +87,26 @@ function SubstackSubscribe() {
   )
 }
 
-export default function Footer() {
+// Light footer variant for subpages (cream background with inverted animation)
+export default function FooterLight() {
   return (
-    <footer className='section-shell bg-tb-dark rounded-tb-card pt-12 sm:pt-14 pb-10 relative overflow-hidden'>
-      {/* Particle animation background - forms the divider line */}
+    <footer className='section-shell bg-tb-cream rounded-tb-card pt-12 sm:pt-14 pb-10 relative overflow-hidden'>
+      {/* Inverted particle animation background (dark particles on light bg) - forms the divider line */}
       <div className="absolute inset-0 pointer-events-none">
-        <HeroAnimation footerMode />
+        <HeroAnimation inverted footerMode />
       </div>
       <div className="max-w-content mx-auto relative z-10">
         {/* Main grid with generous gap between brand block and nav columns */}
         <div className="grid md:grid-cols-[200px_1fr] gap-10 lg:gap-24 pb-10 max-md:pb-8 mb-8">
           {/* Left: Brand block */}
           <div>
-            {/* White SVG wordmark - preserves negative space in Q */}
+            {/* Dark SVG wordmark for light background */}
             <img
-              src="/logos/quotient-wordmark-white.svg"
+              src="/logos/quotient-wordmark.svg"
               alt="Quotient"
               className="h-5 w-auto mb-2"
             />
-            <div className="font-mono text-white/60 text-[12px] uppercase tracking-[0.04em] leading-relaxed mb-5">
+            <div className="font-mono text-tb-dark/60 text-[12px] uppercase tracking-[0.04em] leading-relaxed mb-5">
               Super forecasting for<br />prediction market traders.
             </div>
             <SubstackSubscribe />
@@ -113,7 +114,7 @@ export default function Footer() {
 
           {/* Right: Nav columns - pushed further right with ml-auto and larger gap */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 ml-auto max-md:ml-0">
-            {/* Product Column (renamed from Agentic Trading) */}
+            {/* Product Column */}
             <div className="flex flex-col gap-3">
               <FooterLabel>Product</FooterLabel>
               <FooterLink href="/case-studies/geopolitical">Geopolitical Case Study</FooterLink>
@@ -129,7 +130,7 @@ export default function Footer() {
               <FooterLink href={CONTACT_HREF}>Contact</FooterLink>
             </div>
 
-            {/* Contributors Column (renamed from Signal) */}
+            {/* Contributors Column */}
             <div className="flex flex-col gap-3">
               <FooterLabel>Contributors</FooterLabel>
               <FooterLink href="https://signal.quotient.social">Signal</FooterLink>
@@ -149,11 +150,11 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="flex max-md:flex-col max-md:gap-3 max-md:items-start justify-between items-center relative z-10">
-          <span className="font-mono text-[11px] text-white/40">&copy; 2026 Quotient</span>
+          <span className="font-mono text-[11px] text-tb-dark/40">&copy; 2026 Quotient</span>
           <div className="flex gap-4 max-md:gap-3 max-md:flex-wrap">
-            <Link href="https://x.com/QuotientHQ" className="font-mono text-white/40 text-[11px] uppercase tracking-[0.08em] hover:text-white transition-colors">X</Link>
-            <Link href="https://farcaster.xyz/quotient" className="font-mono text-white/40 text-[11px] uppercase tracking-[0.08em] hover:text-white transition-colors">Farcaster</Link>
-            <Link href="https://quotient.substack.com/" className="font-mono text-white/40 text-[11px] uppercase tracking-[0.08em] hover:text-white transition-colors">Substack</Link>
+            <Link href="https://x.com/QuotientHQ" className="font-mono text-tb-dark/40 text-[11px] uppercase tracking-[0.08em] hover:text-tb-dark transition-colors">X</Link>
+            <Link href="https://farcaster.xyz/quotient" className="font-mono text-tb-dark/40 text-[11px] uppercase tracking-[0.08em] hover:text-tb-dark transition-colors">Farcaster</Link>
+            <Link href="https://quotient.substack.com/" className="font-mono text-tb-dark/40 text-[11px] uppercase tracking-[0.08em] hover:text-tb-dark transition-colors">Substack</Link>
           </div>
         </div>
       </div>
