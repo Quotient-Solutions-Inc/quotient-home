@@ -386,7 +386,7 @@ export default function GeopoliticalCaseStudiesPage() {
                   href={APP_HREF}
                   className="inline-block font-mono text-[13px] uppercase tracking-[0.08em] px-7 py-3 border border-white text-white bg-transparent rounded-tb-card hover:bg-white hover:text-tb-dark transition-all"
                 >
-                  Log in
+                  Launch
                   <span className="ml-2">&rarr;</span>
                 </Link>
               </div>

@@ -34,8 +34,8 @@ const CARDS = [
     icon: DashboardIcon,
     eyebrow: 'Explore Directly',
     title: "View Q's intelligence",
-    body: 'Log in to explore live forecasts, signal divergence, market reasoning, and recent calls.',
-    cta: 'Log In →',
+    body: 'Launch the app to explore live forecasts, signal divergence, market reasoning, and recent calls.',
+    cta: 'Launch →',
     href: 'https://app.quotient.social',
   },
   {
