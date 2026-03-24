@@ -39,7 +39,7 @@ export default function MarketplaceHero() {
           href={APP_HREF}
           className="px-6 sm:px-8 h-[48px] sm:h-[50px] flex items-center border border-tb-page text-tb-page font-mono text-[13px] sm:text-[14px] uppercase tracking-[0.08em] rounded-tb-card hover:bg-tb-primary hover:border-tb-primary transition-all duration-200 ease-out"
         >
-          Log in
+          Launch
         </Link>
       </div>
     </section>
