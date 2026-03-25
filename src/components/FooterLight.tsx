@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import { CONTACT_HREF } from '@/lib/links'
 import HeroAnimation from './HeroAnimation'
@@ -30,68 +29,15 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
 }
 
 function SubstackSubscribe() {
-  const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-  const inputId = 'footer-light-subscribe-email'
-  const statusId = 'footer-light-subscribe-status'
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-    setStatus('loading')
-    try {
-      await fetch('https://quotient.substack.com/api/v1/free?nojs=true', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ email, first_url: 'https://quotient.substack.com/', first_referrer: '', current_url: 'https://quotient.substack.com/', current_referrer: window.location.href }),
-        mode: 'no-cors',
-      })
-      setStatus('success')
-    } catch {
-      setStatus('error')
-    }
-  }
-
-  if (status === 'success') {
-    return (
-      <div id={statusId} aria-live="polite" className="font-mono text-[11px] uppercase tracking-[0.08em] text-tb-primary">
-        Request submitted. Check your inbox for confirmation.
-      </div>
-    )
-  }
-
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-      <label htmlFor={inputId} className="sr-only">
-        Email address
-      </label>
-      <div className="flex flex-col sm:flex-row gap-2 sm:gap-0">
-      <input
-        id={inputId}
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="YOUR EMAIL"
-        autoComplete="email"
-        inputMode="email"
-        required
-        aria-describedby={status !== 'idle' ? statusId : undefined}
-        className="font-mono text-[11px] uppercase tracking-[0.04em] px-3 py-2 w-full transition-colors bg-white border border-tb-border text-tb-dark/80 placeholder:text-tb-dark/30 focus:border-tb-primary rounded-[6px] sm:rounded-r-none"
-      />
-      <button
-        type="submit"
-        disabled={status === 'loading'}
-        className={`font-mono text-[11px] uppercase tracking-[0.08em] px-4 py-2 whitespace-nowrap transition-colors bg-tb-dark border border-tb-dark text-white hover:bg-tb-dark/80 rounded-[6px] sm:rounded-l-none ${status === 'loading' ? 'opacity-60' : ''}`}
-      >
-        {status === 'loading' ? '...' : 'Subscribe'}
-      </button>
-      </div>
-      <div id={statusId} aria-live="polite" className="font-mono text-[9px] uppercase tracking-[0.08em] text-tb-dark/30">
-        {status === 'error'
-          ? 'Subscription failed. Open Substack directly if the issue persists.'
-          : 'Used only to process your Substack subscription.'}
-      </div>
-    </form>
+    <a
+      href="https://quotient.substack.com/subscribe"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center font-mono text-[11px] uppercase tracking-[0.08em] px-4 py-2 whitespace-nowrap transition-colors bg-transparent border border-tb-dark/30 text-tb-dark/70 hover:border-tb-primary hover:text-tb-primary rounded-[6px]"
+    >
+      Subscribe on Substack →
+    </a>
   )
 }
 
@@ -115,7 +61,7 @@ export default function FooterLight() {
               className="h-5 w-auto mb-2"
             />
             <div className="font-mono text-tb-dark/60 text-[12px] uppercase tracking-[0.04em] leading-relaxed mb-5">
-              Super forecasting for<br />prediction market traders.
+              Superforecasting for<br />prediction market traders.
             </div>
             <SubstackSubscribe />
           </div>
