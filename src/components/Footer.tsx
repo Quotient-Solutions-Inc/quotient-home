@@ -114,7 +114,7 @@ export default function Footer() {
               className="h-5 w-auto mb-2"
             />
             <div className="font-mono text-white/60 text-[12px] uppercase tracking-[0.04em] leading-relaxed mb-5">
-              Super forecasting for<br />prediction market traders.
+              Superforecasting for<br />prediction market traders.
             </div>
             <SubstackSubscribe />
           </div>
