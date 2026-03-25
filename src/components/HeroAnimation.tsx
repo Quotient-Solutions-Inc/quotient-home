@@ -132,8 +132,12 @@ export default function HeroAnimation({ inverted = false, footerMode = false }: 
 
       if (footerMode) {
         // Footer mode: line positioned at the divider location
-        // Move line up a bit to give breathing room from bottom bar
-        lineY = height * 0.72;
+        // Footer structure: pt-12/14 (48-56px top) + content + pb-10 mb-8 (72px gap) + bottom bar + pb-10 (40px bottom)
+        // The line should sit in the middle of the 72px gap between content and copyright
+        // Bottom bar is roughly 40px from bottom, gap starts ~112px from bottom (40 + 72)
+        // Center of gap is ~76px from bottom, so lineY = height - 76
+        // As percentage: (height - 76) / height ≈ varies by height, use fixed offset instead
+        lineY = height - 76;
 
         // Line is CENTERED on the page (not aligned to content)
         lineLength = contentWidth * 0.85; // Tighter line - 85% of content width
