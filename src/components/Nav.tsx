@@ -173,18 +173,18 @@ export default function Nav() {
           <NavLink href="/about">About</NavLink>
           <Link
             href={APP_HREF}
-            className="flex items-center px-5 bg-tb-primary text-white font-mono text-[13px] uppercase tracking-[0.08em] rounded-tb-card hover:bg-tb-cta-hover transition-colors"
+            className="flex items-center px-7 bg-tb-primary text-white font-mono text-[13px] uppercase tracking-[0.08em] rounded-tb-card hover:bg-tb-cta-hover transition-colors"
           >
-            Log in
+            App
           </Link>
         </div>
         {/* Mobile: hamburger + CTA */}
         <div className="lg:hidden flex items-stretch gap-0">
           <Link
             href={APP_HREF}
-            className="flex items-center px-3 sm:px-4 bg-tb-primary text-white font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.08em] rounded-tb-card"
+            className="flex items-center px-4 sm:px-5 bg-tb-primary text-white font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.08em] rounded-tb-card"
           >
-            Log in
+            App
           </Link>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
